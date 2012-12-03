@@ -257,7 +257,7 @@ void MainScene::postProcess()
 	this->callbackCount = size;
 	this->disableTouches = true;
 
-	//	set points		
+	//	set points
 	this->checkForBonus();
 
 	//	check for bonus
@@ -286,7 +286,6 @@ void MainScene::postProcess()
 		lab->setPosition(pos);
 		this->addChild(lab);
 
-
 		CCFadeOut* fo2 = CCFadeOut::create(0.5f);				
 		CCMoveBy* mb2 = CCMoveBy::create(0.4f, ccp(0, 10));
 
@@ -294,8 +293,14 @@ void MainScene::postProcess()
 		lab->runAction(mb2);
 		lab->runAction(fo2);
 
-
-		
+		/*
+		//http://www.cocos2d-iphone.org/forum/topic/19523
+		CCParticleExplosion *ex = CCParticleExplosion::create();		
+		ex->setPosition(pos);
+		CCTexture2D *tx = CCTextureCache::sharedTextureCache()->addImage(IMG_SNOWFLAKE);
+		ex->setTexture(tx);
+		this->addChild(ex);
+		*/
 		//	set zero
 		this->matrix[p.row][p.col] = NULL;
 	}
