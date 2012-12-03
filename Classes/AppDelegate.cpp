@@ -13,6 +13,8 @@ USING_NS_CC;
 #ifdef __MACH__
 int g_width = 0;
 int g_height = 0;
+
+IOSTYPE phoneType = UNDEFINED;
 #endif
 
 AppDelegate::AppDelegate()
@@ -39,6 +41,17 @@ bool AppDelegate::applicationDidFinishLaunching()
 #ifdef __MACH__
     g_width = pDirector->getWinSize().width;
     g_height = pDirector->getWinSize().height;
+    
+    
+    if (g_width == 2048)
+        phoneType = IPAD3;
+    else if (g_width == 960)
+        phoneType = IPHONE4;
+    else if (g_width == 1024)
+        phoneType = IPAD;
+    else if (g_width == 640)
+        phoneType = IPHONE;
+    
     
     CCLog("Window size: %dx%d", g_width, g_height);
 #endif

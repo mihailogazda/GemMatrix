@@ -3,6 +3,7 @@
 
 extern int g_height;
 extern int g_width;
+extern IOSTYPE phoneType;
 
 CCScene* MainScene::scene()
 {
@@ -15,6 +16,7 @@ CCScene* MainScene::scene()
 		
 		//	add layer
 		ret->addChild(mainLayer);
+        
 
 	} while (false);
 
@@ -28,6 +30,16 @@ bool MainScene::init()
 	ccColor4B colorWhite = ccc4(0, 0, 0, 255);
 	CCLayerColor::initWithColor(colorWhite);
 	initTextures();
+    
+    //  init scale
+    this->rows = MAX_ROWS;
+    this->columns = MAX_COLS;
+    
+    if (phoneType == IPAD3){
+        this->rows = MAX_ROWS_IPAD3;
+        this->columns = MAX_COLS_IPAD3;
+    }
+    
     
 	//	init snow
 	CCParticleSnow *ps = CCParticleSnow::create();

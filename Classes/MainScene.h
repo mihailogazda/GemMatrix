@@ -15,10 +15,14 @@ typedef struct
 	int col;
 } MATRIXPOS;
 
+#define MAT2D(n, r, c) CCGemSprite* n[r][c]; memset(n, 0, sizeof(n))
+
+#define INSERT_ROW_TIME 2
+
 class MainScene : public CCLayerColor
 {
-private:			
-
+private:
+    
 	unsigned int pointsCount;
 	unsigned int timerCount;
 
@@ -30,6 +34,9 @@ private:
 	//	game matrix we are going to use    
     CCGemSprite* matrix[MAX_ROWS][MAX_COLS];
 	CCGemSprite* spareRow[MAX_COLS];
+    
+    short rows;
+    short columns;
     
 	void initMatrix();
 	void initSpareRow();

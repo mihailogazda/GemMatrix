@@ -1,3 +1,6 @@
+#ifndef __RESOURCES_X__
+#define __RESOURCES_X__
+
 //
 //	BASE DIRECTORY
 //
@@ -10,13 +13,17 @@
 //
 //	CONTENT SIZE SETTINGS
 //
-#ifdef __MACH__
-    #define MAX_COLS 16
-    #define MAX_ROWS 11
-#else
+//#ifdef __MACH__
     #define MAX_COLS 12
-    #define MAX_ROWS 9
-#endif
+    #define MAX_ROWS 10
+//#else
+//    #define MAX_COLS 12
+//    #define MAX_ROWS 9
+//#endif
+
+#define MAX_COLS_IPAD3 12
+#define MAX_ROWS_IPAD3 10
+
 
 //
 //	IMAGE RESOURCES
@@ -28,3 +35,5 @@
 #define IMG_MAIN_TILESET_PLIST RES_DIRECTORY "tileset.plist"
 
 #define IMG_SNOWFLAKE RES_DIRECTORY "snowflake.png"
+
+#endif

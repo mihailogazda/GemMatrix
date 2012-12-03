@@ -5,6 +5,15 @@
 
 using namespace cocos2d;
 
+enum IOSTYPE
+{
+    UNDEFINED = 0,
+    IPHONE,
+    IPHONE4,
+    IPAD,
+    IPAD3
+};
+
 class CCUtils 
 {
 public:

@@ -7,9 +7,9 @@
 using namespace cocos2d;
 
 #ifdef __MACH__
-    static const float GEM_SCALE = 0.5f;
+    static float GEM_SCALE = 0.5f;
 #else
-    static const float GEM_SCALE = 0.4f;
+    static float GEM_SCALE = 0.4f;
 #endif
 
 #define GEM_WIDTH	100 * GEM_SCALE
@@ -26,7 +26,7 @@ static const char* g_gemNames[] =
 
 
 
-//extern IOSTYPE g_phoneType;
+extern IOSTYPE phoneType;
 
 class CCGemSprite : public CCSprite
 {
@@ -42,9 +42,17 @@ public:
         CCGemSprite* t = (CCGemSprite*) CCSprite::createWithSpriteFrameName(g_gemNames[r]);
 		t->setTag(r);
     
-        //if (g_phoneType == IPAD3)
-        //    t->setScale(1);
-        //else
+        if (phoneType == IPAD3)
+        {
+            t->setScale(1);
+            GEM_SCALE = 1;
+        }
+        else if (phoneType == IPHONE4)
+        {
+            t->setScale(0.7);
+            GEM_SCALE = 0.7;
+        }
+        else
             t->setScale(GEM_SCALE);
 		return t;
 	}
