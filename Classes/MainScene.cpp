@@ -272,12 +272,29 @@ void MainScene::postProcess()
 		CC_ASSERT(sp);
 
 		//	fade out
-		CCBlink *fo = CCBlink::create(0.6f, 2);
+		//CCBlink* fo = CCBlink::create(0.6f, 2);		
 		CCHide *hi = CCHide::create();
 		CCCallFuncN *cf = CCCallFuncN::create(this, callfuncN_selector(MainScene::callbackItemHidden));
-		CCAction* seq = CCSequence::create(fo, hi, cf, NULL);
+		CCAction* seq = CCSequence::create(/*fo,*/ hi, cf, NULL);
 		
+
+		//	Add points won per gem
+		CCPoint pos = positionForElement(p.row, p.col);
+		CCLabelTTF *lab  = CCLabelTTF::create("10", "Impact", 16);
+		pos.x += GEM_WIDTH / 2;
+		pos.y += GEM_HEIGHT / 2;
+		lab->setPosition(pos);
+		this->addChild(lab);
+
+
+		CCFadeOut* fo2 = CCFadeOut::create(0.5f);				
+		CCMoveBy* mb2 = CCMoveBy::create(0.4f, ccp(0, 10));
+
 		sp->runAction(seq);
+		lab->runAction(mb2);
+		lab->runAction(fo2);
+
+
 		
 		//	set zero
 		this->matrix[p.row][p.col] = NULL;
