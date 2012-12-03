@@ -426,6 +426,8 @@ void MainScene::handleTimeUpdate(float delta)
 
 	if (this->timerCount >= secTillReset)
 	{
+		this->disableTouches = true;
+
 		//	first check if game is ended
 		//	basically if last row is filled then we end
 		for (int i = 0; i < MAX_COLS; i++)
@@ -467,5 +469,6 @@ void MainScene::handleTimeUpdate(float delta)
 		
 		this->initSpareRow();
 		this->timerCount = 0;
+		this->disableTouches = false;
 	}
 }
