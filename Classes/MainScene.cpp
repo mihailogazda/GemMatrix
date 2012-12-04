@@ -19,7 +19,6 @@ CCScene* MainScene::scene()
 		//	add layer
 		ret->addChild(mainLayer);
         
-
 	} while (false);
 
 	return ret;
@@ -297,7 +296,6 @@ void MainScene::postProcess()
 		CCCallFuncN *cf = CCCallFuncN::create(this, callfuncN_selector(MainScene::callbackItemHidden));
 		CCAction* seq = CCSequence::create(/*fo,*/ hi, cf, NULL);
 		
-
 		//	Add points won per gem
 		CCPoint pos = positionForElement(p.row, p.col);
 		CCLabelTTF *lab  = CCLabelTTF::create("10", "Impact", 16);
@@ -306,7 +304,7 @@ void MainScene::postProcess()
 		lab->setPosition(pos);
 		this->addChild(lab);
 
-		CCFadeOut* fo2 = CCFadeOut::create(0.5f);				
+		CCFadeOut* fo2 = CCFadeOut::create(0.8f);				
 		CCMoveBy* mb2 = CCMoveBy::create(0.4f, ccp(0, 10));
 
 		sp->runAction(seq);
@@ -359,6 +357,7 @@ void MainScene::checkForBonus()
 		bonusLabel->runAction(CCSequence::create(
 			CCFadeTo::create(0.2f, 255), 
 			CCScaleTo::create(0.5, 2),
+			//CCMoveTo::create(0.5, this->pointsLabel->getPosition()),
 			CCFadeTo::create(0.5, 0),
 			NULL));
 	}
