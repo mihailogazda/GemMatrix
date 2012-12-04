@@ -4,6 +4,7 @@
 #include "AppDelegate.h"
 #include "MainScene.h"
 #include "DiedScene.h"
+#include "GameLevels.h"
 #include "SimpleAudioEngine.h"
 
 using namespace CocosDenshion;
@@ -16,6 +17,7 @@ int g_height = 0;
 #endif
 
 IOSTYPE phoneType = UNDEFINED;
+unsigned int currentLevel = 0;
 
 AppDelegate::AppDelegate()
 {
