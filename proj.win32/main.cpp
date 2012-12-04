@@ -7,8 +7,8 @@ USING_NS_CC;
 // uncomment below line, open debug console
 // #define USE_WIN32_CONSOLE
 
-int g_width = 680;
-int g_height = 560;
+//int g_width = 680;
+//int g_height = 560;
 
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
@@ -30,7 +30,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     AppDelegate app;
 
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();		
-    eglView->setFrameSize(g_width, g_height);
+    eglView->setFrameSize(680, 560);
 	
 	HWND handle = eglView->getHWnd();
 	SetWindowText(handle, "Gem Matrix");

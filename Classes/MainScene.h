@@ -15,16 +15,13 @@ typedef struct
 	int col;
 } MATRIXPOS;
 
-#define MAT2D(n, r, c) CCGemSprite* n[r][c]; memset(n, 0, sizeof(n))
-
-#define INSERT_ROW_TIME 2
 
 class MainScene : public CCLayerColor
 {
 private:
     
-	unsigned int pointsCount;
-	unsigned int timerCount;
+	int pointsCount;
+	int timerCount;
 
 	CCLabelTTF* pointsLabel;
 	CCLabelTTF* timeLabel;

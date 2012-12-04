@@ -1,9 +1,11 @@
 #include "MainScene.h"
 #include "DiedScene.h"
+#include "GameLevels.h"
 
 extern int g_height;
 extern int g_width;
 extern IOSTYPE phoneType;
+extern unsigned int currentLevel;
 
 CCScene* MainScene::scene()
 {
@@ -30,16 +32,6 @@ bool MainScene::init()
 	ccColor4B colorWhite = ccc4(0, 0, 0, 255);
 	CCLayerColor::initWithColor(colorWhite);
 	initTextures();
-    
-    //  init scale
-    this->rows = MAX_ROWS;
-    this->columns = MAX_COLS;
-    
-    if (phoneType == IPAD3){
-        this->rows = MAX_ROWS_IPAD3;
-        this->columns = MAX_COLS_IPAD3;
-    }
-    
     
 	//	init snow
 	CCParticleSnow *ps = CCParticleSnow::create();
@@ -121,12 +113,30 @@ bool MainScene::initTextures()
 
 void MainScene::initMatrix()
 {
-	//	init start position
-	for (unsigned int i = 0; i < MAX_ROWS; i++)
+	//	clear memory
+	memset(this->matrix, 0, sizeof(this->matrix));
+    
+    //  init scale
+    this->rows = MAX_ROWS;
+    this->columns = MAX_COLS;
+    
+    if (phoneType == IPAD3)
 	{
-		for (unsigned int j = 0; j < MAX_COLS; j++)
+        this->rows = MAX_ROWS_IPAD3;
+        this->columns = MAX_COLS_IPAD3;
+    }
+	else if (phoneType == WINDOWS)
+	{
+		this->rows = MAX_ROWS_WINDOWS;
+		this->columns = MAX_COLS_WINDOWS;
+	}
+
+	//	init start position
+	for (int i = 0; i < this->rows; i++)
+	{
+		for (int j = 0; j < this->columns; j++)
 		{
-			unsigned int stop = MAX_ROWS - 3;
+			int stop = this->rows - 3;
 			if (i < stop)
 			{
 				CCGemSprite* gs = CCGemSprite::create();
@@ -134,21 +144,19 @@ void MainScene::initMatrix()
 				this->matrix[i][j] = gs;
 				this->addChild(gs);
 			}
-			else
-			{
-				this->matrix[i][j] = NULL;
-			}
 		}
 	}
 
-	this->redrawMatrix();
-	
+	//	now show matrix
+	this->redrawMatrix();	
 }
 
 void MainScene::initSpareRow()
 {
+	memset(this->spareRow, 0, sizeof(this->spareRow));
+
 	//	init spare row	
-	for (unsigned int i = 0; i < MAX_COLS; i++)
+	for (int i = 0; i < this->columns; i++)
 	{
 		//if (this->spareRow[i] != NULL)		
 		//	this->spareRow[i]->removeFromParentAndCleanup(true);					
@@ -157,7 +165,7 @@ void MainScene::initSpareRow()
 		this->spareRow[i] = gs;		
 		gs->setAnchorPoint(ccp(0, 0));
 		gs->setOpacity(SPARE_ROW_FADE_START);
-		this->addChild(gs);		
+		this->addChild(gs);
 	}
 
 	this->redrawSpareRow();
@@ -173,9 +181,9 @@ CCPoint MainScene::positionForElement(int row, int col, bool isSpareRow = false)
 	if (!isSpareRow)
 		ys += GEM_HEIGHT + (GEM_SPACING * 2);
 
-	int x = xs + (col * (GEM_WIDTH + GEM_SPACING));
-	int y = ys + ( ( /*(MAX_ROWS - 1) -*/ row) * (GEM_HEIGHT + GEM_SPACING) );	//	(max_rows - row) inverses display so it is now presented as in matrix
-																//	otherwise row 0 would be highest one and row 10 would be the first from bottom
+	int x = xs + (col * (GEM_WIDTH + GEM_SPACING)  );
+	int y = ys + (row * (GEM_HEIGHT + GEM_SPACING) );	
+
 	return ccp(x, y);
 }
 
@@ -370,10 +378,10 @@ void MainScene::reorganizeMatrix()
 	CCGemSprite* newMatrix[MAX_ROWS][MAX_COLS] = {0};
 	unsigned int lastColumn = 0;
 
-	for (int i = 0; i < MAX_COLS; i++)
+	for (int i = 0; i < this->columns; i++)
 	{
 		int lastPositionNotNull = 0;
-		for (int j = 0; j < MAX_ROWS; j++)
+		for (int j = 0; j < this->rows; j++)
 		{
 			CCGemSprite* item = this->matrix[j][i];
 
@@ -388,7 +396,7 @@ void MainScene::reorganizeMatrix()
 		//	this removes empty rows
 		if (lastPositionNotNull != 0)
 		{
-			for (int j = 0; j < MAX_ROWS; j++)			
+			for (int j = 0; j < this->rows; j++)			
 				newMatrix[j][lastColumn] = this->matrix[j][i];
 			lastColumn++;
 		}
@@ -399,12 +407,13 @@ void MainScene::reorganizeMatrix()
 	
 	//	now center align
 	CCGemSprite* newMatrix2[MAX_ROWS][MAX_COLS] = {0};
+
 	unsigned int lastTaken = 0;
-	unsigned int start = ceil( (float)(MAX_COLS - lastColumn) / 2 );
+	unsigned int start = ceil( (float)(this->columns - lastColumn) / 2 );
 	
-	for (int i = start; i < MAX_COLS; i++)
+	for (int i = start; i < this->columns; i++)
 	{
-		for (int j = 0; j < MAX_ROWS; j++)
+		for (int j = 0; j < this->rows; j++)
 			newMatrix2[j][i] = this->matrix[j][lastTaken];
 		lastTaken++;
 	}
@@ -417,9 +426,9 @@ void MainScene::reorganizeMatrix()
 
 void MainScene::redrawMatrix()
 {
-	for (int i = 0; i < MAX_ROWS; i++)
+	for (int i = 0; i < this->rows; i++)
 	{
-		for (int j = 0; j < MAX_COLS; j++)
+		for (int j = 0; j < this->columns; j++)
 		{
 			if (this->matrix[i][j] != NULL)
 			{
@@ -432,7 +441,7 @@ void MainScene::redrawMatrix()
 
 void MainScene::redrawSpareRow()
 {
-	for (int i = 0; i < MAX_COLS; i++)
+	for (int i = 0; i < this->columns; i++)
 	{
 		CCPoint pos = positionForElement(0, i, true);
 		this->spareRow[i]->runAction( CCEaseBounceOut::create( CCMoveTo::create(0.5f, pos) ) );
@@ -450,12 +459,13 @@ void MainScene::handleTimeUpdate(float delta)
 	sprintf(tmp, "%ds", this->timerCount);
 	this->timeLabel->setString(tmp);
 
-	unsigned int secTillReset = 10;
-	unsigned int fade = SPARE_ROW_FADE_START + this->timerCount * (255 / secTillReset);
-	if (fade > 255)
-		fade = 255;
+	int secTillReset = GAME_LEVELS[currentLevel].insertRowTime;
+	float fade = SPARE_ROW_FADE_START + this->timerCount * (SPARE_ROW_FADE_END / secTillReset);
+	if (fade > SPARE_ROW_FADE_END)
+		fade = SPARE_ROW_FADE_END;
 
-	for (int i = 0; i < MAX_COLS; i++)
+
+	for (int i = 0; i < this->columns; i++)
 		this->spareRow[i]->runAction( CCFadeTo::create(1, fade) );
 
 	if (this->timerCount >= secTillReset)
@@ -464,9 +474,9 @@ void MainScene::handleTimeUpdate(float delta)
 
 		//	first check if game is ended
 		//	basically if last row is filled then we end
-		for (int i = 0; i < MAX_COLS; i++)
+		for (int i = 0; i < this->columns; i++)
 		{
-			if (this->matrix[MAX_ROWS - 1][i] != NULL)
+			if (this->matrix[this->rows - 1][i] != NULL)
 			{
 				CCLog("EXIT SCENE");
 				CCScene* died = DiedScene::scene();
@@ -478,13 +488,13 @@ void MainScene::handleTimeUpdate(float delta)
 		//	now insert from bottom
 		CCGemSprite* tmp[MAX_ROWS][MAX_COLS] = {0};
 
-		for (int i = 0; i < MAX_COLS; i++)
+		for (int i = 0; i < this->columns; i++)					
 			tmp[0][i] = this->spareRow[i];
 
 		int maxColumnHeight = 0;
-		for (int i = 1; i < MAX_ROWS; i++)
+		for (int i = 1; i < this->rows; i++)
 		{
-			for (int j = 0; j < MAX_COLS; j++)
+			for (int j = 0; j < this->columns; j++)
 			{
 				tmp[i][j] = this->matrix[i-1][j];
 

@@ -11,7 +11,11 @@ enum IOSTYPE
     IPHONE,
     IPHONE4,
     IPAD,
-    IPAD3
+    IPAD3,
+	WINDOWS,
+	MAC,
+	ANDROID,
+	WINDOWS_MOBILE
 };
 
 class CCUtils 

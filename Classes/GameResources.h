@@ -10,19 +10,42 @@
     #define RES_DIRECTORY "Resources\\"
 #endif
 
+
 //
 //	CONTENT SIZE SETTINGS
 //
-//#ifdef __MACH__
-    #define MAX_COLS 12
-    #define MAX_ROWS 10
-//#else
-//    #define MAX_COLS 12
-//    #define MAX_ROWS 9
-//#endif
 
-#define MAX_COLS_IPAD3 12
-#define MAX_ROWS_IPAD3 10
+#define MAX_COLS			20
+#define MAX_ROWS			20
+
+
+#define MAX_COLS_IPAD3		12
+#define MAX_ROWS_IPAD3		10
+
+#define MAX_COLS_WINDOWS	12
+#define MAX_ROWS_WINDOWS	9
+
+
+//	
+//	GEM SIZES AND OPACITY
+//
+#ifdef __MACH__
+    static float GEM_SCALE = 0.5f;
+#else
+    static float GEM_SCALE = 0.4f;
+#endif
+
+#define GEM_WIDTH	100 * GEM_SCALE
+#define GEM_HEIGHT	120 * GEM_SCALE
+#define GEM_SPACING	10 * GEM_SCALE
+
+#define SPARE_ROW_FADE_START	50
+#define SPARE_ROW_FADE_END		255
+
+#define GEM_SCALE_IPAD3		1.0f
+#define GEM_SCALE_IPHONE4	0.7f
+
+
 
 
 //

@@ -11,13 +11,12 @@ using namespace CocosDenshion;
 
 USING_NS_CC;
 
-#ifdef __MACH__
 int g_width = 0;
 int g_height = 0;
-#endif
 
 IOSTYPE phoneType = UNDEFINED;
 unsigned int currentLevel = 0;
+unsigned int retina = 0;
 
 AppDelegate::AppDelegate()
 {
@@ -35,16 +34,18 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
     // turn on display FPS
-    pDirector->setDisplayStats(false);	
+    pDirector->setDisplayStats(false);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
     
-#ifdef __MACH__
+	//	capture projector size
     g_width = pDirector->getWinSize().width;
     g_height = pDirector->getWinSize().height;
     
-    
+
+#ifdef __MACH__    
+
     if (g_width == 2048)
         phoneType = IPAD3;
     else if (g_width == 960)
@@ -53,10 +54,24 @@ bool AppDelegate::applicationDidFinishLaunching()
         phoneType = IPAD;
     else if (g_width == 640)
         phoneType = IPHONE;
-    
+
+	//	enable 2x pixel 
+	if (phoneType == IPAD3 || phoneType == IPHONE4)
+	{
+		pDirector->enableRetinaDisplay(true);
+		retina = true;
+	}
+		
+#endif	
+
+#ifdef _WINDOWS
+	phoneType = WINDOWS;
+#endif
+
+		
     
     CCLog("Window size: %dx%d", g_width, g_height);
-#endif
+
     // create a scene. it's an autorelease object
     //CCScene *pScene = HelloWorld::scene();
 	CCScene *pScene = MainScene::scene();
