@@ -340,6 +340,16 @@ void MainScene::checkForBonus()
 
 		char bonusText[100] = "";
 		sprintf(bonusText, "%d x BONUS POINTS", bonusWon);
+		/*
+		if (bonus <= 3)
+			sprintf(bonusText, "GREAT!");
+		else if (bonus <= 5)
+			sprintf(bonusText, "AMAZING!");
+		else if (bonus <= 10)
+			sprintf(bonusText, "INCREDIBLE!");
+		else if (bonus <= 15)
+			sprintf(bonusText, "GOD LIKE!");
+		*/
 		
 		CCLabelTTF* bonusLabel = CCLabelTTF::create(bonusText, "Impact", 32);
 		bonusLabel->setPosition(ccp(g_width / 2, g_height / 2));
