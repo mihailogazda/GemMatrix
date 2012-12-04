@@ -105,8 +105,12 @@ void MainScene::handleClickReset(CCObject* sender)
 bool MainScene::initTextures()
 {
 	CCSpriteFrameCache *sfc = CCSpriteFrameCache::sharedSpriteFrameCache();	
-	sfc->addSpriteFramesWithFile(IMG_MAIN_TILESET_PLIST);		
+	sfc->addSpriteFramesWithFile(IMG_MAIN_TILESET_PLIST);
 
+	/*CCSprite* sp = CCSprite::create(IMG_RED_BACK);
+	sp->setAnchorPoint(ccp(0, 0));
+	this->addChild(sp);
+	*/
 	return true;
 }
 

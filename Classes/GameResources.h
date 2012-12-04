@@ -1,15 +1,6 @@
 #ifndef __RESOURCES_X__
 #define __RESOURCES_X__
 
-//
-//	BASE DIRECTORY
-//
-#ifdef __MACH__
-    #define RES_DIRECTORY "./"
-#else
-    #define RES_DIRECTORY "Resources\\"
-#endif
-
 
 //
 //	CONTENT SIZE SETTINGS
@@ -46,6 +37,14 @@
 #define GEM_SCALE_IPHONE4	0.7f
 
 
+//
+//	BASE DIRECTORY
+//
+#ifdef __MACH__
+    #define RES_DIRECTORY "./"
+#else
+    #define RES_DIRECTORY "Resources\\"
+#endif
 
 
 //
@@ -58,5 +57,7 @@
 #define IMG_MAIN_TILESET_PLIST RES_DIRECTORY "tileset.plist"
 
 #define IMG_SNOWFLAKE RES_DIRECTORY "snowflake.png"
+
+#define IMG_RED_BACK	RES_DIRECTORY "backs\\red_back.png"
 
 #endif
