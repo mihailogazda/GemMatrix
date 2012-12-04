@@ -44,13 +44,13 @@ public:
     
         if (phoneType == IPAD3)
         {
-            t->setScale(1);
-            GEM_SCALE = 1;
+            t->setScale(1.0f);
+            GEM_SCALE = 1.0f;
         }
         else if (phoneType == IPHONE4)
         {
-            t->setScale(0.7);
-            GEM_SCALE = 0.7;
+            t->setScale(0.7f);
+            GEM_SCALE = 0.7f;
         }
         else
             t->setScale(GEM_SCALE);

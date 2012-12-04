@@ -13,9 +13,9 @@ USING_NS_CC;
 #ifdef __MACH__
 int g_width = 0;
 int g_height = 0;
+#endif
 
 IOSTYPE phoneType = UNDEFINED;
-#endif
 
 AppDelegate::AppDelegate()
 {
