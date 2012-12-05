@@ -7,6 +7,8 @@ extern int g_width;
 extern IOSTYPE phoneType;
 extern unsigned int currentLevel;
 
+bool transitionInProgress = false;
+
 CCScene* MainScene::scene()
 {
 	CCScene* ret = NULL;
@@ -27,7 +29,7 @@ CCScene* MainScene::scene()
 bool MainScene::init()
 {
 	//	init parent and textures
-	ccColor4B cornflowerBlue = ccc4(100, 149, 237, 255);
+	//ccColor4B cornflowerBlue = ccc4(100, 149, 237, 255);
 	ccColor4B colorWhite = ccc4(0, 0, 0, 255);
 	CCLayerColor::initWithColor(colorWhite);
 	initTextures();
@@ -41,7 +43,18 @@ bool MainScene::init()
 	//	init matrix
 	memset(this->matrix, 0, sizeof(this->matrix));
 	memset(this->spareRow, 0, sizeof(this->spareRow));
+    
+    this->totalTime = 0;
+    this->pointsCount = 0;
+    this->timerCount = 0;
 
+	this->schedule(schedule_selector(MainScene::handleTimeUpdate), 1);
+    
+	return true;
+}
+
+void MainScene::postInit()
+{
 	this->initMatrix();
 	this->initSpareRow();
 
@@ -54,18 +67,24 @@ bool MainScene::init()
 	//	callback count reset - this will enable touching
 	this->disableTouches = false;
 
-	this->schedule(schedule_selector(MainScene::handleTimeUpdate), 1);
+}
 
-	return true;
+void MainScene::onEnter()
+{
+    CCLayer::onEnter();
+    CCLog("OnEnter()");
 }
 
 bool MainScene::initSidebar()
 {
 	char* fontName = "Impact";
-	unsigned int fontSize = 26;	
+	unsigned int fontSize = 26;
+    
+    if (phoneType == IPAD3 || phoneType == IPHONE4)
+        fontSize *= 2;
 
     int gw = 200;
-	int xs = g_width - gw;
+	int xs = g_width;
 	int ys = g_height - 30;
     
     sidebar = CCLayerColor::create(ccc4(255, 255, 255, 100));
@@ -85,8 +104,8 @@ bool MainScene::initSidebar()
     
 	this->timerCount = 0;
 	this->timeLabel = CCLabelTTF::create("0s", fontName, fontSize - 6);
-	this->timeLabel->setPosition(ccp(gw / 2, g_height - 130));
-	sidebar->addChild(this->timeLabel);
+	this->timeLabel->setPosition(ccp(gw / 2, 80));
+	sidebar->addChild(this->timeLabel, 1);
 
 	//	game menu
 	CCMenuItemFont::setFontName(fontName);
@@ -100,7 +119,7 @@ bool MainScene::initSidebar()
 	sidebar->addChild(menu);
     
     
-    
+    //  now button
     CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(IMG_BUTTON);
     
     CCMenuItemSprite *button = CCMenuItemSprite::create(CCSprite::createWithTexture(tex), CCSprite::createWithTexture(tex), this, menu_selector(MainScene::handleUpButton));
@@ -109,8 +128,9 @@ bool MainScene::initSidebar()
     button->setPosition(ccp(gw / 2, 80));
     menu->addChild(button);
     
-    
     this->addChild(sidebar);
+    
+    sidebar->runAction(CCEaseBounceOut::create(CCMoveBy::create(1, ccp(-gw, 0))));
 
 	return true;
 }
@@ -121,7 +141,10 @@ void MainScene::handleClickReset(CCObject* sender)
 
 	CCDirector* sd = CCDirector::sharedDirector();
 	CCScene* sc = MainScene::scene();
-	CCTransitionScene* t = CCTransitionFlipAngular::create(1, sc);
+	//CCTransitionScene* t = CCTransitionFlipAngular::create(1, sc);
+    CCTransitionScene* t = CCTransitionFadeBL::create(1, sc);
+    
+    sidebar->runAction(CCEaseBounceOut::create(CCMoveBy::create(1, ccp(200, 0))));
 
 	sd->replaceScene(t);
 }
@@ -500,6 +523,12 @@ void MainScene::redrawSpareRow()
 void MainScene::handleTimeUpdate(float delta)
 {
 	CCLog("Handle Time Update");
+    
+    if (!this->wasInit)
+    {
+        this->postInit();
+        this->wasInit = true;
+    }
 
 	//	check for new element insertion
 	this->timerCount++;

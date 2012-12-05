@@ -22,6 +22,7 @@ private:
     
 	int pointsCount;
 	int timerCount;
+    int totalTime;
 
 	CCLabelTTF* pointsLabel;
 	CCLabelTTF* timeLabel;
@@ -55,7 +56,10 @@ private:
 
 public:
 
+    bool wasInit;
 	virtual bool init();
+    void postInit();
+    virtual void onEnter();
 
 	static CCScene* scene();
 

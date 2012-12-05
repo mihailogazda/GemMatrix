@@ -3,6 +3,7 @@
 #include "CCEGLView.h"
 #include "AppDelegate.h"
 #include "MainScene.h"
+#include "MainMenu.h"
 #include "DiedScene.h"
 #include "GameLevels.h"
 #include "SimpleAudioEngine.h"
@@ -76,8 +77,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // create a scene. it's an autorelease object
     //CCScene *pScene = HelloWorld::scene();
-	CCScene *pScene = MainScene::scene();
-	//CCScene *pDied = DiedScene::scene();
+	//CCScene *pScene = MainScene::scene();
+	CCScene *pScene = MainMenuScene::scene();
 
     // run
     pDirector->runWithScene(pScene);
