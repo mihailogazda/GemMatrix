@@ -32,14 +32,24 @@ bool DiedScene::init()
 
 	int xs = g_width / 2;
 	int ys = g_height / 2;
+    
+    //  Add background
+    CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(IMG_ORANGE_BACK);
+    
+    CCSprite* back = CCSprite::createWithTexture(tex);
+    back->setPosition(ccp(0, 0));
+    back->setAnchorPoint(ccp(0, 0));
+    
+    back->setScale(2.0f);
+    this->addChild(back);    
 
 	CCLabelTTF *loser = CCLabelTTF::create("You loose!", "Impact", 36);
 	loser->setPosition(ccp(xs, ys));	
 	this->addChild(loser);	
 	
 	CCMenuItemFont::setFontSize(20);
-	CCMenuItemFont *back = CCMenuItemFont::create("Back to the game", this, menu_selector(DiedScene::backButton));		
-	CCMenu *menu = CCMenu::create(back, NULL);
+	CCMenuItemFont *backb = CCMenuItemFont::create("Back to the game", this, menu_selector(DiedScene::backButton));
+	CCMenu *menu = CCMenu::create(backb, NULL);
 
 	ys -= 80;
 	menu->setPosition(ccp(xs, ys));

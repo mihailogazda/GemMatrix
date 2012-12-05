@@ -1,6 +1,7 @@
 #include "MainScene.h"
 #include "DiedScene.h"
 #include "GameLevels.h"
+#include "MainMenu.h"
 
 extern int g_height;
 extern int g_width;
@@ -106,6 +107,7 @@ bool MainScene::initSidebar()
 	this->timeLabel = CCLabelTTF::create("0s", fontName, fontSize - 6);
 	this->timeLabel->setPosition(ccp(gw / 2, 80));
 	sidebar->addChild(this->timeLabel, 1);
+    
 
 	//	game menu
 	CCMenuItemFont::setFontName(fontName);
@@ -113,7 +115,10 @@ bool MainScene::initSidebar()
 	CCMenuItemFont* reset = CCMenuItemFont::create("Restart", this, menu_selector(MainScene::handleClickReset));
     reset->setPosition(ccp(gw / 2, g_height - 200));
     
-	CCMenu *menu = CCMenu::create(reset, NULL);
+    CCMenuItemFont* mainMenu = CCMenuItemFont::create("Menu", this, menu_selector(MainScene::handleClickMenu));
+    mainMenu->setPosition(ccp(gw / 2, g_height - 250));
+    
+	CCMenu *menu = CCMenu::create(reset, mainMenu, NULL);
     menu->setPosition(ccp(0, 0));
     menu->setAnchorPoint(ccp(0, 0));
 	sidebar->addChild(menu);
@@ -155,13 +160,22 @@ void MainScene::handleUpButton(CCObject* sender)
     this->insertRowFromBottom();
 }
 
+void MainScene::handleClickMenu(CCObject* sender)
+{
+    CCLog("handleClickMenu");
+    
+    CCScene* sc = CCTransitionFadeBL::create(1, MainMenuScene::scene());
+    CCDirector::sharedDirector()->replaceScene(sc);
+    //CCDirector::sharedDirector()->popScene();
+}
+
 bool MainScene::initTextures()
 {
 	CCSpriteFrameCache *sfc = CCSpriteFrameCache::sharedSpriteFrameCache();	
 	sfc->addSpriteFramesWithFile(IMG_MAIN_TILESET_PLIST);
 
     // add background
-	CCSprite* sp = CCSprite::create(IMG_RED_BACK);
+	CCSprite* sp = CCSprite::create(IMG_BLUE_BACK);
 	sp->setAnchorPoint(ccp(0, 0));
 	sp->setScale(0.7f);
     
@@ -400,7 +414,7 @@ void MainScene::checkForBonus()
 		this->pointsCount += bonusWon;
 
 		char bonusText[100] = "";
-		sprintf(bonusText, "%d x BONUS POINTS", bonusWon);
+		sprintf(bonusText, "%d BONUS POINTS!!!", bonusWon);
 		/*
 		if (bonus <= 3)
 			sprintf(bonusText, "GREAT!");

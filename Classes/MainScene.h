@@ -48,10 +48,11 @@ private:
 	CCPoint positionForElement(int row, int col, bool isSpareRow);
 
 	void handleClickReset(CCObject* sender);
+    void handleClickMenu(CCObject* sender);
+    
 	bool initSidebar();
 
 	void handleTimeUpdate(float delta);
-    
     void handleUpButton(CCObject* sender);
 
 public:
