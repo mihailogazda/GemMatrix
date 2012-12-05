@@ -37,7 +37,7 @@ bool MainScene::init()
 	//	init snow
 	CCParticleSnow *ps = CCParticleSnow::create();
 	CCTexture2D *tx = CCTextureCache::sharedTextureCache()->addImage(IMG_SNOWFLAKE);
-	ps->setTexture(tx);	
+	ps->setTexture(tx);
 	this->addChild(ps);
 
 	//	init matrix

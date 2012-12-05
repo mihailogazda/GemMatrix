@@ -10,6 +10,9 @@
 #define gameX_MainMenu_h
 
 #include <cocos2d.h>
+#include "GameResources.h"
+#include "MainScene.h"
+
 using namespace cocos2d;
 
 class MainMenuScene : public CCLayerColor

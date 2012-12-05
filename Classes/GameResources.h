@@ -61,6 +61,7 @@
 #define IMG_SNOWFLAKE RES_DIRECTORY "snowflake.png"
 
 #define IMG_RED_BACK RES_DIRECTORY BACKS_DIR "blueBG.png"
+#define IMG_SPOOKY RES_DIRECTORY BACKS_DIR "spooky_logo.png"
 
 #define IMG_BUTTON RES_DIRECTORY "button.png"
 
