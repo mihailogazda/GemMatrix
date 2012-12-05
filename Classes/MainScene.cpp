@@ -64,29 +64,53 @@ bool MainScene::initSidebar()
 	char* fontName = "Impact";
 	unsigned int fontSize = 26;	
 
-	int xs = g_width - 70;
+    int gw = 200;
+	int xs = g_width - gw;
 	int ys = g_height - 30;
+    
+    sidebar = CCLayerColor::create(ccc4(255, 255, 255, 100));
+    sidebar->setPosition(ccp(xs, 0));
+    sidebar->setAnchorPoint(ccp(0, 0));
+
+    
+    levelLabel = CCLabelTTF::create("Level 1", fontName, fontSize);
+    levelLabel->setPosition(ccp(gw / 2, g_height - 50));
+    sidebar->addChild(levelLabel);
 
 	//	points won
 	this->pointsCount = 0;
-	pointsLabel = CCLabelTTF::create("0 Points", fontName, fontSize - 6);
-	pointsLabel->setPosition(ccp(xs, ys));
-	this->addChild(pointsLabel);
-
-	ys -= 50;
+	pointsLabel = CCLabelTTF::create("0 Points", fontName, fontSize);
+	pointsLabel->setPosition(ccp(gw / 2, g_height - 100));
+    sidebar->addChild(pointsLabel);
+    
 	this->timerCount = 0;
 	this->timeLabel = CCLabelTTF::create("0s", fontName, fontSize - 6);
-	this->timeLabel->setPosition(ccp(xs, ys));
-	this->addChild(this->timeLabel);
+	this->timeLabel->setPosition(ccp(gw / 2, g_height - 130));
+	sidebar->addChild(this->timeLabel);
 
 	//	game menu
-	ys -= 70;
 	CCMenuItemFont::setFontName(fontName);
 	CCMenuItemFont::setFontSize(fontSize);	
 	CCMenuItemFont* reset = CCMenuItemFont::create("Restart", this, menu_selector(MainScene::handleClickReset));
+    reset->setPosition(ccp(gw / 2, g_height - 200));
+    
 	CCMenu *menu = CCMenu::create(reset, NULL);
-	menu->setPosition(ccp(xs, ys));
-	this->addChild(menu);
+    menu->setPosition(ccp(0, 0));
+    menu->setAnchorPoint(ccp(0, 0));
+	sidebar->addChild(menu);
+    
+    
+    
+    CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(IMG_BUTTON);
+    
+    CCMenuItemSprite *button = CCMenuItemSprite::create(CCSprite::createWithTexture(tex), CCSprite::createWithTexture(tex), this, menu_selector(MainScene::handleUpButton));
+    
+    button->setScale(0.7f);
+    button->setPosition(ccp(gw / 2, 80));
+    menu->addChild(button);
+    
+    
+    this->addChild(sidebar);
 
 	return true;
 }
@@ -102,14 +126,25 @@ void MainScene::handleClickReset(CCObject* sender)
 	sd->replaceScene(t);
 }
 
+void MainScene::handleUpButton(CCObject* sender)
+{
+    CCLog("Handle UP button");
+    this->insertRowFromBottom();
+}
+
 bool MainScene::initTextures()
 {
 	CCSpriteFrameCache *sfc = CCSpriteFrameCache::sharedSpriteFrameCache();	
 	sfc->addSpriteFramesWithFile(IMG_MAIN_TILESET_PLIST);
 
+    // add background
 	CCSprite* sp = CCSprite::create(IMG_RED_BACK);
 	sp->setAnchorPoint(ccp(0, 0));
 	sp->setScale(0.7f);
+    
+    //if (phoneType == IPAD || phoneType == IPAD3)
+    sp->setScale(2.0f);
+    
 	this->addChild(sp);
 	
 	return true;
@@ -124,7 +159,7 @@ void MainScene::initMatrix()
     this->rows = MAX_ROWS;
     this->columns = MAX_COLS;
     
-    if (phoneType == IPAD3)
+    if (phoneType == IPAD3 || phoneType == IPAD)
 	{
         this->rows = MAX_ROWS_IPAD3;
         this->columns = MAX_COLS_IPAD3;
@@ -179,8 +214,8 @@ CCPoint MainScene::positionForElement(int row, int col, bool isSpareRow = false)
 {		
 	CCLOG("positionForElement %dx%d", row, col);
 
-	int xs = 10;
-	int ys = 10;
+	int xs = 30;
+	int ys = 30;
 
 	if (!isSpareRow)
 		ys += GEM_HEIGHT + (GEM_SPACING * 2);
@@ -486,47 +521,57 @@ void MainScene::handleTimeUpdate(float delta)
 	{
 		this->disableTouches = true;
 
-		//	first check if game is ended
-		//	basically if last row is filled then we end
-		for (int i = 0; i < this->columns; i++)
-		{
-			if (this->matrix[this->rows - 1][i] != NULL)
-			{
-				CCLog("EXIT SCENE");
-				CCScene* died = DiedScene::scene();
-				CCDirector::sharedDirector()->replaceScene( CCTransitionFadeBL::create(1, died) );
-				return;
-			}
-		}
-
-		//	now insert from bottom
-		CCGemSprite* tmp[MAX_ROWS][MAX_COLS] = {0};
-
-		for (int i = 0; i < this->columns; i++)					
-			tmp[0][i] = this->spareRow[i];
-
-		int maxColumnHeight = 0;
-		for (int i = 1; i < this->rows; i++)
-		{
-			for (int j = 0; j < this->columns; j++)
-			{
-				tmp[i][j] = this->matrix[i-1][j];
-
-				//	row height check
-				if (tmp[i][j] != NULL)
-				{
-					if (i > maxColumnHeight)
-						maxColumnHeight = i;
-				}
-			}
-		}		
-
-		memcpy(this->matrix, tmp, sizeof(this->matrix));
-		
-		this->redrawMatrix();		
-		
-		this->initSpareRow();
-		this->timerCount = 0;
+        this->insertRowFromBottom();
+    
 		this->disableTouches = false;
 	}
+}
+
+void MainScene::insertRowFromBottom()
+{
+    //	first check if game is ended
+    //	basically if last row is filled then we end
+    for (int i = 0; i < this->columns; i++)
+    {
+        if (this->matrix[this->rows - 1][i] != NULL)
+        {
+            CCLog("EXIT SCENE");
+            CCScene* died = DiedScene::scene();
+            CCDirector::sharedDirector()->replaceScene( CCTransitionFadeBL::create(1, died) );
+            return;
+        }
+    }
+
+    //	now insert from bottom
+    CCGemSprite* tmp[MAX_ROWS][MAX_COLS] = {0};
+
+    for (int i = 0; i < this->columns; i++)
+    {
+        this->spareRow[i]->stopAllActions();
+        this->spareRow[i]->setOpacity(255);
+        tmp[0][i] = this->spareRow[i];
+    }
+
+    int maxColumnHeight = 0;
+    for (int i = 1; i < this->rows; i++)
+    {
+        for (int j = 0; j < this->columns; j++)
+        {
+            tmp[i][j] = this->matrix[i-1][j];
+
+            //	row height check
+            if (tmp[i][j] != NULL)
+            {
+                if (i > maxColumnHeight)
+                    maxColumnHeight = i;
+            }
+        }
+    }		
+
+    memcpy(this->matrix, tmp, sizeof(this->matrix));
+    
+    this->redrawMatrix();		
+    
+    this->initSpareRow();
+    this->timerCount = 0;
 }

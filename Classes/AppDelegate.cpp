@@ -58,7 +58,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 	//	enable 2x pixel 
 	if (phoneType == IPAD3 || phoneType == IPHONE4)
 	{
-		pDirector->enableRetinaDisplay(true);
+		//pDirector->enableRetinaDisplay(true);
+        //pDirector->re`
+        
 		retina = true;
 	}
 		

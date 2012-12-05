@@ -10,7 +10,7 @@
 #define MAX_ROWS			20
 
 
-#define MAX_COLS_IPAD3		12
+#define MAX_COLS_IPAD3		14
 #define MAX_ROWS_IPAD3		10
 
 #define MAX_COLS_WINDOWS	12
@@ -42,8 +42,10 @@
 //
 #ifdef __MACH__
     #define RES_DIRECTORY "./"
+    #define BACKS_DIR ""
 #else
     #define RES_DIRECTORY "Resources\\"
+    #define BACKS_DIR "backs\\"
 #endif
 
 
@@ -58,6 +60,8 @@
 
 #define IMG_SNOWFLAKE RES_DIRECTORY "snowflake.png"
 
-#define IMG_RED_BACK	RES_DIRECTORY "backs\\pageBackground.jpg"
+#define IMG_RED_BACK RES_DIRECTORY BACKS_DIR "blueBG.png"
+
+#define IMG_BUTTON RES_DIRECTORY "button.png"
 
 #endif

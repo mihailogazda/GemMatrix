@@ -25,7 +25,10 @@ private:
 
 	CCLabelTTF* pointsLabel;
 	CCLabelTTF* timeLabel;
-
+    CCLabelTTF* levelLabel;
+    
+    CCLayerColor* sidebar;
+    
 	bool initTextures();
 
 	//	game matrix we are going to use    
@@ -47,6 +50,8 @@ private:
 	bool initSidebar();
 
 	void handleTimeUpdate(float delta);
+    
+    void handleUpButton(CCObject* sender);
 
 public:
 
@@ -72,6 +77,7 @@ public:
 	void redrawSpareRow();
 
 	void reorganizeMatrix();
+    void insertRowFromBottom();
 
 	//	dont know what this is
 	CREATE_FUNC(MainScene);
