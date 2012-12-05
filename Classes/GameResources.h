@@ -58,6 +58,6 @@
 
 #define IMG_SNOWFLAKE RES_DIRECTORY "snowflake.png"
 
-#define IMG_RED_BACK	RES_DIRECTORY "backs\\red_back.png"
+#define IMG_RED_BACK	RES_DIRECTORY "backs\\pageBackground.jpg"
 
 #endif
