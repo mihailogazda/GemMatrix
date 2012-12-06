@@ -53,6 +53,8 @@ bool MainScene::init()
     this->pointsCount = 0;
     this->timerCount = 0;
 
+	this->wasInit = false;
+
 	this->schedule(schedule_selector(MainScene::handleTimeUpdate), 1);
     
 	return true;
@@ -192,28 +194,7 @@ bool MainScene::initTextures()
     else
         back->setScale(2.0f);
     
-	this->addChild(back);
-    
-    //  move background too
-    CCEaseBackInOut* b1 = CCEaseBackInOut::create(CCMoveBy::create(10, ccp(-30, -15)));
-    CCEaseBackInOut* b2 = CCEaseBackInOut::create(CCMoveBy::create(10, ccp(+30, +15)));
-    int ws = 2;
-    int ws2 = 2.4;
-    if (phoneType == IPAD3)
-    {
-        ws = 4;
-        ws2 = 5.6;
-    }
-    
-    CCEaseBackInOut* b3 = CCEaseBackInOut::create(CCScaleTo::create(10, ws, ws2));
-    CCEaseBackInOut* b4 = CCEaseBackInOut::create(CCScaleTo::create(10, ws, ws));
-    
-    CCSequence* bs1 = CCSequence::createWithTwoActions(b1, b2);
-    CCSequence* bs2 = CCSequence::createWithTwoActions(b3, b4);
-    
-    back->runAction(CCRepeatForever::create(bs1));
-    back->runAction(CCRepeatForever::create(bs2));    
-	
+	this->addChild(back);   	
 	return true;
 }
 
@@ -577,7 +558,7 @@ void MainScene::handleTimeUpdate(float delta)
 	//	check for new element insertion
 	this->timerCount++;
 
-	char tmp[100];
+	char tmp[100] = {0};
 	sprintf(tmp, "%ds", this->timerCount);
 	this->timeLabel->setString(tmp);
 
