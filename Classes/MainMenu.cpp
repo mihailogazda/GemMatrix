@@ -44,11 +44,16 @@ bool MainMenuScene::init()
     back->setAnchorPoint(ccp(0, 0));
     
     back->setScale(2.0f);
+    if (phoneType == IPAD3)
+        back->setScale(4);
+    
     this->addChild(back);
     
     g_width = CCDirector::sharedDirector()->getWinSize().width;
     g_height = CCDirector::sharedDirector()->getWinSize().height;
     
+    int fontSize = (phoneType == IPAD3 || phoneType == IPHONE4) ? 52 : 26;
+    CCMenuItemFont::setFontSize(fontSize);
     
     //  menu
     CCMenuItemSprite* l = CCMenuItemSprite::create(CCSprite::createWithTexture(logo), CCSprite::createWithTexture(logo));
@@ -84,8 +89,16 @@ bool MainMenuScene::init()
     CCEaseBackInOut* b1 = CCEaseBackInOut::create(CCMoveBy::create(10, ccp(-30, -15)));
     CCEaseBackInOut* b2 = CCEaseBackInOut::create(CCMoveBy::create(10, ccp(+30, +15)));
     
-    CCEaseBackInOut* b3 = CCEaseBackInOut::create(CCScaleTo::create(10, 2.0, 2.4));
-    CCEaseBackInOut* b4 = CCEaseBackInOut::create(CCScaleTo::create(10, 2.0, 2.0));
+    int ws = 2;
+    int ws2 = 2.4;
+    if (phoneType == IPAD3)
+    {
+        ws = 4;
+        ws2 = 5.6;
+    }
+    
+    CCEaseBackInOut* b3 = CCEaseBackInOut::create(CCScaleTo::create(10, ws, ws2));
+    CCEaseBackInOut* b4 = CCEaseBackInOut::create(CCScaleTo::create(10, ws, ws));
     
     CCSequence* bs1 = CCSequence::createWithTwoActions(b1, b2);
     CCSequence* bs2 = CCSequence::createWithTwoActions(b3, b4);

@@ -88,11 +88,13 @@ bool MainScene::initSidebar()
 	int xs = g_width;
 	int ys = g_height - 30;
     
+    if (phoneType == IPAD3 || phoneType == IPHONE4)
+        gw *= 2;
+    
     sidebar = CCLayerColor::create(ccc4(255, 255, 255, 100));
     sidebar->setPosition(ccp(xs, 0));
     sidebar->setAnchorPoint(ccp(0, 0));
 
-    
     levelLabel = CCLabelTTF::create("Level 1", fontName, fontSize);
     levelLabel->setPosition(ccp(gw / 2, g_height - 50));
     sidebar->addChild(levelLabel);
@@ -100,12 +102,12 @@ bool MainScene::initSidebar()
 	//	points won
 	this->pointsCount = 0;
 	pointsLabel = CCLabelTTF::create("0 Points", fontName, fontSize);
-	pointsLabel->setPosition(ccp(gw / 2, g_height - 100));
+	pointsLabel->setPosition(ccp(gw / 2, g_height - 120));
     sidebar->addChild(pointsLabel);
     
 	this->timerCount = 0;
 	this->timeLabel = CCLabelTTF::create("0s", fontName, fontSize - 6);
-	this->timeLabel->setPosition(ccp(gw / 2, 80));
+	this->timeLabel->setPosition(ccp(gw / 2, 120));
 	sidebar->addChild(this->timeLabel, 1);
     
 
@@ -113,10 +115,10 @@ bool MainScene::initSidebar()
 	CCMenuItemFont::setFontName(fontName);
 	CCMenuItemFont::setFontSize(fontSize);	
 	CCMenuItemFont* reset = CCMenuItemFont::create("Restart", this, menu_selector(MainScene::handleClickReset));
-    reset->setPosition(ccp(gw / 2, g_height - 200));
+    reset->setPosition(ccp(gw / 2, g_height - 300));
     
     CCMenuItemFont* mainMenu = CCMenuItemFont::create("Menu", this, menu_selector(MainScene::handleClickMenu));
-    mainMenu->setPosition(ccp(gw / 2, g_height - 250));
+    mainMenu->setPosition(ccp(gw / 2, g_height - 370));
     
 	CCMenu *menu = CCMenu::create(reset, mainMenu, NULL);
     menu->setPosition(ccp(0, 0));
@@ -126,11 +128,14 @@ bool MainScene::initSidebar()
     
     //  now button
     CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(IMG_BUTTON);
-    
     CCMenuItemSprite *button = CCMenuItemSprite::create(CCSprite::createWithTexture(tex), CCSprite::createWithTexture(tex), this, menu_selector(MainScene::handleUpButton));
     
-    button->setScale(0.7f);
-    button->setPosition(ccp(gw / 2, 80));
+    if (phoneType == IPAD3)
+        button->setScale(1.4f);
+    else
+        button->setScale(0.7f);
+    
+    button->setPosition(ccp(gw / 2, 120));
     menu->addChild(button);
     
     this->addChild(sidebar);
@@ -414,7 +419,7 @@ void MainScene::checkForBonus()
 		this->pointsCount += bonusWon;
 
 		char bonusText[100] = "";
-		sprintf(bonusText, "%d BONUS POINTS!!!", bonusWon);
+		sprintf(bonusText, "%d BONUS POINTS!", bonusWon);
 		/*
 		if (bonus <= 3)
 			sprintf(bonusText, "GREAT!");

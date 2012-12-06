@@ -43,15 +43,18 @@ bool DiedScene::init()
     back->setScale(2.0f);
     this->addChild(back);    
 
-	CCLabelTTF *loser = CCLabelTTF::create("You loose!", "Impact", 36);
+    int fontSize = (phoneType == IPAD3 || phoneType == IPHONE4) ? 72 : 36;
+	CCLabelTTF *loser = CCLabelTTF::create("You loose!", "Impact", fontSize);
 	loser->setPosition(ccp(xs, ys));	
 	this->addChild(loser);	
 	
-	CCMenuItemFont::setFontSize(20);
+    fontSize = (phoneType == IPAD3 || phoneType == IPHONE4) ? 52 : 26;
+    CCMenuItemFont::setFontSize(fontSize);
+    
 	CCMenuItemFont *backb = CCMenuItemFont::create("Back to the game", this, menu_selector(DiedScene::backButton));
 	CCMenu *menu = CCMenu::create(backb, NULL);
 
-	ys -= 80;
+	ys -= 120;
 	menu->setPosition(ccp(xs, ys));
 				
 	this->addChild(menu);
