@@ -24,6 +24,8 @@ private:
 	int timerCount;
     int totalTime;
 
+	CCProgressTimer *timeProgress;
+
 	CCLabelTTF* pointsLabel;
 	CCLabelTTF* timeLabel;
     CCLabelTTF* levelLabel;

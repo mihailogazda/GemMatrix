@@ -46,7 +46,7 @@ bool DiedScene::init()
     int fontSize = (phoneType == IPAD3 || phoneType == IPHONE4) ? 72 : 36;
 	CCLabelTTF *loser = CCLabelTTF::create("You loose!", "Impact", fontSize);
 	loser->setPosition(ccp(xs, ys));	
-	this->addChild(loser);	
+	this->addChild(loser);
 	
     fontSize = (phoneType == IPAD3 || phoneType == IPHONE4) ? 52 : 26;
     CCMenuItemFont::setFontSize(fontSize);
@@ -54,7 +54,10 @@ bool DiedScene::init()
 	CCMenuItemFont *backb = CCMenuItemFont::create("Back to the game", this, menu_selector(DiedScene::backButton));
 	CCMenu *menu = CCMenu::create(backb, NULL);
 
-	ys -= 120;
+	ys -= 80;
+	if (phoneType == IPAD3)
+		ys -= 40;
+
 	menu->setPosition(ccp(xs, ys));
 				
 	this->addChild(menu);

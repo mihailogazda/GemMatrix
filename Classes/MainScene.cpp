@@ -107,20 +107,22 @@ bool MainScene::initSidebar()
     sidebar->setPosition(ccp(xs, 0));
     sidebar->setAnchorPoint(ccp(0, 0));
 
-    levelLabel = CCLabelTTF::create("Level 1", fontName, fontSize);
-    levelLabel->setPosition(ccp(gw / 2, g_height - 50));
+	char tmp[100];
+	sprintf(tmp, "Level %d", currentLevel + 1);
+
+    levelLabel = CCLabelTTF::create(tmp, fontName, fontSize);
+    levelLabel->setPosition(ccp(gw / 2, g_height - 30));
     sidebar->addChild(levelLabel);
 
 	//	points won	
 	pointsLabel = CCLabelTTF::create("0 Points", fontName, fontSize);
-	pointsLabel->setPosition(ccp(gw / 2, g_height - 120));
+	pointsLabel->setPosition(ccp(gw / 2, g_height - 80));
     sidebar->addChild(pointsLabel);
     
 	//	Timer for new row
 	this->timeLabel = CCLabelTTF::create("0s", fontName, fontSize - 6);
 	this->timeLabel->setPosition(ccp(gw / 2, buttonStart));
-	sidebar->addChild(this->timeLabel, 1);
-    
+	sidebar->addChild(this->timeLabel, 1);    
 
 	//	game menu
 	CCMenuItemFont::setFontName(fontName);
@@ -135,6 +137,20 @@ bool MainScene::initSidebar()
     menu->setPosition(ccp(0, 0));
     menu->setAnchorPoint(ccp(0, 0));
 	sidebar->addChild(menu);
+
+	//	add clock
+	CCSprite* clockBack = CCSprite::create(IMG_CLOCK);
+	clockBack->setScale(0.2);
+	CCPoint clockPos = ccp(gw / 2, g_height - 200);
+	clockBack->setPosition(clockPos);
+	sidebar->addChild(clockBack);
+
+	this->timeProgress = CCProgressTimer::create(CCSprite::create(IMG_CLOCK_FORE));
+	this->timeProgress->setPosition(clockPos);
+	this->timeProgress->setScale(0.2);
+	this->timeProgress->setType(CCProgressTimerType::kCCProgressTimerTypeRadial);
+	this->timeProgress->setPercentage(0);
+	sidebar->addChild(timeProgress, 1);
     
     
     //  now button
@@ -559,6 +575,12 @@ void MainScene::handleTimeUpdate(float delta)
         this->postInit();
         this->wasInit = true;
     }
+
+	this->totalTime++;
+	float max = GAME_LEVELS[currentLevel].timeout;
+	float perc =  (this->totalTime / max) * 100 ;
+	CCLog("Percentage is %f (%d of %d)", perc, this->totalTime, max);
+	this->timeProgress->setPercentage(perc);
 
 	//	check for new element insertion
 	this->timerCount--;

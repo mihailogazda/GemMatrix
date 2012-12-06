@@ -67,4 +67,7 @@
 #define IMG_SPOOKY RES_DIRECTORY "spooky_logo.png"
 #define IMG_BUTTON RES_DIRECTORY "button.png"
 
+#define IMG_CLOCK	RES_DIRECTORY "clock.png"
+#define IMG_CLOCK_FORE	RES_DIRECTORY "clock_fore.png"
+
 #endif
