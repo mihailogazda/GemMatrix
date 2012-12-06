@@ -39,6 +39,10 @@ bool MainScene::init()
 	CCParticleSnow *ps = CCParticleSnow::create();
 	CCTexture2D *tx = CCTextureCache::sharedTextureCache()->addImage(IMG_SNOWFLAKE);
 	ps->setTexture(tx);
+    
+    if (phoneType == IPAD3)
+        ps->setScale(2.0f);
+    
 	this->addChild(ps);
 
 	//	init matrix
