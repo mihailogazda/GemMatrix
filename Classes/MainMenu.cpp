@@ -55,10 +55,14 @@ bool MainMenuScene::init()
     int fontSize = (phoneType == IPAD3 || phoneType == IPHONE4) ? 52 : 26;
     CCMenuItemFont::setFontSize(fontSize);
     
-    //  menu
+    
+	//logo
     CCMenuItemSprite* l = CCMenuItemSprite::create(CCSprite::createWithTexture(logo), CCSprite::createWithTexture(logo));
     l->setPosition(ccp(g_width / 2, g_height /2 + 100));
+	this->addChild(l);
     
+	//  menu
+	CCMenuItemFont::setFontName("Impact");
     CCMenuItemFont *play = CCMenuItemFont::create("Play now", this, menu_selector(MainMenuScene::PlayButton));
     play->setPosition(ccp(g_width / 2, g_height /2 - 100));
     
@@ -68,7 +72,7 @@ bool MainMenuScene::init()
     CCMenuItemFont* credits = CCMenuItemFont::create("Credits");
     credits->setPosition(ccp(g_width / 2, g_height / 2 - 220));
     
-    CCMenu *menu = CCMenu::create(play, options, credits, l, NULL);
+    CCMenu *menu = CCMenu::create(play, options, credits, NULL);
     menu->setPosition(ccp(0, 0));
     menu->setAnchorPoint(ccp(0, 0));
     

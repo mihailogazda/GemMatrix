@@ -93,9 +93,15 @@ bool MainScene::initSidebar()
     int gw = 200;
 	int xs = g_width;
 	int ys = g_height - 30;
+
+	int buttonStart = 120;
     
     if (phoneType == IPAD3 || phoneType == IPHONE4)
         gw *= 2;
+	
+#ifdef _WINDOWS
+		buttonStart = 70;
+#endif
     
     sidebar = CCLayerColor::create(ccc4(255, 255, 255, 100));
     sidebar->setPosition(ccp(xs, 0));
@@ -113,7 +119,7 @@ bool MainScene::initSidebar()
     
 	this->timerCount = 0;
 	this->timeLabel = CCLabelTTF::create("0s", fontName, fontSize - 6);
-	this->timeLabel->setPosition(ccp(gw / 2, 120));
+	this->timeLabel->setPosition(ccp(gw / 2, buttonStart));
 	sidebar->addChild(this->timeLabel, 1);
     
 
@@ -124,7 +130,7 @@ bool MainScene::initSidebar()
     reset->setPosition(ccp(gw / 2, g_height - 300));
     
     CCMenuItemFont* mainMenu = CCMenuItemFont::create("Menu", this, menu_selector(MainScene::handleClickMenu));
-    mainMenu->setPosition(ccp(gw / 2, g_height - 370));
+    mainMenu->setPosition(ccp(gw / 2, g_height - 350));
     
 	CCMenu *menu = CCMenu::create(reset, mainMenu, NULL);
     menu->setPosition(ccp(0, 0));
@@ -141,7 +147,7 @@ bool MainScene::initSidebar()
     else
         button->setScale(0.7f);
     
-    button->setPosition(ccp(gw / 2, 120));
+	button->setPosition(ccp(gw / 2, buttonStart));
     menu->addChild(button);
     
     this->addChild(sidebar);
