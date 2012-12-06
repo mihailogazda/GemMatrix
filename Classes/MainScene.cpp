@@ -184,14 +184,35 @@ bool MainScene::initTextures()
 	sfc->addSpriteFramesWithFile(IMG_MAIN_TILESET_PLIST);
 
     // add background
-	CCSprite* sp = CCSprite::create(IMG_BLUE_BACK);
-	sp->setAnchorPoint(ccp(0, 0));
-	sp->setScale(0.7f);
+	CCSprite* back = CCSprite::create(IMG_BLUE_BACK);
+	back->setAnchorPoint(ccp(0, 0));
     
-    //if (phoneType == IPAD || phoneType == IPAD3)
-    sp->setScale(2.0f);
+    if ( phoneType == IPAD3)
+        back->setScale(4.0f);
+    else
+        back->setScale(2.0f);
     
-	this->addChild(sp);
+	this->addChild(back);
+    
+    //  move background too
+    CCEaseBackInOut* b1 = CCEaseBackInOut::create(CCMoveBy::create(10, ccp(-30, -15)));
+    CCEaseBackInOut* b2 = CCEaseBackInOut::create(CCMoveBy::create(10, ccp(+30, +15)));
+    int ws = 2;
+    int ws2 = 2.4;
+    if (phoneType == IPAD3)
+    {
+        ws = 4;
+        ws2 = 5.6;
+    }
+    
+    CCEaseBackInOut* b3 = CCEaseBackInOut::create(CCScaleTo::create(10, ws, ws2));
+    CCEaseBackInOut* b4 = CCEaseBackInOut::create(CCScaleTo::create(10, ws, ws));
+    
+    CCSequence* bs1 = CCSequence::createWithTwoActions(b1, b2);
+    CCSequence* bs2 = CCSequence::createWithTwoActions(b3, b4);
+    
+    back->runAction(CCRepeatForever::create(bs1));
+    back->runAction(CCRepeatForever::create(bs2));    
 	
 	return true;
 }
