@@ -51,7 +51,7 @@ bool MainScene::init()
     
     this->totalTime = 0;
     this->pointsCount = 0;
-    this->timerCount = 0;
+	this->timerCount = GAME_LEVELS[currentLevel].insertRowTime;
 
 	this->wasInit = false;
 
@@ -111,13 +111,12 @@ bool MainScene::initSidebar()
     levelLabel->setPosition(ccp(gw / 2, g_height - 50));
     sidebar->addChild(levelLabel);
 
-	//	points won
-	this->pointsCount = 0;
+	//	points won	
 	pointsLabel = CCLabelTTF::create("0 Points", fontName, fontSize);
 	pointsLabel->setPosition(ccp(gw / 2, g_height - 120));
     sidebar->addChild(pointsLabel);
     
-	this->timerCount = 0;
+	//	Timer for new row
 	this->timeLabel = CCLabelTTF::create("0s", fontName, fontSize - 6);
 	this->timeLabel->setPosition(ccp(gw / 2, buttonStart));
 	sidebar->addChild(this->timeLabel, 1);
@@ -562,22 +561,21 @@ void MainScene::handleTimeUpdate(float delta)
     }
 
 	//	check for new element insertion
-	this->timerCount++;
+	this->timerCount--;
 
 	char tmp[100] = {0};
 	sprintf(tmp, "%ds", this->timerCount);
 	this->timeLabel->setString(tmp);
 
 	int secTillReset = GAME_LEVELS[currentLevel].insertRowTime;
-	float fade = SPARE_ROW_FADE_START + this->timerCount * (SPARE_ROW_FADE_END / secTillReset);
+	float fade = SPARE_ROW_FADE_START + (255 - this->timerCount * (SPARE_ROW_FADE_END / secTillReset));	
 	if (fade > SPARE_ROW_FADE_END)
 		fade = SPARE_ROW_FADE_END;
-
 
 	for (int i = 0; i < this->columns; i++)
 		this->spareRow[i]->runAction( CCFadeTo::create(1, fade) );
 
-	if (this->timerCount >= secTillReset)
+	if (this->timerCount == 0)
 	{
 		this->disableTouches = true;
 
@@ -633,5 +631,5 @@ void MainScene::insertRowFromBottom()
     this->redrawMatrix();		
     
     this->initSpareRow();
-    this->timerCount = 0;
+	this->timerCount = GAME_LEVELS[currentLevel].insertRowTime;
 }
