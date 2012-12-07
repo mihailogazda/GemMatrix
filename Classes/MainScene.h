@@ -29,7 +29,8 @@ private:
 	CCLabelTTF* pointsLabel;
 	CCLabelTTF* timeLabel;
     CCLabelTTF* levelLabel;
-    
+
+	CCLayer* gameContent;
     CCLayerColor* sidebar;
     
 	bool initTextures();
@@ -55,14 +56,16 @@ private:
 	bool initSidebar();
 
 	void handleTimeUpdate(float delta);
-    void handleUpButton(CCObject* sender);
+    void handleClickUp(CCObject* sender);
+
+	bool isPaused;
+	void handleClickPause(CCObject* sender);
 
 public:
 
     bool wasInit;
 	virtual bool init();
-    void postInit();
-    virtual void onEnter();
+    void postInit();    
 
 	static CCScene* scene();
 

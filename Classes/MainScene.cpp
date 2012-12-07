@@ -48,13 +48,22 @@ bool MainScene::init()
 	//	init matrix
 	memset(this->matrix, 0, sizeof(this->matrix));
 	memset(this->spareRow, 0, sizeof(this->spareRow));
+
+	//	init game content layer
+	this->gameContent = CCLayer::create();
+	this->gameContent->setPosition(ccp(0, 0));
+	this->gameContent->setAnchorPoint(ccp(0, 0));
+	this->addChild(this->gameContent, 1);
     
+	//	set points and such
     this->totalTime = 0;
     this->pointsCount = 0;
 	this->timerCount = GAME_LEVELS[currentLevel].insertRowTime;
 
 	this->wasInit = false;
+	this->isPaused = false;
 
+	//	scheduel ticker
 	this->schedule(schedule_selector(MainScene::handleTimeUpdate), 1);
     
 	return true;
@@ -76,102 +85,6 @@ void MainScene::postInit()
 
 }
 
-void MainScene::onEnter()
-{
-    CCLayer::onEnter();
-    CCLog("OnEnter()");
-}
-
-bool MainScene::initSidebar()
-{
-	char* fontName = "Impact";
-	unsigned int fontSize = 26;
-    
-    if (phoneType == IPAD3 || phoneType == IPHONE4)
-        fontSize *= 2;
-
-    int gw = 200;
-	int xs = g_width;
-	int ys = g_height - 30;
-
-	int buttonStart = 120;
-    
-    if (phoneType == IPAD3 || phoneType == IPHONE4)
-        gw *= 2;
-	
-#ifdef _WINDOWS
-		buttonStart = 70;
-#endif
-    
-    sidebar = CCLayerColor::create(ccc4(255, 255, 255, 100));
-    sidebar->setPosition(ccp(xs, 0));
-    sidebar->setAnchorPoint(ccp(0, 0));
-
-	char tmp[100];
-	sprintf(tmp, "Level %d", currentLevel + 1);
-
-    levelLabel = CCLabelTTF::create(tmp, fontName, fontSize);
-    levelLabel->setPosition(ccp(gw / 2, g_height - 30));
-    sidebar->addChild(levelLabel);
-
-	//	points won	
-	pointsLabel = CCLabelTTF::create("0 Points", fontName, fontSize);
-	pointsLabel->setPosition(ccp(gw / 2, g_height - 80));
-    sidebar->addChild(pointsLabel);
-    
-	//	Timer for new row
-	this->timeLabel = CCLabelTTF::create("0s", fontName, fontSize - 6);
-	this->timeLabel->setPosition(ccp(gw / 2, buttonStart));
-	sidebar->addChild(this->timeLabel, 1);    
-
-	//	game menu
-	CCMenuItemFont::setFontName(fontName);
-	CCMenuItemFont::setFontSize(fontSize);	
-	CCMenuItemFont* reset = CCMenuItemFont::create("Restart", this, menu_selector(MainScene::handleClickReset));
-    reset->setPosition(ccp(gw / 2, g_height - 300));
-    
-    CCMenuItemFont* mainMenu = CCMenuItemFont::create("Menu", this, menu_selector(MainScene::handleClickMenu));
-    mainMenu->setPosition(ccp(gw / 2, g_height - 350));
-    
-	CCMenu *menu = CCMenu::create(reset, mainMenu, NULL);
-    menu->setPosition(ccp(0, 0));
-    menu->setAnchorPoint(ccp(0, 0));
-	sidebar->addChild(menu);
-
-	//	add clock
-	CCSprite* clockBack = CCSprite::create(IMG_CLOCK);
-	clockBack->setScale(0.2);
-	CCPoint clockPos = ccp(gw / 2, g_height - 200);
-	clockBack->setPosition(clockPos);
-	sidebar->addChild(clockBack);
-
-	this->timeProgress = CCProgressTimer::create(CCSprite::create(IMG_CLOCK_FORE));
-	this->timeProgress->setPosition(clockPos);
-	this->timeProgress->setScale(0.2);
-	this->timeProgress->setType(CCProgressTimerType::kCCProgressTimerTypeRadial);
-	this->timeProgress->setPercentage(0);
-	sidebar->addChild(timeProgress, 1);
-    
-    
-    //  now button
-    CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(IMG_BUTTON);
-    CCMenuItemSprite *button = CCMenuItemSprite::create(CCSprite::createWithTexture(tex), CCSprite::createWithTexture(tex), this, menu_selector(MainScene::handleUpButton));
-    
-    if (phoneType == IPAD3)
-        button->setScale(1.4f);
-    else
-        button->setScale(0.7f);
-    
-	button->setPosition(ccp(gw / 2, buttonStart));
-    menu->addChild(button);
-    
-    this->addChild(sidebar);
-    
-    sidebar->runAction(CCEaseBounceOut::create(CCMoveBy::create(1, ccp(-gw, 0))));
-
-	return true;
-}
-
 void MainScene::handleClickReset(CCObject* sender)
 {
 	CCLog("Reset click");
@@ -186,7 +99,7 @@ void MainScene::handleClickReset(CCObject* sender)
 	sd->replaceScene(t);
 }
 
-void MainScene::handleUpButton(CCObject* sender)
+void MainScene::handleClickUp(CCObject* sender)
 {
     CCLog("Handle UP button");
     this->insertRowFromBottom();
@@ -199,6 +112,21 @@ void MainScene::handleClickMenu(CCObject* sender)
     CCScene* sc = CCTransitionFadeBL::create(1, MainMenuScene::scene());
     CCDirector::sharedDirector()->replaceScene(sc);
     //CCDirector::sharedDirector()->popScene();
+}
+
+void MainScene::handleClickPause(CCObject* sender)
+{
+	CCLog("Pause click");
+	if (!this->isPaused)
+	{
+		CCDirector::sharedDirector()->pause();
+	}
+	else
+	{
+		CCDirector::sharedDirector()->resume();
+	}
+
+	this->isPaused = !this->isPaused;
 }
 
 bool MainScene::initTextures()
@@ -250,7 +178,7 @@ void MainScene::initMatrix()
 				CCGemSprite* gs = CCGemSprite::create();
 				gs->setAnchorPoint(ccp(0, 0));			
 				this->matrix[i][j] = gs;
-				this->addChild(gs);
+				this->gameContent->addChild(gs);
 			}
 		}
 	}
@@ -273,14 +201,113 @@ void MainScene::initSpareRow()
 		this->spareRow[i] = gs;		
 		gs->setAnchorPoint(ccp(0, 0));
 		gs->setOpacity(SPARE_ROW_FADE_START);
-		this->addChild(gs);
+		this->gameContent->addChild(gs);
 	}
 
 	this->redrawSpareRow();
 }
 
+bool MainScene::initSidebar()
+{
+	char* fontName = "Impact";
+	unsigned int fontSize = 26;
+    
+    if (phoneType == IPAD3 || phoneType == IPHONE4)
+        fontSize *= 2;
+
+    int gw = 200;
+	int xs = g_width;
+	int ys = g_height - 30;
+
+	int buttonStart = 120;
+    
+    if (phoneType == IPAD3 || phoneType == IPHONE4)
+        gw *= 2;
+	
+#ifdef _WINDOWS
+		buttonStart = 70;
+#endif
+    
+    sidebar = CCLayerColor::create(ccc4(255, 255, 255, 100));
+    sidebar->setPosition(ccp(xs, 0));
+    sidebar->setAnchorPoint(ccp(0, 0));
+
+	char tmp[100];
+	sprintf(tmp, "Level %d", currentLevel + 1);
+
+    levelLabel = CCLabelTTF::create(tmp, fontName, fontSize);
+    levelLabel->setPosition(ccp(gw / 2, g_height - 30));
+    sidebar->addChild(levelLabel);
+
+	//	points won	
+	pointsLabel = CCLabelTTF::create("0 Points", fontName, fontSize);
+	pointsLabel->setPosition(ccp(gw / 2, g_height - 80));
+    sidebar->addChild(pointsLabel);
+    
+	//	Timer for new row
+	this->timeLabel = CCLabelTTF::create("0s", fontName, fontSize - 6);
+	this->timeLabel->setPosition(ccp(gw / 2, buttonStart));
+	sidebar->addChild(this->timeLabel, 1);    
+
+	short menuItemX = gw / 2;
+	short menuItemStart = g_height - 270;
+
+	//	game menu
+	CCMenuItemFont::setFontName(fontName);
+	CCMenuItemFont::setFontSize(fontSize);	
+
+	CCMenuItemFont* pause =  CCMenuItemFont::create("Pause", this, menu_selector(MainScene::handleClickPause));
+	pause->setPosition(ccp(menuItemX, menuItemStart));
+
+	menuItemStart -= 50;
+	CCMenuItemFont* reset = CCMenuItemFont::create("Restart", this, menu_selector(MainScene::handleClickReset));
+	reset->setPosition(ccp(menuItemX, menuItemStart));
+    
+	menuItemStart -= 50;
+    CCMenuItemFont* mainMenu = CCMenuItemFont::create("Menu", this, menu_selector(MainScene::handleClickMenu));
+    mainMenu->setPosition(ccp(menuItemX, menuItemStart));
+    
+	CCMenu *menu = CCMenu::create(pause, reset, mainMenu, NULL);
+    menu->setPosition(ccp(0, 0));
+    menu->setAnchorPoint(ccp(0, 0));
+	sidebar->addChild(menu);
+
+	//	add clock
+	CCSprite* clockBack = CCSprite::create(IMG_CLOCK);
+	clockBack->setScale(0.2f);
+	CCPoint clockPos = ccp(menuItemX, g_height - 180);
+	clockBack->setPosition(clockPos);
+	sidebar->addChild(clockBack);
+
+	this->timeProgress = CCProgressTimer::create(CCSprite::create(IMG_CLOCK_FORE));
+	this->timeProgress->setPosition(clockPos);
+	this->timeProgress->setScale(0.2f);
+	this->timeProgress->setType(kCCProgressTimerTypeRadial);
+	this->timeProgress->setPercentage(0);
+	sidebar->addChild(timeProgress, 1);
+    
+    
+    //  now button
+    CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(IMG_BUTTON);
+	CCMenuItemSprite *button = CCMenuItemSprite::create(CCSprite::createWithTexture(tex), CCSprite::createWithTexture(tex), this, menu_selector(MainScene::handleClickUp));
+    
+    if (phoneType == IPAD3)
+        button->setScale(1.4f);
+    else
+        button->setScale(0.7f);
+    
+	button->setPosition(ccp(gw / 2, buttonStart));
+    menu->addChild(button);
+    
+    this->addChild(sidebar);
+    
+    sidebar->runAction(CCEaseBounceOut::create(CCMoveBy::create(1, ccp(-gw, 0))));
+
+	return true;
+}
+
 CCPoint MainScene::positionForElement(int row, int col, bool isSpareRow = false)
-{		
+{
 	CCLOG("positionForElement %dx%d", row, col);
 
 	int xs = 30;

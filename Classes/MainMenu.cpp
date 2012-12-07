@@ -8,6 +8,8 @@
 
 #include "MainMenu.h"
 
+#pragma warning (push)
+#pragma warning (disable: 4305)
 
 extern int g_width;
 extern int g_height;
@@ -120,3 +122,5 @@ void MainMenuScene::PlayButton(CCObject* sender)
     CCDirector::sharedDirector()->pushScene(CCTransitionFadeBL::create(1, MainScene::scene()));
     
 }
+
+#pragma warning (pop)
