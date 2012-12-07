@@ -12,8 +12,8 @@ static const char* g_gemNames[] =
 {
 	"Gem Blue.png",
 	"Gem Orange.png",
-	"Gem Green.png",
-    "Rock.png"
+	"Gem Green.png"//,
+    //"Rock.png"
 	/*,	"Rock.png"*/
 };
 

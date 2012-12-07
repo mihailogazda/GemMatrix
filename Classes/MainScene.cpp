@@ -120,6 +120,11 @@ void MainScene::handleClickPause(CCObject* sender)
 	if (!this->isPaused)
 	{
 		CCDirector::sharedDirector()->pause();
+		if (!this->pauseLayer)
+		{
+			this->pauseLayer = CCLayer::create();
+			this->addChild(pauseLayer);
+		}
 	}
 	else
 	{
@@ -223,6 +228,11 @@ bool MainScene::initSidebar()
     
     if (phoneType == IPAD3 || phoneType == IPHONE4)
         gw *= 2;
+
+	//	set size of game content (minus right bar)
+	CCSize s = this->getContentSize();
+	s.width -= gw;
+	this->gameContent->setContentSize(s);
 	
 #ifdef _WINDOWS
 		buttonStart = 70;
@@ -486,9 +496,9 @@ void MainScene::checkForBonus()
 		*/
 		
 		CCLabelTTF* bonusLabel = CCLabelTTF::create(bonusText, "Impact", 32);
-		bonusLabel->setPosition(ccp(g_width / 2, g_height / 2));
+		bonusLabel->setPosition(ccp(gameContent->getContentSize().width / 2, g_height / 2));
 		bonusLabel->setOpacity(0);
-		this->addChild(bonusLabel);
+		gameContent->addChild(bonusLabel, 2);
 
 		bonusLabel->runAction(CCSequence::create(
 			CCFadeTo::create(0.2f, 255), 
