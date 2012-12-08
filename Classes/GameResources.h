@@ -9,13 +9,11 @@
 #define MAX_COLS			20
 #define MAX_ROWS			20
 
-
 #define MAX_COLS_IPAD3		14
 #define MAX_ROWS_IPAD3		10
 
 #define MAX_COLS_WINDOWS	12
 #define MAX_ROWS_WINDOWS	9
-
 
 //	
 //	GEM SIZES AND OPACITY
@@ -44,7 +42,7 @@
     #define RES_DIRECTORY "./"
     #define BACKS_DIR ""
 #else
-    #define RES_DIRECTORY "Resources\\"
+    #define RES_DIRECTORY "..\\..\\Resources\\"
     #define BACKS_DIR "backs\\"
 #endif
 
