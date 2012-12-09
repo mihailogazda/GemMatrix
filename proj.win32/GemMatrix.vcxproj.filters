@@ -36,6 +36,9 @@
     <ClCompile Include="..\Classes\MainScene.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\NextScene.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -66,6 +69,9 @@
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\LevelLoader.h">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NextScene.h">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
   </ItemGroup>

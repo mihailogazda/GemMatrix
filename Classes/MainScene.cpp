@@ -2,6 +2,7 @@
 #include "DiedScene.h"
 #include "GameLevels.h"
 #include "MainMenu.h"
+#include "NextScene.h"
 
 extern int g_height;
 extern int g_width;
@@ -61,6 +62,13 @@ bool MainScene::init()
 	this->gameLevel = LevelLoader::sharedLoader()->getGameLevel(currentLevel);
 
 	CCAssert(this->gameLevel.valid, "GameLevel not valid. Probably end of the game.");	
+	if (!this->gameLevel.valid)
+	{
+#ifdef _WINDOWS
+		MessageBox(NULL, "Probably end of the game (no more levels in xml file)", "Hello", MB_OK | MB_ICONWARNING);		
+#endif
+		exit(0);
+	}
 
 	//	set points and such
     this->totalTime = 0;
@@ -247,7 +255,7 @@ bool MainScene::initSidebar()
     sidebar->setAnchorPoint(ccp(0, 0));
 
 	char tmp[100];
-	sprintf(tmp, "Level %d", currentLevel + 1);
+	sprintf(tmp, "Level %d", currentLevel);
 
     levelLabel = CCLabelTTF::create(tmp, fontName, fontSize);
     levelLabel->setPosition(ccp(gw / 2, g_height - 30));
@@ -625,10 +633,17 @@ void MainScene::handleTimeUpdate(float delta)
     }
 
 	this->totalTime++;
-	float max = GAME_LEVELS[currentLevel].timeout;
+	float max = this->gameLevel.timeout;
 	float perc =  (this->totalTime / max) * 100 ;
 	CCLog("Percentage is %f (%d of %d)", perc, this->totalTime, max);
 	this->timeProgress->setPercentage(perc);
+
+	//	check for timeout
+	if (this->totalTime == this->gameLevel.timeout)
+	{
+		this->handleTimeout();
+		return;
+	}
 
 	//	check for new element insertion
 	this->timerCount--;
@@ -702,4 +717,13 @@ void MainScene::insertRowFromBottom()
     
     this->initSpareRow();
 	this->timerCount = gameLevel.insertRowTime;
+}
+
+void MainScene::handleTimeout()
+{
+	CCLog("HandleTimeout");
+	currentLevel++;
+	
+	CCDirector::sharedDirector()->replaceScene(CCTransitionFadeBL::create(1, NextScene::scene()));
+
 }

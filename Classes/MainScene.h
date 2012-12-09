@@ -65,6 +65,8 @@ private:
 	CCLayer* pauseLayer;
 	void handleClickPause(CCObject* sender);
 
+	void handleTimeout();
+
 public:
 
     bool wasInit;

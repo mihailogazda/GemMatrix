@@ -28,6 +28,6 @@ public:
         return min + (rand() % (int)(max - min + 1));
 	}
 
-};
+}; 
 
 #endif //__CC_UTILS_H__

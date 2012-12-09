@@ -66,6 +66,7 @@
 #define IMG_BLUE_BACK RES_DIRECTORY BACKS_DIR "blueBG.png"
 #define IMG_GREEN_BACK RES_DIRECTORY BACKS_DIR "greenBG.png"
 #define IMG_ORANGE_BACK RES_DIRECTORY BACKS_DIR "orangeBG.png"
+#define IMG_GREENYELLOW RES_DIRECTORY BACKS_DIR "greenyellowBG.png"
 
 #define IMG_SPOOKY RES_DIRECTORY "spooky_logo.png"
 #define IMG_BUTTON RES_DIRECTORY "button.png"
