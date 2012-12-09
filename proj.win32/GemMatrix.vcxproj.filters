@@ -65,5 +65,8 @@
     <ClInclude Include="..\Classes\GameResources.h">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\LevelLoader.h">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

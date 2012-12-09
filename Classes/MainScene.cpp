@@ -360,6 +360,7 @@ void MainScene::verifyTouch(CCPoint point)
 		{
 			if (this->matrix[i][j] == NULL)
 				continue;
+				
 
 			CCRect r = this->matrix[i][j]->boundingBox();
 			if (r.containsPoint(point))
@@ -496,6 +497,8 @@ void MainScene::checkForBonus()
 		*/
 		
 		CCLabelTTF* bonusLabel = CCLabelTTF::create(bonusText, "Impact", 32);
+		CCAssert(bonusLabel, "Bonus label is empty");
+
 		bonusLabel->setPosition(ccp(gameContent->getContentSize().width / 2, g_height / 2));
 		bonusLabel->setOpacity(0);
 		gameContent->addChild(bonusLabel, 2);
@@ -506,6 +509,10 @@ void MainScene::checkForBonus()
 			//CCMoveTo::create(0.5, this->pointsLabel->getPosition()),
 			CCFadeTo::create(0.5, 0),
 			NULL));
+
+		//bonusLabel->autorelease();
+		
+
 	}
 
 	//	set points

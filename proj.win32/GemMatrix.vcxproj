@@ -94,6 +94,7 @@
     <ClInclude Include="..\Classes\GameLevels.h" />
     <ClInclude Include="..\Classes\GameResources.h" />
     <ClInclude Include="..\Classes\GemSprite.h" />
+    <ClInclude Include="..\Classes\LevelLoader.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
     <ClInclude Include="..\Classes\MainScene.h" />
     <ClInclude Include="..\Classes\utils.h" />
