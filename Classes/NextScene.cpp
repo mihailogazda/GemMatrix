@@ -2,6 +2,9 @@
 
 extern IOSTYPE phoneType;
 
+extern unsigned int totalPoints;
+extern unsigned int totalWonPoints;
+
 CCScene* NextScene::scene()
 {
 	CCScene* ret = NULL;
@@ -9,6 +12,7 @@ CCScene* NextScene::scene()
 	{
 		ret = CCScene::create();
 		NextScene *layer = NextScene::create();
+
 		CC_BREAK_IF(!ret || !layer);
 		    
 		//	add layer
@@ -37,6 +41,20 @@ bool NextScene::init()
         back->setScale(4);
     
     this->addChild(back);
+
+	int width = CCDirector::sharedDirector()->getWinSize().width;
+	int height = CCDirector::sharedDirector()->getWinSize().height;
+
+	char tmp[50];
+	sprintf(tmp, "Total won: %d", totalPoints);
+	CCLabelTTF *total = CCLabelTTF::create(tmp, "Impact", 36);
+	total->setPosition(ccp(width / 2, height / 2 ));
+	this->addChild(total);
+
+	sprintf(tmp, "Points won: %d", totalWonPoints);
+	CCLabelTTF *now = CCLabelTTF::create(tmp, "Impact", 20);
+	now->setPosition(ccp(width / 2, height / 2 + 50));
+	this->addChild(now);
 
 	return true;
 }

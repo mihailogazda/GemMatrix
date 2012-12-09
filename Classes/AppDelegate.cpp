@@ -18,6 +18,8 @@ int g_height = 0;
 IOSTYPE phoneType = UNDEFINED;
 unsigned int currentLevel = 1;
 unsigned int retina = 0;
+unsigned int totalPoints = 0;
+unsigned int totalWonPoints = 0;
 
 AppDelegate::AppDelegate()
 {

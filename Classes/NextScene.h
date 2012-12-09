@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "GameResources.h"
 #include "utils.h"
+#include "MainScene.h"
 
 using namespace cocos2d;
 

@@ -3,11 +3,14 @@
 #include "GameLevels.h"
 #include "MainMenu.h"
 #include "NextScene.h"
+#include "NextScene.h"
 
 extern int g_height;
 extern int g_width;
 extern IOSTYPE phoneType;
 extern unsigned int currentLevel;
+extern unsigned int totalPoints;
+extern unsigned int totalWonPoints;
 
 bool transitionInProgress = false;
 
@@ -57,7 +60,7 @@ bool MainScene::init()
 	this->addChild(this->gameContent, 1);
    
 	this->wasInit = false;
-	this->isPaused = false;
+	this->isPaused = false;	
 
 	this->gameLevel = LevelLoader::sharedLoader()->getGameLevel(currentLevel);
 
@@ -72,7 +75,8 @@ bool MainScene::init()
 
 	//	set points and such
     this->totalTime = 0;
-    this->pointsCount = 0;
+    this->pointsCount = 0;	
+	
 	this->timerCount = this->gameLevel.insertRowTime;
 
 	//	scheduel ticker
@@ -261,9 +265,15 @@ bool MainScene::initSidebar()
     levelLabel->setPosition(ccp(gw / 2, g_height - 30));
     sidebar->addChild(levelLabel);
 
+	sprintf(tmp, "Collect %d", gameLevel.minScore);	
+	CCLabelTTF *collect = CCLabelTTF::create(tmp, fontName, fontSize - 6);
+	collect->setPosition(ccp(gw /2, g_height - 60));
+	collect->setColor(ccc3(80, 80, 80));
+	sidebar->addChild(collect);
+
 	//	points won	
 	pointsLabel = CCLabelTTF::create("0 Points", fontName, fontSize);
-	pointsLabel->setPosition(ccp(gw / 2, g_height - 80));
+	pointsLabel->setPosition(ccp(gw / 2, g_height - 100));
     sidebar->addChild(pointsLabel);
     
 	//	Timer for new row
@@ -724,6 +734,8 @@ void MainScene::handleTimeout()
 	CCLog("HandleTimeout");
 	currentLevel++;
 	
-	CCDirector::sharedDirector()->replaceScene(CCTransitionFadeBL::create(1, NextScene::scene()));
+	totalWonPoints = this->pointsCount;
 
+	//	set temp values for NextScene to read
+	CCDirector::sharedDirector()->replaceScene(CCTransitionFadeBL::create(1, NextScene::scene()));
 }
