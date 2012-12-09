@@ -16,7 +16,7 @@ int g_width = 0;
 int g_height = 0;
 
 IOSTYPE phoneType = UNDEFINED;
-unsigned int currentLevel = 0;
+unsigned int currentLevel = 1;
 unsigned int retina = 0;
 
 AppDelegate::AppDelegate()

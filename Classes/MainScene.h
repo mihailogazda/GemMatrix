@@ -5,6 +5,7 @@
 #include "SimpleAudioEngine.h"
 #include "GameResources.h"
 #include "GemSprite.h"
+#include "LevelLoader.h"
 #include <list>
 
 using namespace cocos2d;
@@ -23,6 +24,8 @@ private:
 	int pointsCount;
 	int timerCount;
     int totalTime;
+	
+	GAMELEVEL gameLevel;
 
 	CCProgressTimer *timeProgress;
 

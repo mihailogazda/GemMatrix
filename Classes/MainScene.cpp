@@ -54,14 +54,18 @@ bool MainScene::init()
 	this->gameContent->setPosition(ccp(0, 0));
 	this->gameContent->setAnchorPoint(ccp(0, 0));
 	this->addChild(this->gameContent, 1);
-    
+   
+	this->wasInit = false;
+	this->isPaused = false;
+
+	this->gameLevel = LevelLoader::sharedLoader()->getGameLevel(currentLevel);
+
+	CCAssert(this->gameLevel.valid, "GameLevel not valid. Probably end of the game.");	
+
 	//	set points and such
     this->totalTime = 0;
     this->pointsCount = 0;
-	this->timerCount = GAME_LEVELS[currentLevel].insertRowTime;
-
-	this->wasInit = false;
-	this->isPaused = false;
+	this->timerCount = this->gameLevel.insertRowTime;
 
 	//	scheduel ticker
 	this->schedule(schedule_selector(MainScene::handleTimeUpdate), 1);
@@ -697,5 +701,5 @@ void MainScene::insertRowFromBottom()
     this->redrawMatrix();		
     
     this->initSpareRow();
-	this->timerCount = GAME_LEVELS[currentLevel].insertRowTime;
+	this->timerCount = gameLevel.insertRowTime;
 }

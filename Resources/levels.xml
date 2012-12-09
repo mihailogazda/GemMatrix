@@ -1,24 +1,29 @@
 <levels>
+	<!-- 1 -->
   <level>
     <timeout> 60 </timeout>
     <insertRowTime> 10 </insertRowTime>
     <minScore> 3000 </minScore>
   </level>
+  <!-- 2 -->
   <level>
     <timeout> 60 </timeout>
     <insertRowTime> 10 </insertRowTime>
     <minScore> 4000 </minScore>
   </level>
+  <!-- 3 -->
   <level>
     <timeout> 60 </timeout>
     <insertRowTime> 10 </insertRowTime>
     <minScore> 5000 </minScore>
   </level>
+  <!-- 4 -->
   <level>
     <timeout> 50 </timeout>
     <insertRowTime> 10 </insertRowTime>
     <minScore> 6000 </minScore>
   </level>
+  <!-- 5 -->
   <level>
     <timeout> 50 </timeout>
     <insertRowTime> 9 </insertRowTime>
