@@ -5,6 +5,9 @@ extern IOSTYPE phoneType;
 extern unsigned int totalPoints;
 extern unsigned int totalWonPoints;
 
+extern unsigned int currentLevel;
+extern GAMELEVEL globalCurrentLevel;
+
 CCScene* NextScene::scene()
 {
 	CCScene* ret = NULL;
@@ -56,5 +59,44 @@ bool NextScene::init()
 	now->setPosition(ccp(width / 2, height / 2 + 50));
 	this->addChild(now);
 
+
+	CCMenuItemFont *cont = CCMenuItemFont::create("Continue", this, menu_selector(NextScene::handleContinue));	
+	CCMenuItemFont *restart = CCMenuItemFont::create("Restart", this, menu_selector(NextScene::handleRestart));
+	CCMenuItemFont *menub = CCMenuItemFont::create("Main menu", this, menu_selector(NextScene::handleMenu));	
+	
+	CCMenu *menu = NULL;
+	if (globalCurrentLevel.minScore <= totalWonPoints)
+		menu = CCMenu::create(cont, restart, menub, NULL);
+	else
+		menu = CCMenu::create(restart, menub, NULL);
+	
+	menu->setAnchorPoint(ccp(0, 0));
+	menu->setPosition(ccp(width / 2, height / 2 - 100));
+	menu->alignItemsVertically();
+
+	this->addChild(menu);
+
 	return true;
+}
+
+void NextScene::handleContinue(CCObject *sender)
+{
+	CCLog("handleContinue");
+	
+	currentLevel ++;
+	totalPoints += totalWonPoints;
+
+	this->handleRestart(NULL);
+}
+
+void NextScene::handleRestart(CCObject *sender)
+{
+	CCLog("handleRestart");
+	CCDirector::sharedDirector()->replaceScene(CCTransitionFadeBL::create(1, MainScene::scene()));
+}
+
+void NextScene::handleMenu(CCObject *sender)
+{
+	CCLog("handleMenu");
+	CCDirector::sharedDirector()->replaceScene(CCTransitionFadeBL::create(1, MainMenuScene::scene()));
 }

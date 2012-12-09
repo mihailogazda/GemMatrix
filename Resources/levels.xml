@@ -1,7 +1,7 @@
 <levels>
 	<!-- 1 -->
   <level>
-    <timeout> 10 </timeout>
+    <timeout> 60 </timeout>
     <insertRowTime> 10 </insertRowTime>
     <minScore> 3000 </minScore>
   </level>

@@ -5,12 +5,18 @@
 #include "GameResources.h"
 #include "utils.h"
 #include "MainScene.h"
+#include "MainMenu.h"
 
 using namespace cocos2d;
 
 class NextScene : public CCLayerColor
 {
 private:
+
+	void handleContinue(CCObject* sender);
+	void handleRestart(CCObject* sender);
+	void handleMenu(CCObject* sender);
+
 public:
 
 	static CCScene* scene();

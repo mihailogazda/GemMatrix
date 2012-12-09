@@ -14,6 +14,8 @@ extern unsigned int totalWonPoints;
 
 bool transitionInProgress = false;
 
+GAMELEVEL globalCurrentLevel = {0};
+
 CCScene* MainScene::scene()
 {
 	CCScene* ret = NULL;
@@ -63,6 +65,7 @@ bool MainScene::init()
 	this->isPaused = false;	
 
 	this->gameLevel = LevelLoader::sharedLoader()->getGameLevel(currentLevel);
+	globalCurrentLevel = this->gameLevel;
 
 	CCAssert(this->gameLevel.valid, "GameLevel not valid. Probably end of the game.");	
 	if (!this->gameLevel.valid)
@@ -662,7 +665,7 @@ void MainScene::handleTimeUpdate(float delta)
 	sprintf(tmp, "%ds", this->timerCount);
 	this->timeLabel->setString(tmp);
 
-	int secTillReset = GAME_LEVELS[currentLevel].insertRowTime;
+	int secTillReset = this->gameLevel.insertRowTime;
 	float fade = SPARE_ROW_FADE_START + (255 - this->timerCount * (SPARE_ROW_FADE_END / secTillReset));	
 	if (fade > SPARE_ROW_FADE_END)
 		fade = SPARE_ROW_FADE_END;
@@ -732,7 +735,7 @@ void MainScene::insertRowFromBottom()
 void MainScene::handleTimeout()
 {
 	CCLog("HandleTimeout");
-	currentLevel++;
+	//currentLevel++;
 	
 	totalWonPoints = this->pointsCount;
 
