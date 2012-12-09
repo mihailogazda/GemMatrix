@@ -43,6 +43,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 	//	capture projector size
     g_width = pDirector->getWinSize().width;
     g_height = pDirector->getWinSize().height;
+
+	
     
 
 #ifdef __MACH__    
@@ -74,6 +76,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 		
     
     CCLog("Window size: %dx%d", g_width, g_height);
+
+	
+	LevelLoader *l = LevelLoader::sharedLoader();
+	CCLog("Level count: %d", l->getLevelsCount());
+	GAMELEVEL gl =  l->getGameLevel(1);
+	CCLog("Valid: %d, Timeout: %d, Insert: %d, MinCount: %d", gl.valid, gl.timeout, gl.insertRowTime, gl.minScore);
 
     // create a scene. it's an autorelease object
     //CCScene *pScene = HelloWorld::scene();

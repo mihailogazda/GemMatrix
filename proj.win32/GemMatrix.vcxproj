@@ -53,7 +53,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Mihailo\Desktop\cocos2d\CocosDenshion\include;C:\Users\Mihailo\Desktop\cocos2d\CocosDenshion\;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\kazmath\include;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\base_nodes;..\Classes;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\platform;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\platform\win32;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\platform\third_party\win32\OGLES;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\platform\third_party\win32;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\kazmath;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\platform\third_party\win32\iconv;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\platform\third_party\win32\libxml2;C:\Users\Mihailo\Desktop\cocos2d\CocosDenshion\include;C:\Users\Mihailo\Desktop\cocos2d\CocosDenshion\;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\kazmath\include;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\base_nodes;..\Classes;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\platform;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\platform\win32;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\platform\third_party\win32\OGLES;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\platform\third_party\win32;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\kazmath;C:\Users\Mihailo\Desktop\cocos2d\cocos2dx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251; 4244;4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -61,7 +61,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\Mihailo\Desktop\cocos2d\Debug.win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libBox2D.lib;libchipmunk.lib;libcocos2d.lib;libCocosDenshion.lib;libExtensions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libBox2D.lib;libchipmunk.lib;libcocos2d.lib;libCocosDenshion.lib;libExtensions.lib;libXML2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

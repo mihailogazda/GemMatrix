@@ -1,7 +1,7 @@
 #include "main.h"
 #include "AppDelegate.h"
 #include "CCEGLView.h"
-
+#include "LevelLoader.h"
 USING_NS_CC;
 
 // uncomment below line, open debug console
@@ -32,6 +32,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	SetWindowText(handle, "Gem Matrix");
 	
     int ret = CCApplication::sharedApplication()->run();
+
+
 
 #ifdef USE_WIN32_CONSOLE
     FreeConsole();
