@@ -48,6 +48,11 @@
 
 
 //
+//	LEVELS
+//
+#define LEVEL_RESOURCE RES_DIRECTORY "levels.xml"
+
+//
 //	IMAGE RESOURCES
 //
 #define IMG_CLOSE_NORMAL RES_DIRECTORY "CloseNormal.png"

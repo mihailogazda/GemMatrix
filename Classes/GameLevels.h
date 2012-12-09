@@ -1,13 +1,7 @@
 #ifndef __GAME_LEVELS_H__
 #define __GAME_LEVELS_H__
 
-
-typedef struct 
-{
-	unsigned int timeout;
-	unsigned int insertRowTime;
-	unsigned int minScore;
-} GAMELEVEL;
+#include "LevelLoader.h"
 
 
 static const GAMELEVEL GAME_LEVELS[] = 

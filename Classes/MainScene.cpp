@@ -496,7 +496,7 @@ void MainScene::checkForBonus()
 			sprintf(bonusText, "GOD LIKE!");
 		*/
 		
-		CCLabelTTF* bonusLabel = CCLabelTTF::create(bonusText, "Impact", 32);
+		CCLabelTTF* bonusLabel = CCLabelTTF::create(bonusText, "Impact", 28);
 		CCAssert(bonusLabel, "Bonus label is empty");
 
 		bonusLabel->setPosition(ccp(gameContent->getContentSize().width / 2, g_height / 2));

@@ -3,9 +3,20 @@
 
 #include "cocos2d.h"
 
+typedef struct 
+{
+	unsigned int timeout;
+	unsigned int insertRowTime;
+	unsigned int minScore;
+} GAMELEVEL, *LPGAMELEVEL;
 
+//	singleton class
+class LevelLoader;
 static LevelLoader* p_sharedLoader = NULL;
 
+//
+//	Enables level loading from resource XML file
+//
 class LevelLoader 
 {
 private:
