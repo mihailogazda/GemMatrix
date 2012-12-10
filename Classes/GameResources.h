@@ -52,6 +52,12 @@
 //
 #define LEVEL_RESOURCE RES_DIRECTORY "levels.xml"
 
+
+//
+//	SETTINGS
+//
+#define SETTING_LEVEL_CURRENT "currentLevel"
+
 //
 //	IMAGE RESOURCES
 //

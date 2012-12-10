@@ -8,6 +8,7 @@ USING_NS_CC;
 //#define USE_WIN32_CONSOLE
 
 extern unsigned int currentLevel;
+extern bool overidedByCommandLine;
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                        HINSTANCE hPrevInstance,
@@ -19,7 +20,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	int tmp  = atoi(lpCmdLine);
 	if (tmp != 0)
+	{
 		currentLevel = tmp;
+		overidedByCommandLine = true;
+	}
 
 #ifdef USE_WIN32_CONSOLE
     AllocConsole();

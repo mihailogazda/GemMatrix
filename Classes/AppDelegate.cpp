@@ -21,6 +21,10 @@ unsigned int retina = 0;
 unsigned int totalPoints = 0;
 unsigned int totalWonPoints = 0;
 
+//	windows only
+bool overidedByCommandLine = false;
+
+
 AppDelegate::AppDelegate()
 {
 }
@@ -47,8 +51,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     g_height = pDirector->getWinSize().height;
 
 	
-    
-
 #ifdef __MACH__    
 
     if (g_width == 2048)
@@ -62,35 +64,27 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 	//	enable 2x pixel 
 	if (phoneType == IPAD3 || phoneType == IPHONE4)
-	{
-		//pDirector->enableRetinaDisplay(true);
-        //pDirector->re`
-        
 		retina = true;
-	}
 		
 #endif	
 
 #ifdef _WINDOWS
 	phoneType = WINDOWS;
 #endif
-
-		
-    
+	    
     CCLog("Window size: %dx%d", g_width, g_height);
-
-	
+		
 	LevelLoader *l = LevelLoader::sharedLoader();
 	CCLog("Level count: %d", l->getLevelsCount());
-	GAMELEVEL gl =  l->getGameLevel(1);
-	CCLog("Valid: %d, Timeout: %d, Insert: %d, MinCount: %d", gl.valid, gl.timeout, gl.insertRowTime, gl.minScore);
-
-    // create a scene. it's an autorelease object
-    //CCScene *pScene = HelloWorld::scene();
-	//CCScene *pScene = MainScene::scene();
-	CCScene *pScene = MainMenuScene::scene();
+	
+	if (!overidedByCommandLine)
+	{
+		currentLevel = CCUserDefault::sharedUserDefault()->getIntegerForKey(SETTING_LEVEL_CURRENT, 1);
+	}
+	
 
     // run
+	CCScene *pScene = MainMenuScene::scene();
     pDirector->runWithScene(pScene);
     return true;
 }
