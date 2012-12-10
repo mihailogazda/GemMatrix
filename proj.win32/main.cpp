@@ -23,8 +23,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 #endif
 
 
-
-
     // create the application instance
     AppDelegate app;
 
