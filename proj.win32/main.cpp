@@ -7,6 +7,8 @@ USING_NS_CC;
 // uncomment below line, open debug console
 //#define USE_WIN32_CONSOLE
 
+extern unsigned int currentLevel;
+
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                        HINSTANCE hPrevInstance,
                        LPTSTR    lpCmdLine,
@@ -14,6 +16,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
+
+	int tmp  = atoi(lpCmdLine);
+	if (tmp != 0)
+		currentLevel = tmp;
 
 #ifdef USE_WIN32_CONSOLE
     AllocConsole();
@@ -28,8 +34,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();		
     eglView->setFrameSize(780, 560);
 	
-	//HWND handle = eglView->getHWnd();
-	//SetWindowText(handle, "Gem Matrix");
+	HWND handle = eglView->getHWnd();
+	SetWindowText(handle, "Gem Matrix");
 	
     int ret = CCApplication::sharedApplication()->run();
 

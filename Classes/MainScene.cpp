@@ -68,7 +68,7 @@ bool MainScene::init()
 	this->gameLevel = LevelLoader::sharedLoader()->getGameLevel(currentLevel);
 	globalCurrentLevel = this->gameLevel;
 
-	CCAssert(this->gameLevel.valid, "GameLevel not valid. Probably end of the game.");	
+	//CCAssert(this->gameLevel.valid, "GameLevel not valid. Probably end of the game.");	
 	if (!this->gameLevel.valid)
 	{
 #ifdef _WINDOWS
