@@ -62,7 +62,7 @@ private:
     void handleClickUp(CCObject* sender);
 
 	bool isPaused;
-	CCLayer* pauseLayer;
+	CCLayerColor* pauseLayer;
 	void handleClickPause(CCObject* sender);
 
 	void handleTimeout();

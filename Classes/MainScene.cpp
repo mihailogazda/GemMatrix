@@ -63,6 +63,7 @@ bool MainScene::init()
    
 	this->wasInit = false;
 	this->isPaused = false;	
+	this->pauseLayer = NULL;
 
 	this->gameLevel = LevelLoader::sharedLoader()->getGameLevel(currentLevel);
 	globalCurrentLevel = this->gameLevel;
@@ -130,24 +131,56 @@ void MainScene::handleClickMenu(CCObject* sender)
     
     CCScene* sc = CCTransitionFadeBL::create(1, MainMenuScene::scene());
     CCDirector::sharedDirector()->replaceScene(sc);
-    //CCDirector::sharedDirector()->popScene();
 }
 
 void MainScene::handleClickPause(CCObject* sender)
 {
-	CCLog("Pause click");
+	CCLog("Pause click");	
+
 	if (!this->isPaused)
 	{
-		CCDirector::sharedDirector()->pause();
 		if (!this->pauseLayer)
 		{
-			this->pauseLayer = CCLayer::create();
-			this->addChild(pauseLayer);
+			this->pauseLayer = CCLayerColor::create(ccc4(0, 0, 0, 0));								
+			pauseLayer->setAnchorPoint(ccp(0, 0));
+			pauseLayer->setPosition(ccp(0, 0));
+			this->addChild(pauseLayer, 1000);
+
+			CCLabelTTF *pausedLabel = CCLabelTTF::create("Paused", "Impact", 26);
+			pausedLabel->setPosition(ccp(g_width / 2, g_height / 2));
+			pausedLabel->setOpacity(0);
+			this->pauseLayer->addChild(pausedLabel);
+
+			CCMenuItemFont::setFontSize(20);
+			CCMenuItemFont* cont = CCMenuItemFont::create("Continue game", this, menu_selector(MainScene::handleClickPause));
+			CCMenu *menu = CCMenu::create(cont, NULL);			
+			menu->setPosition(ccp(g_width / 2, g_height / 2 - 50));
+			menu->setOpacity(0);
+			this->pauseLayer->addChild(menu);
+		}
+
+		this->disableTouches = true;
+
+		this->pauseSchedulerAndActions();
+		this->pauseLayer->runAction(CCEaseIn::create(CCFadeTo::create(0.5, 255 * 0.8), 1));
+
+		for (int i = 0; i < this->pauseLayer->getChildrenCount(); i++)
+		{
+			CCNode* ch = (CCNode*) this->pauseLayer->getChildren()->objectAtIndex(i);
+			ch->runAction(CCEaseIn::create(CCFadeTo::create(0.5, 255 * 0.8), 1));
 		}
 	}
 	else
 	{
-		CCDirector::sharedDirector()->resume();
+		this->resumeSchedulerAndActions();		
+		this->pauseLayer->runAction(CCEaseOut::create(CCFadeTo::create(0.5, 0), 1));
+		for (int i = 0; i < this->pauseLayer->getChildrenCount(); i++)
+		{
+			CCNode* ch = (CCNode*) this->pauseLayer->getChildren()->objectAtIndex(i);
+			ch->runAction(CCEaseOut::create(CCFadeTo::create(0.5, 0), 1));
+		}
+
+		this->disableTouches = false;
 	}
 
 	this->isPaused = !this->isPaused;
@@ -529,15 +562,10 @@ void MainScene::checkForBonus()
 		gameContent->addChild(bonusLabel, 2);
 
 		bonusLabel->runAction(CCSequence::create(
-			CCFadeTo::create(0.2f, 255), 
-			CCScaleTo::create(0.5, 2),
-			//CCMoveTo::create(0.5, this->pointsLabel->getPosition()),
+			CCFadeTo::create(0.2f, 255),
+			CCScaleTo::create(0.5, 2),			
 			CCFadeTo::create(0.5, 0),
 			NULL));
-
-		//bonusLabel->autorelease();
-		
-
 	}
 
 	//	set points
@@ -666,7 +694,7 @@ void MainScene::handleTimeUpdate(float delta)
 	this->timeLabel->setString(tmp);
 
 	int secTillReset = this->gameLevel.insertRowTime;
-	float fade = SPARE_ROW_FADE_START + (255 - this->timerCount * (SPARE_ROW_FADE_END / secTillReset));	
+	float fade = SPARE_ROW_FADE_START + (255 - this->timerCount * (SPARE_ROW_FADE_END / secTillReset));
 	if (fade > SPARE_ROW_FADE_END)
 		fade = SPARE_ROW_FADE_END;
 
@@ -676,9 +704,7 @@ void MainScene::handleTimeUpdate(float delta)
 	if (this->timerCount == 0)
 	{
 		this->disableTouches = true;
-
-        this->insertRowFromBottom();
-    
+        this->insertRowFromBottom();    
 		this->disableTouches = false;
 	}
 }

@@ -50,12 +50,12 @@ bool NextScene::init()
 
 	char tmp[50];
 	sprintf(tmp, "Total won: %d", totalPoints);
-	CCLabelTTF *total = CCLabelTTF::create(tmp, "Impact", 36);
-	total->setPosition(ccp(width / 2, height / 2 ));
+	CCLabelTTF *total = CCLabelTTF::create(tmp, "Impact", 20);
+	total->setPosition(ccp(width / 2, height / 2 + 100 ));
 	this->addChild(total);
 
 	sprintf(tmp, "Points won: %d", totalWonPoints);
-	CCLabelTTF *now = CCLabelTTF::create(tmp, "Impact", 20);
+	CCLabelTTF *now = CCLabelTTF::create(tmp, "Impact", 36);
 	now->setPosition(ccp(width / 2, height / 2 + 50));
 	this->addChild(now);
 

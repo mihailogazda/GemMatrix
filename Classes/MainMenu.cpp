@@ -38,6 +38,8 @@ bool MainMenuScene::init()
 	CCLayerColor::initWithColor(colorWhite);
     
     //  Add background
+
+
     CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(IMG_GREEN_BACK);
     CCTexture2D* logo = CCTextureCache::sharedTextureCache()->addImage(IMG_SPOOKY);
     
@@ -82,7 +84,7 @@ bool MainMenuScene::init()
     
     
     //  Move play button arround a little
-
+	
     play->runAction(CCRepeatForever::create(CCSequence::createWithTwoActions(CCEaseBackInOut::create(CCSkewBy::create(1, 5, 5)), CCEaseBackInOut::create(CCSkewBy::create(1, -5, -5)))));
     play->runAction(CCRepeatForever::create(CCSequence::createWithTwoActions(CCEaseBackInOut::create(CCScaleTo::create(1, 1.2, 1.2)), CCEaseBackInOut::create(CCScaleTo::create(1, 1.0, 1.0)))));
     credits->runAction(CCRepeatForever::create(CCSequence::createWithTwoActions(CCEaseBackInOut::create(CCSkewBy::create(1, 5, 5)), CCEaseBackInOut::create(CCSkewBy::create(1, -5, -5)))));

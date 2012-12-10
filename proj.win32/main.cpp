@@ -22,19 +22,16 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     freopen("CONOUT$", "w", stderr);
 #endif
 
-
     // create the application instance
     AppDelegate app;
 
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();		
     eglView->setFrameSize(780, 560);
 	
-	HWND handle = eglView->getHWnd();
-	SetWindowText(handle, "Gem Matrix");
+	//HWND handle = eglView->getHWnd();
+	//SetWindowText(handle, "Gem Matrix");
 	
     int ret = CCApplication::sharedApplication()->run();
-
-
 
 #ifdef USE_WIN32_CONSOLE
     FreeConsole();
