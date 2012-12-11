@@ -88,6 +88,7 @@ void NextScene::handleContinue(CCObject *sender)
 
 	//	save level progression
 	CCUserDefault::sharedUserDefault()->setIntegerForKey(SETTING_LEVEL_CURRENT, currentLevel);
+	CCUserDefault::sharedUserDefault()->setIntegerForKey(SETTING_TOTAL_POINTS, totalPoints);
 
 	this->handleRestart(NULL);
 }

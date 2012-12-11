@@ -46,23 +46,23 @@
     #define BACKS_DIR "backs\\"
 #endif
 
-
 //
 //	LEVELS
 //
 #define LEVEL_RESOURCE RES_DIRECTORY "levels.xml"
 
-
 //
 //	SETTINGS
 //
-#define SETTING_LEVEL_CURRENT "currentLevel"
+#define SETTING_LEVEL_CURRENT	"currentLevel"
+#define SETTING_TOTAL_POINTS	"totalPoints"
 
 //
 //	IMAGE RESOURCES
 //
 #define IMG_CLOSE_NORMAL RES_DIRECTORY "CloseNormal.png"
 #define IMG_CLOSE_SELECTED RES_DIRECTORY "CloseSelected.png"
+
 
 #define IMG_MAIN_TILESET RES_DIRECTORY "tileset.png"
 #define IMG_MAIN_TILESET_PLIST RES_DIRECTORY "tileset.plist"

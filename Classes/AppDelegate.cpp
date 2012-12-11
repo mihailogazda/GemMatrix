@@ -77,11 +77,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 	LevelLoader *l = LevelLoader::sharedLoader();
 	CCLog("Level count: %d", l->getLevelsCount());
 	
-	if (!overidedByCommandLine)
-	{
-		currentLevel = CCUserDefault::sharedUserDefault()->getIntegerForKey(SETTING_LEVEL_CURRENT, 1);
-	}
-	
+	//	load current level and points
+	totalPoints = CCUserDefault::sharedUserDefault()->getIntegerForKey(SETTING_TOTAL_POINTS, 0);
+	if (!overidedByCommandLine)	
+		currentLevel = CCUserDefault::sharedUserDefault()->getIntegerForKey(SETTING_LEVEL_CURRENT, 1);		
 
     // run
 	CCScene *pScene = MainMenuScene::scene();
