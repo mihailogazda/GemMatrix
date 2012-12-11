@@ -64,6 +64,7 @@ bool MainScene::init()
 	this->wasInit = false;
 	this->isPaused = false;	
 	this->pauseLayer = NULL;
+	this->upButton = NULL;
 
 	this->gameLevel = LevelLoader::sharedLoader()->getGameLevel(currentLevel);
 	globalCurrentLevel = this->gameLevel;
@@ -123,6 +124,19 @@ void MainScene::handleClickUp(CCObject* sender)
 {
     CCLog("Handle UP button");
     this->insertRowFromBottom();
+
+	//	add points	
+	CCLabelTTF *pts = CCLabelTTF::create("100 points!", "Impact", 18);
+	pts->setPosition(this->upButton->getPosition());
+	this->sidebar->addChild(pts);
+	
+	pts->runAction(CCEaseOut::create(CCMoveBy::create(0.5, ccp(0, 50)), 1));
+	pts->runAction(CCEaseOut::create(CCFadeTo::create(0.5, 0), 1));	
+	this->pointsCount += 100;
+	
+	char tmp[50];
+	sprintf(tmp, "%d points", this->pointsCount);
+	this->pointsLabel->setString(tmp);
 }
 
 void MainScene::handleClickMenu(CCObject* sender)
@@ -164,7 +178,7 @@ void MainScene::handleClickPause(CCObject* sender)
 		this->pauseSchedulerAndActions();
 		this->pauseLayer->runAction(CCEaseIn::create(CCFadeTo::create(0.5, 255 * 0.8), 1));
 
-		for (int i = 0; i < this->pauseLayer->getChildrenCount(); i++)
+		for (unsigned int i = 0; i < this->pauseLayer->getChildrenCount(); i++)
 		{
 			CCNode* ch = (CCNode*) this->pauseLayer->getChildren()->objectAtIndex(i);
 			ch->runAction(CCEaseIn::create(CCFadeTo::create(0.5, 255 * 0.8), 1));
@@ -174,7 +188,7 @@ void MainScene::handleClickPause(CCObject* sender)
 	{
 		this->resumeSchedulerAndActions();		
 		this->pauseLayer->runAction(CCEaseOut::create(CCFadeTo::create(0.5, 0), 1));
-		for (int i = 0; i < this->pauseLayer->getChildrenCount(); i++)
+		for (unsigned int i = 0; i < this->pauseLayer->getChildrenCount(); i++)
 		{
 			CCNode* ch = (CCNode*) this->pauseLayer->getChildren()->objectAtIndex(i);
 			ch->runAction(CCEaseOut::create(CCFadeTo::create(0.5, 0), 1));
@@ -357,15 +371,15 @@ bool MainScene::initSidebar()
     
     //  now button
     CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(IMG_BUTTON);
-	CCMenuItemSprite *button = CCMenuItemSprite::create(CCSprite::createWithTexture(tex), CCSprite::createWithTexture(tex), this, menu_selector(MainScene::handleClickUp));
+	upButton = CCMenuItemSprite::create(CCSprite::createWithTexture(tex), CCSprite::createWithTexture(tex), this, menu_selector(MainScene::handleClickUp));
     
     if (phoneType == IPAD3)
-        button->setScale(1.4f);
+        upButton->setScale(1.4f);
     else
-        button->setScale(0.7f);
+        upButton->setScale(0.7f);
     
-	button->setPosition(ccp(gw / 2, buttonStart));
-    menu->addChild(button);
+	upButton->setPosition(ccp(gw / 2, buttonStart));
+    menu->addChild(upButton);
     
     this->addChild(sidebar);
     

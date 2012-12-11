@@ -33,6 +33,8 @@ private:
 	CCLabelTTF* timeLabel;
     CCLabelTTF* levelLabel;
 
+	CCMenuItemSprite* upButton; 
+
 	CCLayer* gameContent;
     CCLayerColor* sidebar;
     
