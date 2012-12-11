@@ -109,6 +109,8 @@ void MainScene::postInit()
 void MainScene::handleClickReset(CCObject* sender)
 {
 	CCLog("Reset click");
+	if (this->disableTouches)
+		return;	
 
 	CCDirector* sd = CCDirector::sharedDirector();
 	CCScene* sc = MainScene::scene();
@@ -122,9 +124,10 @@ void MainScene::handleClickReset(CCObject* sender)
 
 void MainScene::handleClickUp(CCObject* sender)
 {
-    CCLog("Handle UP button");
-    this->insertRowFromBottom();
-
+	CCLog("Handle UP button");
+	if (this->disableTouches)
+		return;
+    
 	//	add points	
 	CCLabelTTF *pts = CCLabelTTF::create("100 points!", "Impact", 18);
 	pts->setPosition(this->upButton->getPosition());
@@ -137,11 +140,16 @@ void MainScene::handleClickUp(CCObject* sender)
 	char tmp[50];
 	sprintf(tmp, "%d points", this->pointsCount);
 	this->pointsLabel->setString(tmp);
+
+	//	now insert rows
+	this->insertRowFromBottom();
 }
 
 void MainScene::handleClickMenu(CCObject* sender)
 {
     CCLog("handleClickMenu");
+	if (this->disableTouches)
+		return;	
     
     CCScene* sc = CCTransitionFadeBL::create(1, MainMenuScene::scene());
     CCDirector::sharedDirector()->replaceScene(sc);
@@ -167,13 +175,14 @@ void MainScene::handleClickPause(CCObject* sender)
 
 			CCMenuItemFont::setFontSize(20);
 			CCMenuItemFont* cont = CCMenuItemFont::create("Continue game", this, menu_selector(MainScene::handleClickPause));
-			CCMenu *menu = CCMenu::create(cont, NULL);			
-			menu->setPosition(ccp(g_width / 2, g_height / 2 - 50));
-			menu->setOpacity(0);
-			this->pauseLayer->addChild(menu);
+			this->pauseMenu = CCMenu::create(cont, NULL);			
+			this->pauseMenu->setPosition(ccp(g_width / 2, g_height / 2 - 50));
+			this->pauseMenu->setOpacity(0);
+			this->pauseLayer->addChild(this->pauseMenu);
 		}
 
 		this->disableTouches = true;
+		this->pauseMenu->setTouchEnabled(true);
 
 		this->pauseSchedulerAndActions();
 		this->pauseLayer->runAction(CCEaseIn::create(CCFadeTo::create(0.5, 255 * 0.8), 1));
@@ -186,7 +195,9 @@ void MainScene::handleClickPause(CCObject* sender)
 	}
 	else
 	{
-		this->resumeSchedulerAndActions();		
+		this->resumeSchedulerAndActions();
+		this->pauseMenu->setTouchEnabled(false);
+
 		this->pauseLayer->runAction(CCEaseOut::create(CCFadeTo::create(0.5, 0), 1));
 		for (unsigned int i = 0; i < this->pauseLayer->getChildrenCount(); i++)
 		{
@@ -366,8 +377,7 @@ bool MainScene::initSidebar()
 	this->timeProgress->setScale(0.2f);
 	this->timeProgress->setType(kCCProgressTimerTypeRadial);
 	this->timeProgress->setPercentage(0);
-	sidebar->addChild(timeProgress, 1);
-    
+	sidebar->addChild(timeProgress, 1);    
     
     //  now button
     CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(IMG_BUTTON);
@@ -557,6 +567,7 @@ void MainScene::checkForBonus()
 
 		char bonusText[100] = "";
 		sprintf(bonusText, "%d BONUS POINTS!", bonusWon);
+		
 		/*
 		if (bonus <= 3)
 			sprintf(bonusText, "GREAT!");

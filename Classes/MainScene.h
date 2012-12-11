@@ -34,6 +34,7 @@ private:
     CCLabelTTF* levelLabel;
 
 	CCMenuItemSprite* upButton; 
+	CCMenu* pauseMenu;
 
 	CCLayer* gameContent;
     CCLayerColor* sidebar;
