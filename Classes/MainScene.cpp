@@ -109,8 +109,6 @@ void MainScene::postInit()
 void MainScene::handleClickReset(CCObject* sender)
 {
 	CCLog("Reset click");
-	if (this->disableTouches)
-		return;	
 
 	CCDirector* sd = CCDirector::sharedDirector();
 	CCScene* sc = MainScene::scene();
@@ -125,8 +123,6 @@ void MainScene::handleClickReset(CCObject* sender)
 void MainScene::handleClickUp(CCObject* sender)
 {
 	CCLog("Handle UP button");
-	if (this->disableTouches)
-		return;
     
 	//	add points	
 	CCLabelTTF *pts = CCLabelTTF::create("100 points!", "Impact", 18);
@@ -148,8 +144,6 @@ void MainScene::handleClickUp(CCObject* sender)
 void MainScene::handleClickMenu(CCObject* sender)
 {
     CCLog("handleClickMenu");
-	if (this->disableTouches)
-		return;	
     
     CCScene* sc = CCTransitionFadeBL::create(1, MainMenuScene::scene());
     CCDirector::sharedDirector()->replaceScene(sc);
@@ -183,6 +177,7 @@ void MainScene::handleClickPause(CCObject* sender)
 
 		this->disableTouches = true;
 		this->pauseMenu->setTouchEnabled(true);
+		this->sidebarMenu->setTouchEnabled(false);
 
 		this->pauseSchedulerAndActions();
 		this->pauseLayer->runAction(CCEaseIn::create(CCFadeTo::create(0.5, 255 * 0.8), 1));
@@ -197,6 +192,7 @@ void MainScene::handleClickPause(CCObject* sender)
 	{
 		this->resumeSchedulerAndActions();
 		this->pauseMenu->setTouchEnabled(false);
+		this->sidebarMenu->setTouchEnabled(true);
 
 		this->pauseLayer->runAction(CCEaseOut::create(CCFadeTo::create(0.5, 0), 1));
 		for (unsigned int i = 0; i < this->pauseLayer->getChildrenCount(); i++)
@@ -360,10 +356,10 @@ bool MainScene::initSidebar()
     CCMenuItemFont* mainMenu = CCMenuItemFont::create("Menu", this, menu_selector(MainScene::handleClickMenu));
     mainMenu->setPosition(ccp(menuItemX, menuItemStart));
     
-	CCMenu *menu = CCMenu::create(pause, reset, mainMenu, NULL);
-    menu->setPosition(ccp(0, 0));
-    menu->setAnchorPoint(ccp(0, 0));
-	sidebar->addChild(menu);
+	this->sidebarMenu = CCMenu::create(pause, reset, mainMenu, NULL);
+    this->sidebarMenu->setPosition(ccp(0, 0));
+    this->sidebarMenu->setAnchorPoint(ccp(0, 0));
+	sidebar->addChild(this->sidebarMenu);
 
 	//	add clock
 	CCSprite* clockBack = CCSprite::create(IMG_CLOCK);
@@ -389,7 +385,7 @@ bool MainScene::initSidebar()
         upButton->setScale(0.7f);
     
 	upButton->setPosition(ccp(gw / 2, buttonStart));
-    menu->addChild(upButton);
+    this->sidebarMenu->addChild(upButton);
     
     this->addChild(sidebar);
     

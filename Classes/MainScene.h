@@ -35,6 +35,7 @@ private:
 
 	CCMenuItemSprite* upButton; 
 	CCMenu* pauseMenu;
+	CCMenu* sidebarMenu;
 
 	CCLayer* gameContent;
     CCLayerColor* sidebar;

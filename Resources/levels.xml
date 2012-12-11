@@ -1,5 +1,5 @@
 <levels>
-	<!-- 1 -->
+  <!-- 1 -->
   <level>
     <timeout> 60 </timeout>
     <insertRowTime> 10 </insertRowTime>
@@ -28,5 +28,35 @@
     <timeout> 50 </timeout>
     <insertRowTime> 9 </insertRowTime>
     <minScore> 7000 </minScore>
+  </level>
+  <!-- 6 -->
+  <level>
+    <timeout> 45 </timeout>
+    <insertRowTime> 8 </insertRowTime>
+    <minScore> 7000 </minScore>
+  </level>
+  <!-- 7 -->
+  <level>
+    <timeout> 50 </timeout>
+    <insertRowTime> 9 </insertRowTime>
+    <minScore> 7000 </minScore>
+  </level>
+  <!-- 8 -->
+  <level>
+    <timeout> 45 </timeout>
+    <insertRowTime> 8 </insertRowTime>
+    <minScore> 8000 </minScore>
+  </level>
+  <!-- 9 -->
+  <level>
+    <timeout> 40 </timeout>
+    <insertRowTime> 7 </insertRowTime>
+    <minScore> 9000 </minScore>
+  </level>
+  <!-- 10 -->
+  <level>
+    <timeout> 40 </timeout>
+    <insertRowTime> 7 </insertRowTime>
+    <minScore> 10000 </minScore>
   </level>
 </levels>
