@@ -19,7 +19,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v90</PlatformToolset>
+    <PlatformToolset>v110_xp</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -56,6 +56,7 @@
       <AdditionalIncludeDirectories>..\..\cocos2dx\platform\third_party\win32\iconv;..\..\cocos2dx\platform\third_party\win32\libxml2;..\..\CocosDenshion\include;..\..\CocosDenshion\;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\base_nodes;..\Classes;..\..\cocos2dx\;..\..\cocos2dx\platform;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\kazmath;..\..\cocos2dx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251; 4244;4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -92,7 +93,6 @@
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\DiedScene.h" />
-    <ClInclude Include="..\Classes\GameLevels.h" />
     <ClInclude Include="..\Classes\GameResources.h" />
     <ClInclude Include="..\Classes\GemSprite.h" />
     <ClInclude Include="..\Classes\LevelLoader.h" />

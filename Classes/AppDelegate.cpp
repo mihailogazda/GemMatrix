@@ -5,7 +5,6 @@
 #include "MainScene.h"
 #include "MainMenu.h"
 #include "DiedScene.h"
-#include "GameLevels.h"
 #include "SimpleAudioEngine.h"
 
 using namespace CocosDenshion;
@@ -39,6 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+
 
     // turn on display FPS
     pDirector->setDisplayStats(false);
@@ -87,6 +87,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     // run
 	CCScene *pScene = MainMenuScene::scene();
     pDirector->runWithScene(pScene);
+
+
     return true;
 }
 

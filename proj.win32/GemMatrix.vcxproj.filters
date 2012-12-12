@@ -50,9 +50,6 @@
     <ClInclude Include="..\Classes\DiedScene.h">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GameLevels.h">
-      <Filter>Header Files\Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\GemSprite.h">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
