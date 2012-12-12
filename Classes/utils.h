@@ -45,6 +45,11 @@ public:
 		return uniformGems(eng);
 	}
 
+	static int uniformProbabilityRock()
+	{
+		return uniformGemsRocks(eng) == 0;
+	}
+
 	static void trim(char * s) 
 	{
 		char * p = s;

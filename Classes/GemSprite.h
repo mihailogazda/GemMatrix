@@ -21,21 +21,13 @@ class CCGemSprite : public CCSprite
 public:
 
 	static CCGemSprite* create(bool includeRock = false)
-	{
-		//int count = sizeof(g_gemNames) / sizeof(g_gemNames[0]);        
-		//int r = CCUtils::randomInInterval(0, count - 1);
+	{		
 		int r = CCUtils::uniformRandomGems();
-		const char* gemname = g_gemNames[r];
 
-		/*if (includeRock)
-		{
-			int rr2 = CCUtils::randomInInterval(0, GEM_ROCK_PROBABILITY_MAX);
-			if (rr2 == 0)
-			{
-				gemname = "Rock.png";
-				r = GEM_ROCK_PROBABILITY_MAX;
-			}
-		}*/
+		if (includeRock && CCUtils::uniformProbabilityRock())
+			r = 3;
+
+		const char* gemname = g_gemNames[r];
     
 		CCLog("Spawning sprite (%d) %s", r,  gemname);
         CCGemSprite* t = (CCGemSprite*) CCSprite::createWithSpriteFrameName(gemname);
