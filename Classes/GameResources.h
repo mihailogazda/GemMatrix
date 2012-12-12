@@ -80,4 +80,8 @@
 #define IMG_CLOCK	RES_DIRECTORY "clock.png"
 #define IMG_CLOCK_FORE	RES_DIRECTORY "clock_fore.png"
 
+#define IMG_PROGRESS RES_DIRECTORY "progress.png"
+#define IMG_PROGRESS_FORE RES_DIRECTORY "progress_fore.png"
+
+
 #endif

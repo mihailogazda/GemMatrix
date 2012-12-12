@@ -136,6 +136,7 @@ void MainScene::handleClickUp(CCObject* sender)
 	char tmp[50];
 	sprintf(tmp, "%d points", this->pointsCount);
 	this->pointsLabel->setString(tmp);
+	this->updateProgress();
 
 	//	now insert rows
 	this->insertRowFromBottom();
@@ -318,26 +319,43 @@ bool MainScene::initSidebar()
 	char tmp[100];
 	sprintf(tmp, "Level %d", currentLevel);
 
-    levelLabel = CCLabelTTF::create(tmp, fontName, fontSize);
-    levelLabel->setPosition(ccp(gw / 2, g_height - 30));
+    levelLabel = CCLabelTTF::create(tmp, fontName, fontSize - 6);
+    levelLabel->setPosition(ccp(gw / 2, g_height - 20));
     sidebar->addChild(levelLabel);
 
+	sprintf(tmp, "Total: %d", totalPoints);
+	CCLabelTTF* pointsTotal = CCLabelTTF::create(tmp, fontName, fontSize - 6);
+	pointsTotal->setPosition(ccp(gw / 2, g_height - 50));
+	pointsTotal->setColor(ccc3(80, 80, 80));
+	sidebar->addChild(pointsTotal);
+
+	/*
 	sprintf(tmp, "Collect %d", gameLevel.minScore);	
 	CCLabelTTF *collect = CCLabelTTF::create(tmp, fontName, fontSize - 6);
 	collect->setPosition(ccp(gw /2, g_height - 60));
 	collect->setColor(ccc3(80, 80, 80));
 	sidebar->addChild(collect);
+	*/
 
 	//	points won	
-	pointsLabel = CCLabelTTF::create("0 Points", fontName, fontSize);
+	sprintf(tmp, "0 points");
+	pointsLabel = CCLabelTTF::create(tmp, fontName, fontSize);
 	pointsLabel->setPosition(ccp(gw / 2, g_height - 90));
     sidebar->addChild(pointsLabel);
     
-	sprintf(tmp, "Total: %d", totalPoints);
-	CCLabelTTF* pointsTotal = CCLabelTTF::create(tmp, fontName, fontSize - 6);
-	pointsTotal->setPosition(ccp(gw / 2, g_height - 120));
-	pointsTotal->setColor(ccc3(80, 80, 80));
-	sidebar->addChild(pointsTotal);
+	pointsProgress = CCProgressTimer::create(CCSprite::create(IMG_PROGRESS_FORE));
+	CCSprite* backProgress = CCSprite::create(IMG_PROGRESS);
+
+	pointsProgress->setPosition(ccp(gw / 2, g_height - 115));
+	backProgress->setPosition(ccp(gw / 2, g_height - 115));
+
+	pointsProgress->setType(kCCProgressTimerTypeBar);
+	pointsProgress->setMidpoint(ccp(0, 0));	
+	pointsProgress->setPercentage(0);
+	pointsProgress->setBarChangeRate(ccp(1, 0));
+	
+	sidebar->addChild(backProgress);
+	sidebar->addChild(pointsProgress);
 
 	short menuItemX = gw / 2;
 	short menuItemStart = g_height - 300;
@@ -405,7 +423,7 @@ CCPoint MainScene::positionForElement(int row, int col, bool isSpareRow = false)
 	CCLOG("positionForElement %dx%d", row, col);
 
 	int xs = 30;
-	int ys = 30;
+	int ys = 15;
 
 	if (!isSpareRow)
 		ys += GEM_HEIGHT + (GEM_SPACING * 2);
@@ -556,7 +574,7 @@ void MainScene::postProcess()
 }
 
 void MainScene::checkForBonus()
-{	
+{
 	unsigned int size = this->foundItems.size();
 	
 	//	now bonus
@@ -598,8 +616,9 @@ void MainScene::checkForBonus()
 	//	set points
 	this->pointsCount += size * 10;
 	char points[100] = "";
-	sprintf(points, "%d Points", this->pointsCount);
+	sprintf(points, "%d points", this->pointsCount);
 	this->pointsLabel->setString(points);
+	this->updateProgress();
 }
 
 void MainScene::callbackItemHidden(CCNode* node)
@@ -794,4 +813,9 @@ void MainScene::handleTimeout()
 
 	//	set temp values for NextScene to read
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFadeBL::create(1, NextScene::scene()));
+}
+
+void MainScene::updateProgress()
+{
+	this->pointsProgress->setPercentage( (float) this->pointsCount / (float) this->gameLevel.minScore * 100);
 }

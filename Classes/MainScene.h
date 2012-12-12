@@ -28,6 +28,7 @@ private:
 	GAMELEVEL gameLevel;
 
 	CCProgressTimer *timeProgress;
+	CCProgressTimer *pointsProgress;
 
 	CCLabelTTF* pointsLabel;
 	CCLabelTTF* timeLabel;
@@ -70,6 +71,7 @@ private:
 	void handleClickPause(CCObject* sender);
 
 	void handleTimeout();
+	void updateProgress();
 
 public:
 
