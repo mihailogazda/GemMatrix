@@ -330,16 +330,17 @@ bool MainScene::initSidebar()
 
 	//	points won	
 	pointsLabel = CCLabelTTF::create("0 Points", fontName, fontSize);
-	pointsLabel->setPosition(ccp(gw / 2, g_height - 100));
+	pointsLabel->setPosition(ccp(gw / 2, g_height - 90));
     sidebar->addChild(pointsLabel);
     
-	//	Timer for new row
-	this->timeLabel = CCLabelTTF::create("0s", fontName, fontSize - 6);
-	this->timeLabel->setPosition(ccp(gw / 2, buttonStart));
-	sidebar->addChild(this->timeLabel, 1);    
+	sprintf(tmp, "Total: %d", totalPoints);
+	CCLabelTTF* pointsTotal = CCLabelTTF::create(tmp, fontName, fontSize - 6);
+	pointsTotal->setPosition(ccp(gw / 2, g_height - 120));
+	pointsTotal->setColor(ccc3(80, 80, 80));
+	sidebar->addChild(pointsTotal);
 
 	short menuItemX = gw / 2;
-	short menuItemStart = g_height - 270;
+	short menuItemStart = g_height - 300;
 
 	//	game menu
 	CCMenuItemFont::setFontName(fontName);
@@ -348,11 +349,11 @@ bool MainScene::initSidebar()
 	CCMenuItemFont* pause =  CCMenuItemFont::create("Pause", this, menu_selector(MainScene::handleClickPause));
 	pause->setPosition(ccp(menuItemX, menuItemStart));
 
-	menuItemStart -= 50;
+	menuItemStart -= 30;
 	CCMenuItemFont* reset = CCMenuItemFont::create("Restart", this, menu_selector(MainScene::handleClickReset));
 	reset->setPosition(ccp(menuItemX, menuItemStart));
     
-	menuItemStart -= 50;
+	menuItemStart -= 30;
     CCMenuItemFont* mainMenu = CCMenuItemFont::create("Menu", this, menu_selector(MainScene::handleClickMenu));
     mainMenu->setPosition(ccp(menuItemX, menuItemStart));
     
@@ -364,7 +365,7 @@ bool MainScene::initSidebar()
 	//	add clock
 	CCSprite* clockBack = CCSprite::create(IMG_CLOCK);
 	clockBack->setScale(0.2f);
-	CCPoint clockPos = ccp(menuItemX, g_height - 180);
+	CCPoint clockPos = ccp(menuItemX, g_height - 190);
 	clockBack->setPosition(clockPos);
 	sidebar->addChild(clockBack);
 
@@ -387,6 +388,11 @@ bool MainScene::initSidebar()
 	upButton->setPosition(ccp(gw / 2, buttonStart));
     this->sidebarMenu->addChild(upButton);
     
+	//	Timer for new row
+	this->timeLabel = CCLabelTTF::create("0s", fontName, fontSize - 6);
+	this->timeLabel->setPosition(ccp(gw / 2, buttonStart));
+	sidebar->addChild(this->timeLabel, 1);
+
     this->addChild(sidebar);
     
     sidebar->runAction(CCEaseBounceOut::create(CCMoveBy::create(1, ccp(-gw, 0))));
