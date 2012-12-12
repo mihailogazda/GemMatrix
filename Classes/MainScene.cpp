@@ -254,7 +254,7 @@ void MainScene::initMatrix()
 			int stop = this->rows - 3;
 			if (i < stop)
 			{
-				CCGemSprite* gs = CCGemSprite::create();
+				CCGemSprite* gs = CCGemSprite::create(gameLevel.hasRocks);
 				gs->setAnchorPoint(ccp(0, 0));			
 				this->matrix[i][j] = gs;
 				this->gameContent->addChild(gs);
@@ -276,7 +276,7 @@ void MainScene::initSpareRow()
 		//if (this->spareRow[i] != NULL)		
 		//	this->spareRow[i]->removeFromParentAndCleanup(true);					
 
-		CCGemSprite* gs = CCGemSprite::create();
+		CCGemSprite* gs = CCGemSprite::create(gameLevel.hasRocks);
 		this->spareRow[i] = gs;		
 		gs->setAnchorPoint(ccp(0, 0));
 		gs->setOpacity(SPARE_ROW_FADE_START);

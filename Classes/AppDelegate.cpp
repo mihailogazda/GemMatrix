@@ -76,6 +76,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 		
 	LevelLoader *l = LevelLoader::sharedLoader();
 	CCLog("Level count: %d", l->getLevelsCount());
+
+	//GAMELEVEL lev = l->getGameLevel(currentLevel);
 	
 	//	load current level and points
 	totalPoints = CCUserDefault::sharedUserDefault()->getIntegerForKey(SETTING_TOTAL_POINTS, 0);

@@ -11,6 +11,8 @@ typedef struct
 	unsigned int timeout;
 	unsigned int insertRowTime;
 	unsigned int minScore;
+	bool hasRocks;
+	bool checksInvalid;
 	bool valid;
 } GAMELEVEL, *LPGAMELEVEL;
 
@@ -78,6 +80,20 @@ private:
 				l.minScore = atoi((const char*) cont);
 				if (l.minScore != 0)
 					foundCounter++;
+			}
+			else if (xmlStrcmp(currNode->name, (const xmlChar*) "hasRocks") == 0)
+			{
+				cont = xmlNodeGetContent(currNode);				
+				CCUtils::trim((char*) cont);
+				if (xmlStrcmp(cont, (const xmlChar*) "true") == 0)				
+					l.hasRocks = true;
+			}
+			else if (xmlStrcmp(currNode->name, (const xmlChar*) "checksInvalid") == 0)
+			{
+				cont = xmlNodeGetContent(currNode);
+				CCUtils::trim((char*) cont);
+				if (xmlStrcmp(cont, (const xmlChar*) "true") == 0)
+					l.checksInvalid = true;
 			}
 			
 			currNode = currNode->next;
