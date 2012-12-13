@@ -50,7 +50,11 @@
 //
 //	LEVELS
 //
-#define LEVEL_RESOURCE RES_DIRECTORY "levels.xml"
+#ifdef __MACH__
+    #define LEVEL_RESOURCE "levels.xml"
+#else
+    #define LEVEL_RESOURCE RES_DIRECTORY "levels.xml"
+#endif
 
 //
 //	SETTINGS

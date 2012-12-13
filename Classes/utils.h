@@ -2,8 +2,12 @@
 #define __CC_UTILS_H__
 
 #include "cocos2d.h"
+
+#if _WINDOWS
 #include <random>
 #include <array>
+#endif
+
 #include "GameResources.h"
 
 using namespace cocos2d;
@@ -26,20 +30,24 @@ enum IOSTYPE
 //static std::vector<int> g_p(g_a.begin(), g_a.end());
 //static std::discrete_distribution<int> randomDist();
 
+#if _WINDOWS
 static std::mt19937 eng;
 static std::uniform_int_distribution<int> uniformGems(0, 2);
 static std::uniform_int_distribution<int> uniformGemsRocks(0, GEM_ROCK_PROBABILITY_MAX);
+#endif
 
 class CCUtils 
 {
 public:
+
 
 	//	gets random interval number with upper border
 	static int randomInInterval(int min, int max)
     {		
         return min + (rand() % (int)(max - min + 1));
 	}
-
+    
+#if _WINDOWS
 	static int uniformRandomGems()
 	{
 		return uniformGems(eng);
@@ -49,6 +57,7 @@ public:
 	{
 		return uniformGemsRocks(eng) == 0;
 	}
+#endif
 
 	static void trim(char * s) 
 	{

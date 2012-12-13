@@ -16,6 +16,11 @@ typedef struct
 	bool valid;
 } GAMELEVEL, *LPGAMELEVEL;
 
+
+#ifndef MAX_PATH
+#define MAX_PATH 255
+#endif
+
 //	singleton class
 class LevelLoader;
 static LevelLoader* p_sharedLoader = NULL;
@@ -34,9 +39,22 @@ private:
 	{
 		memset(path, 0, sizeof(path));
 		sharedDoc = NULL;
-
+    
+    #ifdef __MACH__
+    
+        const char* resDir = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(LEVEL_RESOURCE);
+    
+        //char tmp[MAX_PATH];
+        //sprintf(tmp, "%s%s", resDir, LEVEL_RESOURCE);
+        CCLog(resDir);
+    
+		sharedDoc = xmlReadFile(resDir, "utf-8", XML_PARSE_RECOVER);
+    
+    #else
 		sharedDoc = xmlReadFile(LEVEL_RESOURCE, "utf-8", XML_PARSE_RECOVER);
-		CCAssert(this->sharedDoc, "XML Levels document not loaded");
+    #endif
+    
+		CCAssert(sharedDoc, "XML Levels document not loaded");
 	}
 
 	~LevelLoader()

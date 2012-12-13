@@ -22,9 +22,8 @@ public:
 
 	static CCGemSprite* create(bool includeRock = false)
 	{		
-		int r = CCUtils::uniformRandomGems();
-
-		if (includeRock && CCUtils::uniformProbabilityRock())
+		int r = CCUtils::randomInInterval(0, 2); //CCUtils::uniformRandomGems();
+		if (includeRock && CCUtils::randomInInterval(0, 60) == 0)
 			r = 3;
 
 		const char* gemname = g_gemNames[r];
