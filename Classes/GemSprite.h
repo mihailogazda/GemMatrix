@@ -6,12 +6,18 @@
 
 using namespace cocos2d;
 
+#define BOMB_ID 4
+#define BOMB_FACTOR 2
+#define GEM_POINS 10
+#define BONUS_FACTOR 10
+
 static const char* g_gemNames[] = 
 {
 	"Gem Blue.png",
 	"Gem Orange.png",
 	"Gem Green.png",
     "Gem Gray.png",
+	"bomb.png",
 	"Rock.png"
 };
 
@@ -27,6 +33,8 @@ public:
 		//if (includeRock && CCUtils::randomInInterval(0, 60) == 0)
 		//	r = 3;
 		int r = CCUtils::uniformRandomGems();
+		if (CCUtils::uniformProbabilityRock())
+			r = BOMB_ID;
 
 		const char* gemname = g_gemNames[r];
     

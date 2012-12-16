@@ -461,16 +461,23 @@ void MainScene::verifyTouch(CCPoint point)
 		for (int j = 0; j < MAX_COLS; j++)
 		{
 			if (this->matrix[i][j] == NULL)
-				continue;
-				
+				continue;				
 
 			CCRect r = this->matrix[i][j]->boundingBox();
 			if (r.containsPoint(point))
 			{
 				CCLog("Found item @ %dx%d", i, j);
-				this->foundItems.clear();
-				this->processItem(i, j);
-				this->postProcess();
+
+				if (this->matrix[i][j]->getTag() == BOMB_ID)
+				{
+					this->processBomb(i, j);
+				}
+				else
+				{
+					this->foundItems.clear();
+					this->processItem(i, j);
+					this->postProcess();
+				}
 				return;
 			}
 		}
@@ -513,6 +520,35 @@ void MainScene::processItem(int row, int col)
 		this->processItem(row - 1, col);
 }
 
+void MainScene::hideItem(unsigned int row, unsigned int col)
+{
+	CCGemSprite* sp = this->matrix[row][col];
+	CC_ASSERT(sp);
+
+	//	fade out
+	//CCBlink* fo = CCBlink::create(0.6f, 2);		
+	CCHide *hi = CCHide::create();
+	CCCallFuncN *cf = CCCallFuncN::create(this, callfuncN_selector(MainScene::callbackItemHidden));
+	CCAction* seq = CCSequence::create(/*fo,*/ hi, cf, NULL);
+		
+	//	Add points won per gem
+	CCPoint pos = positionForElement(row, col);
+	CCLabelTTF *lab  = CCLabelTTF::create("10", "Impact", 16);
+	pos.x += GEM_WIDTH / 2;
+	pos.y += GEM_HEIGHT / 2;
+	lab->setPosition(pos);
+	this->addChild(lab);
+
+	CCFadeOut* fo2 = CCFadeOut::create(0.8f);				
+	CCMoveBy* mb2 = CCMoveBy::create(0.4f, ccp(0, 10));
+
+	sp->runAction(seq);
+	lab->runAction(mb2);
+	lab->runAction(fo2);
+
+	this->matrix[row][col] = NULL;
+}
+
 void MainScene::postProcess()
 {
 	int size = this->foundItems.size();
@@ -536,7 +572,8 @@ void MainScene::postProcess()
 	{
 		MATRIXPOS p = this->foundItems.at(i);
 		CCLog("Post processing item: %d x %d", p.row, p.col);
-
+		this->hideItem(p.row, p.col);
+#if 0
 		CCGemSprite* sp = this->matrix[p.row][p.col];
 		CC_ASSERT(sp);
 
@@ -569,8 +606,11 @@ void MainScene::postProcess()
 		ex->setTexture(tx);
 		this->addChild(ex);
 		*/
+
 		//	set zero
 		this->matrix[p.row][p.col] = NULL;
+#endif
+
 	}
 }
 
@@ -583,7 +623,7 @@ void MainScene::checkForBonus()
 	int bonus = size - bonusOver;
 	if (bonus > 0)
 	{
-		int bonusWon = 100 * bonus;
+		int bonusWon = BONUS_FACTOR * bonus;
 		this->pointsCount += bonusWon;
 
 		char bonusText[100] = "";
@@ -615,7 +655,7 @@ void MainScene::checkForBonus()
 	}
 
 	//	set points
-	this->pointsCount += size * 10;
+	this->pointsCount += size * GEM_POINS;
 	char points[100] = "";
 	sprintf(points, "%d points", this->pointsCount);
 	this->pointsLabel->setString(points);
@@ -863,4 +903,80 @@ void MainScene::startTipDiscovery()
 			}
 		}
 	}
+}
+
+void MainScene::processBomb(unsigned int row, unsigned int col)
+{
+	CCLog("PRocess bomb %dx%d", row, col);
+
+
+	this->hideItem(row, col);
+	unsigned int counter = 0;
+
+
+	if (this->matrix[row + 1][col])		//	top
+	{
+		this->hideItem(row + 1, col);
+		counter++;
+	}
+	if (this->matrix[row][col + 1])		//	right
+	{
+		this->hideItem(row, col + 1);
+		counter++;
+	}
+	if (row > 0 && this->matrix[row - 1][col])		//	bottom
+	{
+		this->hideItem(row - 1, col);	
+		counter++;
+	}
+	if (col > 0 && this->matrix[row][col - 1])		//	left
+	{
+		this->hideItem(row, col - 1);
+		counter++;
+	}
+
+	/*
+		 *		  1*2
+		* *  -->  ***
+		 *		  3*4
+	*/
+	
+	//	1
+	if (col > 0 && this->matrix[row + 1][col - 1])
+	{
+		this->hideItem(row + 1, col - 1);
+		counter++;
+	}
+	//	2
+	if (this->matrix[row + 1][col + 1])
+	{
+		this->hideItem(row + 1, col + 1);
+		counter++;
+	}
+	//	3
+	if (row > 0 && col > 0 && this->matrix[row - 1][col - 1])
+	{
+		this->hideItem(row - 1, col - 1);
+		counter++;
+	}
+	//	4
+	if (row > 0 && this->matrix[row - 1][col + 1])
+	{
+		this->hideItem(row - 1, col + 1);
+		counter++;
+	}
+	
+	this->pointsCount += counter * GEM_POINS * BOMB_FACTOR;
+	this->updateProgress();
+	
+	char tmp[50];
+	sprintf(tmp, "%d points", this->pointsCount);
+	this->pointsLabel->setString(tmp);
+
+
+	this->reorganizeMatrix();
+	this->redrawMatrix();
+	
+	
+
 }

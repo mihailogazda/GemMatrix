@@ -84,7 +84,10 @@ private:
 	void postProcess();
 	void checkForBonus();
 
+	void hideItem(unsigned int row, unsigned int col);
+
 	void startTipDiscovery();
+	void processBomb(unsigned int row, unsigned int col);
 	
 	bool disableTouches;
 	int callbackCount;

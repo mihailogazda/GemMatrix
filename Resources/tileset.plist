@@ -69,6 +69,19 @@
                 <key>sourceSize</key>
                 <string>{101,171}</string>
             </dict>
+            <key>bomb.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,867},{101,145}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{101,145}}</string>
+                <key>sourceSize</key>
+                <string>{101,145}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -79,7 +92,7 @@
             <key>size</key>
             <string>{128,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:f097248f4c0999b9aeb1bf1840962a38$</string>
+            <string>$TexturePacker:SmartUpdate:981ced8bc4f029b36f6260b91f863112$</string>
             <key>textureFileName</key>
             <string>tileset.png</string>
         </dict>

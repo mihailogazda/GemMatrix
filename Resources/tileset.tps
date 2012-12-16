@@ -10,7 +10,7 @@
         <key>autoSDSettings</key>
         <array/>
         <key>allowRotation</key>
-        <false/>
+        <true/>
         <key>quiet</key>
         <false/>
         <key>premultiplyAlpha</key>
@@ -22,7 +22,7 @@
         <key>dataFormat</key>
         <string>cocos2d</string>
         <key>textureFileName</key>
-        <filename>tileset.png</filename>
+        <filename></filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -111,7 +111,7 @@
             <enum type="AndEngine::MagFilter">MagLinear</enum>
         </struct>
         <key>dataFileName</key>
-        <filename>tileset.plist</filename>
+        <filename></filename>
         <key>mainExtension</key>
         <string></string>
         <key>forceIdenticalLayout</key>
@@ -141,17 +141,32 @@
         </struct>
         <key>fileList</key>
         <array>
+            <filename>PlanetCute PNG/bomb.png</filename>
             <filename>PlanetCute PNG/Gem Blue.png</filename>
+            <filename>PlanetCute PNG/Gem Gray.png</filename>
             <filename>PlanetCute PNG/Gem Green.png</filename>
             <filename>PlanetCute PNG/Gem Orange.png</filename>
+            <filename>PlanetCute PNG/bomb.png</filename>
             <filename>PlanetCute PNG/Gem Blue.png</filename>
+            <filename>PlanetCute PNG/Gem Gray.png</filename>
             <filename>PlanetCute PNG/Gem Green.png</filename>
             <filename>PlanetCute PNG/Gem Orange.png</filename>
+            <filename>PlanetCute PNG/bomb.png</filename>
             <filename>PlanetCute PNG/Gem Blue.png</filename>
+            <filename>PlanetCute PNG/Gem Gray.png</filename>
+            <filename>PlanetCute PNG/Gem Green.png</filename>
+            <filename>PlanetCute PNG/Gem Orange.png</filename>
+            <filename>PlanetCute PNG/bomb.png</filename>
+            <filename>PlanetCute PNG/Gem Blue.png</filename>
+            <filename>PlanetCute PNG/Gem Gray.png</filename>
+            <filename>PlanetCute PNG/Gem Green.png</filename>
+            <filename>PlanetCute PNG/Gem Orange.png</filename>
+            <filename>PlanetCute PNG/bomb.png</filename>
+            <filename>PlanetCute PNG/Gem Blue.png</filename>
+            <filename>PlanetCute PNG/Gem Gray.png</filename>
             <filename>PlanetCute PNG/Gem Green.png</filename>
             <filename>PlanetCute PNG/Gem Orange.png</filename>
             <filename>PlanetCute PNG/Rock.png</filename>
-            <filename>PlanetCute PNG/Gem Gray.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
