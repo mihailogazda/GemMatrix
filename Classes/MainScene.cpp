@@ -623,7 +623,7 @@ void MainScene::checkForBonus()
 	int bonus = size - bonusOver;
 	if (bonus > 0)
 	{
-		int bonusWon = BONUS_FACTOR * bonus;
+		int bonusWon = BONUS_FACTOR * GEM_POINS * bonus;
 		this->pointsCount += bonusWon;
 
 		char bonusText[100] = "";
@@ -977,6 +977,15 @@ void MainScene::processBomb(unsigned int row, unsigned int col)
 	this->reorganizeMatrix();
 	this->redrawMatrix();
 	
-	
+	this->makeShakeEffect();
+
+}
+
+void MainScene::makeShakeEffect()
+{
+	CCLog("Make shake effect");
+
+
+
 
 }

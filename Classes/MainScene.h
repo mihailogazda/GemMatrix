@@ -88,6 +88,8 @@ private:
 
 	void startTipDiscovery();
 	void processBomb(unsigned int row, unsigned int col);
+
+	void makeShakeEffect();
 	
 	bool disableTouches;
 	int callbackCount;

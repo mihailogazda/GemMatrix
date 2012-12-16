@@ -7,7 +7,7 @@
 using namespace cocos2d;
 
 #define BOMB_ID 4
-#define BOMB_FACTOR 2
+#define BOMB_FACTOR 5
 #define GEM_POINS 10
 #define BONUS_FACTOR 10
 
