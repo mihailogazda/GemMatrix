@@ -161,41 +161,58 @@ void MainMenuScene::handleBoxShowed()
 	short fontSize = 28;
 	selectedLevel = currentLevel;
 	
-	CCLabelTTF *level = CCLabelTTF::create(tmp, "Impact", fontSize);
+	level = CCLabelTTF::create(tmp, "Impact", fontSize);
 	level->setPosition(ccp(x, y));
 	level->setColor(black);
 	messageLayer->addChild(level, 1);
 
+	//CCMenuItemFont::setColor(black);
+
+	//	now create buttons		
+	left = CCMenuItemFont::create("<-", this, menu_selector(MainMenuScene::handleLeft));
+	right = CCMenuItemFont::create("->", this, menu_selector(MainMenuScene::handleRight));
+
+	left->setPosition(-200, 0);	
+	right->setPosition(200, 0);	
+
+	CCMenu *m = CCMenu::create(left, right, NULL);
+	m->setPosition(x, y);
+	this->addChild(m, 2);
+
+	//	now create text and button
 	GAMELEVEL gl = LevelLoader::sharedLoader()->getGameLevel(currentLevel);
 	if (gl.valid)
 	{
 		fontSize = 20;
-		short spaceing = 60;
+		short spaceing = 50;
+		
+		y -= spaceing + 20;		
+		INSERT_LABEL(l1, "Points to win:", font, fontSize, x, y, black, messageLayer)
+
+		y -= spaceing / 2;
+		sprintf(tmp, "%d", gl.minScore);
+		INSERT_LABEL(l4, tmp, font, fontSize, x, y, black, messageLayer);
+		this->points = l4;
+
+		y -= spaceing;		
+		INSERT_LABEL(l2, "Time to win it:", font, fontSize, x, y, black, messageLayer);
+
+		y -= spaceing / 2;
+		sprintf(tmp, "%d seconds", gl.timeout);
+		INSERT_LABEL(l5, tmp, font, fontSize, x, y, black, messageLayer);
+		this->timeout = l5;
+
+		y -= spaceing;		
+		INSERT_LABEL(l3, "New row comes every:", font, fontSize, x, y, black, messageLayer);
+
+		y -= spaceing / 2;	
+		sprintf(tmp, "%d seconds", gl.insertRowTime);
+		INSERT_LABEL(l6, tmp, font, fontSize, x, y, black, messageLayer);
+		this->insertRowTime = l6;
 
 		y -= spaceing + 20;
-		sprintf(tmp, "Points to win: %d", gl.minScore);
-		CCLabelTTF *l1 = CCLabelTTF::create(tmp, font, fontSize);				
-		l1->setPosition(ccp(x, y));
-		l1->setColor(black);
-		messageLayer->addChild(l1);
-
-		y -= spaceing;
-		sprintf(tmp, "Time to win it: %d seconds", gl.timeout);
-		CCLabelTTF *l2 = CCLabelTTF::create(tmp, font, fontSize);
-		l2->setPosition(ccp(x, y));
-		l2->setColor(black);
-		messageLayer->addChild(l2);
-
-		y -= spaceing;
-		sprintf(tmp, "New row comes: every %d seconds", gl.insertRowTime);
-		CCLabelTTF *l3 = CCLabelTTF::create(tmp, font, fontSize);
-		l3->setPosition(ccp(x, y));
-		l3->setColor(black);
-		messageLayer->addChild(l3);		
-
-		y -= spaceing * 2;
 		fontSize = 36;
-		sprintf(tmp, "Play");		
+		sprintf(tmp, "Play");
 		
 		CCMenuItemFont::setFontSize(fontSize);
 		CCMenuItemFont* play = CCMenuItemFont::create(tmp, this, menu_selector(MainMenuScene::handleLevelSelected));
@@ -204,7 +221,6 @@ void MainMenuScene::handleBoxShowed()
 		CCMenu* menu = CCMenu::create(play, NULL);
 		menu->setPosition(ccp(x, y));
 		messageLayer->addChild(menu);
-
 	}
 }
 
@@ -214,6 +230,20 @@ void MainMenuScene::handleLevelSelected(CCObject* sender)
 
 	currentLevel = selectedLevel;
 	CCDirector::sharedDirector()->pushScene(CCTransitionFadeBL::create(1, MainScene::scene()));
+}
+
+void MainMenuScene::handleLeft(CCObject* sender)
+{
+	char tmp[50];
+	sprintf(tmp, "Level: %d", --selectedLevel);
+	this->level->setString(tmp);
+}
+
+void MainMenuScene::handleRight(CCObject* sender)
+{
+	char tmp[50];
+	sprintf(tmp, "Level: %d", ++selectedLevel);
+	this->level->setString(tmp);
 }
 
 #pragma warning (pop)

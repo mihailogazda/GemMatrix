@@ -11,6 +11,11 @@
 
 #include "GameResources.h"
 
+
+//	few usefull macros
+#define INSERT_LABEL(name, txt, font, fontSize, x, y, color, layer) CCLabelTTF* name = CCLabelTTF::create(txt, font, fontSize); name->setPosition(ccp(x, y)); name->setColor(color); layer->addChild(name);
+
+
 using namespace cocos2d;
 
 enum IOSTYPE

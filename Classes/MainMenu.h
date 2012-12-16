@@ -26,6 +26,17 @@ private:
 	void handleBoxShowed();
 	void handleLevelSelected(CCObject* sender);
 
+	CCLabelTTF* points;
+	CCLabelTTF* timeout;
+	CCLabelTTF* insertRowTime;
+	CCLabelTTF* level;
+
+	CCMenuItem* left;
+	CCMenuItem* right;
+
+	void handleLeft(CCObject* sender);
+	void handleRight(CCObject* sender);
+
 public:
 
 	static CCScene* scene();
