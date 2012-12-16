@@ -6,6 +6,7 @@
 #if _WINDOWS
 #include <random>
 #include <array>
+#include <time.h>
 #endif
 
 #include "GameResources.h"
@@ -26,14 +27,15 @@ enum IOSTYPE
 };
 
 //	for uniform distribution
-//static std::array<int, 3> g_a = {33, 33, 33};
-//static std::vector<int> g_p(g_a.begin(), g_a.end());
-//static std::discrete_distribution<int> randomDist();
+static bool seedWasAssigned = false;
+static std::array<int, 3> g_a = {33, 33, 33};
+static std::vector<int> g_p(g_a.begin(), g_a.end());
+static std::tr1::discrete_distribution<int> randomDist();
 
 #if _WINDOWS
-static std::mt19937 eng;
-static std::uniform_int_distribution<int> uniformGems(0, 2);
-static std::uniform_int_distribution<int> uniformGemsRocks(0, GEM_ROCK_PROBABILITY_MAX);
+static std::tr1::mt19937 eng;
+static std::tr1::uniform_int_distribution<int> uniformGems(0, 2);
+static std::tr1::uniform_int_distribution<int> uniformGemsRocks(0, GEM_ROCK_PROBABILITY_MAX);
 #endif
 
 class CCUtils 
@@ -50,6 +52,11 @@ public:
 #if _WINDOWS
 	static int uniformRandomGems()
 	{
+		if (!seedWasAssigned)
+		{
+			eng.seed(static_cast<unsigned int>(time(0)));
+			seedWasAssigned = true;
+		}
 		return uniformGems(eng);
 	}
 
