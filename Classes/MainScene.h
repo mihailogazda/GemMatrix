@@ -90,6 +90,8 @@ private:
 	void processBomb(unsigned int row, unsigned int col);
 
 	void makeShakeEffect();
+	float shakeTimer;
+	void shakeTick(float delta);
 	
 	bool disableTouches;
 	int callbackCount;

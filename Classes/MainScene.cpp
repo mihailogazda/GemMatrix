@@ -978,14 +978,44 @@ void MainScene::processBomb(unsigned int row, unsigned int col)
 	this->redrawMatrix();
 	
 	this->makeShakeEffect();
-
 }
 
 void MainScene::makeShakeEffect()
 {
 	CCLog("Make shake effect");
 
+	shakeTimer = 0;
+	this->schedule(schedule_selector(MainScene::shakeTick), 1 / 60);
+}
+
+void MainScene::shakeTick(float delta)
+{
+	CCLog("ShakeTICK");
+	shakeTimer += delta;
+
+	float x = 0, y = 0, factor = 8;
+
+	x = this->gameContent->getPositionX();
+	y = this->gameContent->getPositionY();
 
 
+	if (CCUtils::randomInInterval(0, 1) == 0)
+	{
+		x -= CCUtils::randomInInterval(1, factor);
+		y -= CCUtils::randomInInterval(1, factor);
+	}
+	else
+	{
+		x += CCUtils::randomInInterval(1, factor);
+		y += CCUtils::randomInInterval(1, factor);
+	}
+		
+	this->setPosition(x, y);
 
+	if (shakeTimer >= BOMB_SHAKE)
+	{
+		CCLog("Unschedule shake");
+		this->unschedule(schedule_selector(MainScene::shakeTick));
+		this->setPosition(0, 0);
+	}
 }
