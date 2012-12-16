@@ -79,7 +79,8 @@ bool MainScene::init()
 
 	//	set points and such
     this->totalTime = 0;
-    this->pointsCount = 0;	
+    this->pointsCount = 0;
+	this->timerTip = 0;
 	
 	this->timerCount = this->gameLevel.insertRowTime;
 
@@ -180,7 +181,7 @@ void MainScene::handleClickPause(CCObject* sender)
 		this->sidebarMenu->setTouchEnabled(false);
 
 		this->pauseSchedulerAndActions();
-		this->pauseLayer->runAction(CCEaseIn::create(CCFadeTo::create(0.5, 255 * 0.8), 1));
+		this->pauseLayer->runAction(CCEaseIn::create(CCFadeTo::create(0.5, 255 * 0.7), 1));
 
 		for (unsigned int i = 0; i < this->pauseLayer->getChildrenCount(); i++)
 		{
@@ -250,11 +251,11 @@ void MainScene::initMatrix()
 	{
 		for (int j = 0; j < this->columns; j++)
 		{
-			int stop = this->rows - 3;
+			int stop = this->rows - this->gameLevel.substractRows;
 			if (i < stop)
 			{
 				CCGemSprite* gs = CCGemSprite::create(gameLevel.hasRocks);
-				gs->setAnchorPoint(ccp(0, 0));			
+				gs->setAnchorPoint(ccp(0, 0));
 				this->matrix[i][j] = gs;
 				this->gameContent->addChild(gs);
 			}
@@ -526,6 +527,7 @@ void MainScene::postProcess()
 
 	//	set points
 	this->checkForBonus();
+	this->timerTip = 0;
 
 	//	check for bonus
 
@@ -719,6 +721,8 @@ void MainScene::handleTimeUpdate(float delta)
     }
 
 	this->totalTime++;
+	this->timerTip++;
+
 	float max = this->gameLevel.timeout;
 	float perc =  (this->totalTime / max) * 100 ;
 	CCLog("Percentage is %f (%d of %d)", perc, this->totalTime, max);
@@ -729,6 +733,12 @@ void MainScene::handleTimeUpdate(float delta)
 	{
 		this->handleTimeout();
 		return;
+	}
+
+	if (this->timerTip >= this->gameLevel.tipPause)
+	{
+		this->startTipDiscovery();
+		this->timerTip = 0;
 	}
 
 	//	check for new element insertion
@@ -793,7 +803,7 @@ void MainScene::insertRowFromBottom()
                     maxColumnHeight = i;
             }
         }
-    }		
+    }
 
     memcpy(this->matrix, tmp, sizeof(this->matrix));
     
@@ -817,4 +827,40 @@ void MainScene::handleTimeout()
 void MainScene::updateProgress()
 {
 	this->pointsProgress->setPercentage( (float) this->pointsCount / (float) this->gameLevel.minScore * 100);
+}
+
+void MainScene::startTipDiscovery()
+{
+	CCLog("Start tip discovery");
+
+	for (int i = 0; i < this->rows; i++)
+	{
+		for (int j = 0; j < this->columns; j++)
+		{
+			if (this->matrix[i][j] != NULL)
+			{
+				this->foundItems.clear();
+				this->processItem(i, j);
+				if (this->foundItems.size() >= 3)
+				{
+					CCLog("Found tip");
+
+					for (int m = 0; m < this->foundItems.size(); m++)
+					{
+						MATRIXPOS po = this->foundItems[m];
+						CCGemSprite* s = this->matrix[po.row][po.col];
+						int scale = s->getScaleX();
+
+						CCEaseInOut *e1 = CCEaseInOut::create(CCScaleTo::create(0.3, GEM_SCALE + 0.05, GEM_SCALE + 0.05), 1);						
+						CCEaseInOut *e2 = CCEaseInOut::create(CCScaleTo::create(0.3, GEM_SCALE, GEM_SCALE), 1);
+						CCRepeat *rep = CCRepeat::create(CCSequence::createWithTwoActions(e1, e2), 3);
+						
+						s->runAction(rep);
+					}
+
+					return;
+				}
+			}
+		}
+	}
 }

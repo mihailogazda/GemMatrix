@@ -33,11 +33,13 @@
   </level>
   <!-- 6 -->
   <level>
-    <timeout> 45 </timeout>
-    <insertRowTime> 8 </insertRowTime>
+    <timeout> 180 </timeout>
+    <insertRowTime> 88 </insertRowTime>
     <minScore> 7000 </minScore>
     <checksInvalid> true </checksInvalid>
     <hasRocks> true </hasRocks>
+    <substractRows> 0 </substractRows>
+    <secondsToTip> 5 </secondsToTip>
   </level>
   <!-- 7 -->
   <level>

@@ -23,6 +23,7 @@ private:
     
 	int pointsCount;
 	int timerCount;
+	unsigned int timerTip;
     int totalTime;
 	
 	GAMELEVEL gameLevel;
@@ -73,14 +74,6 @@ private:
 	void handleTimeout();
 	void updateProgress();
 
-public:
-
-    bool wasInit;
-	virtual bool init();
-    void postInit();    
-
-	static CCScene* scene();
-
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 
@@ -90,6 +83,8 @@ public:
 	void processItem(int row, int col);
 	void postProcess();
 	void checkForBonus();
+
+	void startTipDiscovery();
 	
 	bool disableTouches;
 	int callbackCount;
@@ -101,7 +96,15 @@ public:
 	void reorganizeMatrix();
     void insertRowFromBottom();
 
-	//	dont know what this is
+    bool wasInit;
+	void postInit();
+
+public:
+   
+	virtual bool init();
+    
+	static CCScene* scene();
+
 	CREATE_FUNC(MainScene);
 };
 

@@ -11,6 +11,9 @@ typedef struct
 	unsigned int timeout;
 	unsigned int insertRowTime;
 	unsigned int minScore;
+	unsigned int substractRows;
+	unsigned int secondsToTip;
+	static const unsigned int tipPause = 10;
 	bool hasRocks;
 	bool checksInvalid;
 	bool valid;
@@ -99,6 +102,23 @@ private:
 				if (l.minScore != 0)
 					foundCounter++;
 			}
+			else if (xmlStrcmp(currNode->name, (const xmlChar*) "substractRows") == 0)
+			{
+				cont = xmlNodeGetContent(currNode);
+				l.substractRows = atoi((const char*) cont);
+				if (l.substractRows != 0)
+					foundCounter++;
+			}
+			else if (xmlStrcmp(currNode->name, (const xmlChar*) "secondsToTip") == 0)
+			{
+				cont = xmlNodeGetContent(currNode);
+				l.secondsToTip = atoi((const char*) cont);
+				if (l.secondsToTip != 0)
+					foundCounter++;
+			}
+			//
+			//	not counting in successfull - optional
+			//
 			else if (xmlStrcmp(currNode->name, (const xmlChar*) "hasRocks") == 0)
 			{
 				cont = xmlNodeGetContent(currNode);				
@@ -114,10 +134,11 @@ private:
 					l.checksInvalid = true;
 			}
 			
+			
 			currNode = currNode->next;
 		}
 
-		if (foundCounter == 3)
+		if (foundCounter >= 3)
 			l.valid = true;
 
 		return l;
