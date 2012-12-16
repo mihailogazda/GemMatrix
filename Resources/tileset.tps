@@ -22,7 +22,7 @@
         <key>dataFormat</key>
         <string>cocos2d</string>
         <key>textureFileName</key>
-        <filename></filename>
+        <filename>tileset.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -111,7 +111,7 @@
             <enum type="AndEngine::MagFilter">MagLinear</enum>
         </struct>
         <key>dataFileName</key>
-        <filename></filename>
+        <filename>tileset.plist</filename>
         <key>mainExtension</key>
         <string></string>
         <key>forceIdenticalLayout</key>
@@ -167,6 +167,15 @@
             <filename>PlanetCute PNG/Gem Green.png</filename>
             <filename>PlanetCute PNG/Gem Orange.png</filename>
             <filename>PlanetCute PNG/Rock.png</filename>
+            <filename>PlanetCute PNG/Heart.png</filename>
+            <filename>PlanetCute PNG/Key.png</filename>
+            <filename>PlanetCute PNG/Star.png</filename>
+            <filename>PlanetCute PNG/Heart.png</filename>
+            <filename>PlanetCute PNG/Key.png</filename>
+            <filename>PlanetCute PNG/Star.png</filename>
+            <filename>PlanetCute PNG/Heart.png</filename>
+            <filename>PlanetCute PNG/Key.png</filename>
+            <filename>PlanetCute PNG/Star.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

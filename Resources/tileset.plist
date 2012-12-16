@@ -20,7 +20,7 @@
             <key>Gem Gray.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,175},{101,171}}</string>
+                <string>{{105,2},{101,171}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -33,7 +33,7 @@
             <key>Gem Green.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,348},{101,171}}</string>
+                <string>{{208,2},{101,171}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -46,7 +46,33 @@
             <key>Gem Orange.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,521},{101,171}}</string>
+                <string>{{311,2},{101,171}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{101,171}}</string>
+                <key>sourceSize</key>
+                <string>{101,171}</string>
+            </dict>
+            <key>Heart.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,175},{101,171}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{101,171}}</string>
+                <key>sourceSize</key>
+                <string>{101,171}</string>
+            </dict>
+            <key>Key.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{105,175},{101,171}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -59,7 +85,20 @@
             <key>Rock.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,694},{101,171}}</string>
+                <string>{{208,175},{101,171}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{101,171}}</string>
+                <key>sourceSize</key>
+                <string>{101,171}</string>
+            </dict>
+            <key>Star.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{311,175},{101,171}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,7 +111,7 @@
             <key>bomb.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,867},{101,145}}</string>
+                <string>{{2,348},{101,145}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -90,9 +129,9 @@
             <key>realTextureFileName</key>
             <string>tileset.png</string>
             <key>size</key>
-            <string>{128,1024}</string>
+            <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:981ced8bc4f029b36f6260b91f863112$</string>
+            <string>$TexturePacker:SmartUpdate:a7b81d3e73373d91e1599963af9430b5$</string>
             <key>textureFileName</key>
             <string>tileset.png</string>
         </dict>
