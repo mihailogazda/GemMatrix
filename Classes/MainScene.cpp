@@ -614,6 +614,22 @@ void MainScene::postProcess()
 	}
 }
 
+void MainScene::showBonusMessage(char* message)
+{
+	CCLabelTTF* bonusLabel = CCLabelTTF::create(message, "Impact", 28);
+	CCAssert(bonusLabel, "Bonus label is empty");
+
+	bonusLabel->setPosition(ccp(gameContent->getContentSize().width / 2, g_height / 2));
+	bonusLabel->setOpacity(0);
+	gameContent->addChild(bonusLabel, 2);
+
+	bonusLabel->runAction(CCSequence::create(
+		CCFadeTo::create(0.2f, 255),
+		CCScaleTo::create(0.5, 2),			
+		CCFadeTo::create(0.5, 0),
+		NULL));
+}
+
 void MainScene::checkForBonus()
 {
 	unsigned int size = this->foundItems.size();
@@ -640,18 +656,7 @@ void MainScene::checkForBonus()
 			sprintf(bonusText, "GOD LIKE!");
 		*/
 		
-		CCLabelTTF* bonusLabel = CCLabelTTF::create(bonusText, "Impact", 28);
-		CCAssert(bonusLabel, "Bonus label is empty");
-
-		bonusLabel->setPosition(ccp(gameContent->getContentSize().width / 2, g_height / 2));
-		bonusLabel->setOpacity(0);
-		gameContent->addChild(bonusLabel, 2);
-
-		bonusLabel->runAction(CCSequence::create(
-			CCFadeTo::create(0.2f, 255),
-			CCScaleTo::create(0.5, 2),			
-			CCFadeTo::create(0.5, 0),
-			NULL));
+		this->showBonusMessage(bonusText);
 	}
 
 	//	set points
@@ -966,13 +971,16 @@ void MainScene::processBomb(unsigned int row, unsigned int col)
 		counter++;
 	}
 	
-	this->pointsCount += counter * GEM_POINS * BOMB_FACTOR;
+	int won = counter * GEM_POINS * BOMB_FACTOR;
+	this->pointsCount += won;
 	this->updateProgress();
 	
 	char tmp[50];
 	sprintf(tmp, "%d points", this->pointsCount);
 	this->pointsLabel->setString(tmp);
 
+	sprintf(tmp, "%d points!", won);
+	this->showBonusMessage(tmp);
 
 	this->reorganizeMatrix();
 	this->redrawMatrix();

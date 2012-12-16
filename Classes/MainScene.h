@@ -82,6 +82,8 @@ private:
 	std::vector<MATRIXPOS> foundItems;
 	void processItem(int row, int col);
 	void postProcess();
+	
+	void showBonusMessage(char* message);
 	void checkForBonus();
 
 	void hideItem(unsigned int row, unsigned int col);
