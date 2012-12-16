@@ -21,6 +21,11 @@ private:
 
 	void PlayButton(CCObject* sender);
 
+	bool messageShowing;
+	CCLayer* messageLayer;
+	void handleBoxShowed();
+	void handleLevelSelected(CCObject* sender);
+
 public:
 
 	static CCScene* scene();

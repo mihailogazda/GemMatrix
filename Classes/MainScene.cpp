@@ -210,9 +210,6 @@ void MainScene::handleClickPause(CCObject* sender)
 
 bool MainScene::initTextures()
 {
-	CCSpriteFrameCache *sfc = CCSpriteFrameCache::sharedSpriteFrameCache();	
-	sfc->addSpriteFramesWithFile(IMG_MAIN_TILESET_PLIST);
-
     // add background
 	CCSprite* back = CCSprite::create(IMG_BLUE_BACK);
 	back->setAnchorPoint(ccp(0, 0));
@@ -914,10 +911,8 @@ void MainScene::processBomb(unsigned int row, unsigned int col)
 {
 	CCLog("PRocess bomb %dx%d", row, col);
 
-
 	this->hideItem(row, col);
 	unsigned int counter = 0;
-
 
 	if (this->matrix[row + 1][col])		//	top
 	{
@@ -971,6 +966,9 @@ void MainScene::processBomb(unsigned int row, unsigned int col)
 		counter++;
 	}
 	
+
+	this->timerTip = 0;
+
 	int won = counter * GEM_POINS * BOMB_FACTOR;
 	this->pointsCount += won;
 	this->updateProgress();
@@ -1005,7 +1003,6 @@ void MainScene::shakeTick(float delta)
 
 	x = this->gameContent->getPositionX();
 	y = this->gameContent->getPositionY();
-
 
 	if (CCUtils::randomInInterval(0, 1) == 0)
 	{

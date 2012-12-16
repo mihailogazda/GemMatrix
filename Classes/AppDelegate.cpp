@@ -78,6 +78,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 	CCLog("Level count: %d", l->getLevelsCount());
 
 	//GAMELEVEL lev = l->getGameLevel(currentLevel);
+
+	//	load textures
+	CCSpriteFrameCache *sfc = CCSpriteFrameCache::sharedSpriteFrameCache();	
+	sfc->addSpriteFramesWithFile(IMG_MAIN_TILESET_PLIST);
 	
 	//	load current level and points
 	totalPoints = CCUserDefault::sharedUserDefault()->getIntegerForKey(SETTING_TOTAL_POINTS, 0);

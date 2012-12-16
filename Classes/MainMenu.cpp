@@ -13,6 +13,9 @@
 
 extern int g_width;
 extern int g_height;
+extern unsigned int currentLevel;
+
+int selectedLevel = 0;
 
 CCScene* MainMenuScene::scene()
 {
@@ -38,7 +41,7 @@ bool MainMenuScene::init()
 	CCLayerColor::initWithColor(colorWhite);
     
     //  Add background
-
+	this->messageShowing = false;
 
     CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(IMG_GREEN_BACK);
     CCTexture2D* logo = CCTextureCache::sharedTextureCache()->addImage(IMG_SPOOKY);
@@ -121,8 +124,96 @@ void MainMenuScene::PlayButton(CCObject* sender)
 {
     CCLog("PlayButton");
     
-    CCDirector::sharedDirector()->pushScene(CCTransitionFadeBL::create(1, MainScene::scene()));
-    
+	if (this->messageShowing)
+		return;    
+
+	this->messageShowing = true;
+
+	CCLayerColor* darkBack = CCLayerColor::create(ccc4(0, 0, 0, 255 * 0.6));
+	this->addChild(darkBack);
+
+	messageLayer = CCLayer::create();
+
+	CCSprite* levelList = CCSprite::createWithSpriteFrameName("levelList.png");
+	levelList->setPosition(ccp(g_width / 2, g_height / 2));
+	messageLayer->addChild(levelList);
+	messageLayer->setScale(0);
+
+	this->addChild(messageLayer);
+
+
+	CCCallFunc *cf1 = CCCallFunc::create(this, callfunc_selector(MainMenuScene::handleBoxShowed));
+	CCSequence *seq = CCSequence::createWithTwoActions(CCEaseBounceOut::create(CCScaleTo::create(0.5, 1, 1)), cf1);
+	messageLayer->runAction(seq);
+}
+
+void MainMenuScene::handleBoxShowed()
+{
+	CCLog("Handle box showed");
+
+	char tmp[100];
+	sprintf(tmp, "Level: %d", currentLevel);
+
+	int x = g_width / 2;
+	int y = g_height - 110;
+	ccColor3B black = ccc3(0, 0, 0);
+	char *font = "Impact";
+	short fontSize = 28;
+	selectedLevel = currentLevel;
+	
+	CCLabelTTF *level = CCLabelTTF::create(tmp, "Impact", fontSize);
+	level->setPosition(ccp(x, y));
+	level->setColor(black);
+	messageLayer->addChild(level, 1);
+
+	GAMELEVEL gl = LevelLoader::sharedLoader()->getGameLevel(currentLevel);
+	if (gl.valid)
+	{
+		fontSize = 20;
+		short spaceing = 60;
+
+		y -= spaceing + 20;
+		sprintf(tmp, "Points to win: %d", gl.minScore);
+		CCLabelTTF *l1 = CCLabelTTF::create(tmp, font, fontSize);				
+		l1->setPosition(ccp(x, y));
+		l1->setColor(black);
+		messageLayer->addChild(l1);
+
+		y -= spaceing;
+		sprintf(tmp, "Time to win it: %d seconds", gl.timeout);
+		CCLabelTTF *l2 = CCLabelTTF::create(tmp, font, fontSize);
+		l2->setPosition(ccp(x, y));
+		l2->setColor(black);
+		messageLayer->addChild(l2);
+
+		y -= spaceing;
+		sprintf(tmp, "New row comes: every %d seconds", gl.insertRowTime);
+		CCLabelTTF *l3 = CCLabelTTF::create(tmp, font, fontSize);
+		l3->setPosition(ccp(x, y));
+		l3->setColor(black);
+		messageLayer->addChild(l3);		
+
+		y -= spaceing * 2;
+		fontSize = 36;
+		sprintf(tmp, "Play");		
+		
+		CCMenuItemFont::setFontSize(fontSize);
+		CCMenuItemFont* play = CCMenuItemFont::create(tmp, this, menu_selector(MainMenuScene::handleLevelSelected));
+		play->setColor(ccc3(200, 0, 100));		
+
+		CCMenu* menu = CCMenu::create(play, NULL);
+		menu->setPosition(ccp(x, y));
+		messageLayer->addChild(menu);
+
+	}
+}
+
+void MainMenuScene::handleLevelSelected(CCObject* sender)
+{
+	CCLog("handleLevelSelected");
+
+	currentLevel = selectedLevel;
+	CCDirector::sharedDirector()->pushScene(CCTransitionFadeBL::create(1, MainScene::scene()));
 }
 
 #pragma warning (pop)

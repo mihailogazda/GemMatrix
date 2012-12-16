@@ -59,7 +59,7 @@
             <key>Heart.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,175},{101,171}}</string>
+                <string>{{414,2},{101,171}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,7 +72,7 @@
             <key>Key.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{105,175},{101,171}}</string>
+                <string>{{517,2},{101,171}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -85,7 +85,7 @@
             <key>Rock.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{208,175},{101,171}}</string>
+                <string>{{620,2},{101,171}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -98,7 +98,7 @@
             <key>Star.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{311,175},{101,171}}</string>
+                <string>{{723,2},{101,171}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -111,7 +111,7 @@
             <key>bomb.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,348},{101,145}}</string>
+                <string>{{826,2},{101,145}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -121,6 +121,19 @@
                 <key>sourceSize</key>
                 <string>{101,145}</string>
             </dict>
+            <key>levelList.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,175},{523,475}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{523,475}}</string>
+                <key>sourceSize</key>
+                <string>{523,475}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -129,9 +142,9 @@
             <key>realTextureFileName</key>
             <string>tileset.png</string>
             <key>size</key>
-            <string>{512,512}</string>
+            <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:a7b81d3e73373d91e1599963af9430b5$</string>
+            <string>$TexturePacker:SmartUpdate:d81e15ba43e230d5ec4e55f9f1089b6d$</string>
             <key>textureFileName</key>
             <string>tileset.png</string>
         </dict>

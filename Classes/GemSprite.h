@@ -8,7 +8,7 @@ using namespace cocos2d;
 
 #define BOMB_ID 4
 #define BOMB_FACTOR 5
-#define BOMB_SHAKE 0.5
+#define BOMB_SHAKE 0.6
 #define GEM_POINS 10
 #define BONUS_FACTOR 10
 
@@ -33,6 +33,7 @@ public:
 		//int r = CCUtils::randomInInterval(0, 2); //CCUtils::uniformRandomGems();
 		//if (includeRock && CCUtils::randomInInterval(0, 60) == 0)
 		//	r = 3;
+
 		int r = CCUtils::uniformRandomGems();
 		if (CCUtils::uniformProbabilityRock())
 			r = BOMB_ID;

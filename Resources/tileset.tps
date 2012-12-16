@@ -176,6 +176,7 @@
             <filename>PlanetCute PNG/Heart.png</filename>
             <filename>PlanetCute PNG/Key.png</filename>
             <filename>PlanetCute PNG/Star.png</filename>
+            <filename>levelList.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

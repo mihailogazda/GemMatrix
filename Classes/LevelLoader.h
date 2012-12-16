@@ -141,6 +141,9 @@ private:
 		if (foundCounter >= 3)
 			l.valid = true;
 
+		if (l.secondsToTip == 0)
+			l.secondsToTip = 5;
+
 		return l;
 	}
 
