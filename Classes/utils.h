@@ -34,7 +34,7 @@ static std::tr1::discrete_distribution<int> randomDist();
 
 #if _WINDOWS
 static std::tr1::mt19937 eng;
-static std::tr1::uniform_int_distribution<int> uniformGems(0, 2);
+static std::tr1::uniform_int_distribution<int> uniformGems(0, 3);
 static std::tr1::uniform_int_distribution<int> uniformGemsRocks(0, GEM_ROCK_PROBABILITY_MAX);
 #endif
 
@@ -42,10 +42,14 @@ class CCUtils
 {
 public:
 
-
 	//	gets random interval number with upper border
 	static int randomInInterval(int min, int max)
-    {		
+    {
+		if (!seedWasAssigned)
+		{
+			srand(time(0));
+			seedWasAssigned = true;
+		}
         return min + (rand() % (int)(max - min + 1));
 	}
     

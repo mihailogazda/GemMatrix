@@ -11,7 +11,8 @@ static const char* g_gemNames[] =
 	"Gem Blue.png",
 	"Gem Orange.png",
 	"Gem Green.png",
-    "Rock.png"
+    "Gem Gray.png",
+	"Rock.png"
 };
 
 extern IOSTYPE phoneType;
