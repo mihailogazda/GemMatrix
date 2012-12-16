@@ -16,6 +16,7 @@ int g_height = 0;
 
 IOSTYPE phoneType = UNDEFINED;
 unsigned int currentLevel = 1;
+unsigned int lastLevel = currentLevel;
 unsigned int retina = 0;
 unsigned int totalPoints = 0;
 unsigned int totalWonPoints = 0;
@@ -86,7 +87,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 	//	load current level and points
 	totalPoints = CCUserDefault::sharedUserDefault()->getIntegerForKey(SETTING_TOTAL_POINTS, 0);
 	if (!overidedByCommandLine)	
-		currentLevel = CCUserDefault::sharedUserDefault()->getIntegerForKey(SETTING_LEVEL_CURRENT, 1);		
+	{
+		currentLevel = CCUserDefault::sharedUserDefault()->getIntegerForKey(SETTING_LEVEL_CURRENT, 1);
+		lastLevel = currentLevel;
+	}
 
     // run
 	CCScene *pScene = MainMenuScene::scene();

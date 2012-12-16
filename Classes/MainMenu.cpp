@@ -14,6 +14,7 @@
 extern int g_width;
 extern int g_height;
 extern unsigned int currentLevel;
+extern unsigned int lastLevel;
 
 int selectedLevel = 0;
 
@@ -171,7 +172,11 @@ void MainMenuScene::handleBoxShowed()
 	//	now create buttons		
 	left = CCMenuItemFont::create("<-", this, menu_selector(MainMenuScene::handleLeft));
 	right = CCMenuItemFont::create("->", this, menu_selector(MainMenuScene::handleRight));
-	right->setEnabled(false);
+
+	if (currentLevel == 1)
+		left->setEnabled(false);
+	else if (currentLevel == lastLevel)
+		right->setEnabled(false);
 
 	left->setPosition(-200, 0);	
 	right->setPosition(200, 0);	
@@ -276,7 +281,7 @@ void MainMenuScene::handleRight(CCObject* sender)
 
 	this->setStrings();
 
-	if (selectedLevel == currentLevel)
+	if (selectedLevel == lastLevel)
 	{
 		this->right->setEnabled(false);
 	}
