@@ -144,6 +144,9 @@ private:
 		if (l.secondsToTip == 0)
 			l.secondsToTip = 5;
 
+		if (l.substractRows == 0)
+			l.substractRows = 3;
+
 		return l;
 	}
 

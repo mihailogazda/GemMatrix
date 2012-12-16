@@ -37,6 +37,8 @@ private:
 	void handleLeft(CCObject* sender);
 	void handleRight(CCObject* sender);
 
+	void setStrings();
+
 public:
 
 	static CCScene* scene();

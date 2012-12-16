@@ -171,6 +171,7 @@ void MainMenuScene::handleBoxShowed()
 	//	now create buttons		
 	left = CCMenuItemFont::create("<-", this, menu_selector(MainMenuScene::handleLeft));
 	right = CCMenuItemFont::create("->", this, menu_selector(MainMenuScene::handleRight));
+	right->setEnabled(false);
 
 	left->setPosition(-200, 0);	
 	right->setPosition(200, 0);	
@@ -232,18 +233,53 @@ void MainMenuScene::handleLevelSelected(CCObject* sender)
 	CCDirector::sharedDirector()->pushScene(CCTransitionFadeBL::create(1, MainScene::scene()));
 }
 
-void MainMenuScene::handleLeft(CCObject* sender)
+void MainMenuScene::setStrings()
 {
+	char tmp[50];
+	GAMELEVEL l = LevelLoader::sharedLoader()->getGameLevel(selectedLevel);
+	if (l.valid)
+	{
+		sprintf(tmp, "%d seconds", l.timeout);
+		this->timeout->setString(tmp);
+
+		sprintf(tmp, "%d seconds", l.insertRowTime);
+		this->insertRowTime->setString(tmp);
+
+		sprintf(tmp, "%d", l.minScore);
+		this->points->setString(tmp);
+	}
+}
+
+void MainMenuScene::handleLeft(CCObject* sender)
+{	
+	this->right->setEnabled(true);
+
 	char tmp[50];
 	sprintf(tmp, "Level: %d", --selectedLevel);
 	this->level->setString(tmp);
+
+	if (selectedLevel == 1)
+	{
+		this->left->setEnabled(false);
+	}
+
+	this->setStrings();
 }
 
 void MainMenuScene::handleRight(CCObject* sender)
 {
+	this->left->setEnabled(true);
+
 	char tmp[50];
 	sprintf(tmp, "Level: %d", ++selectedLevel);
 	this->level->setString(tmp);
+
+	this->setStrings();
+
+	if (selectedLevel == currentLevel)
+	{
+		this->right->setEnabled(false);
+	}
 }
 
 #pragma warning (pop)

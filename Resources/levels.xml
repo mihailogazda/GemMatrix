@@ -3,6 +3,7 @@
   <level>
     <timeout> 60 </timeout>
     <insertRowTime> 10 </insertRowTime>
+    <substractRows> 4 </substractRows>
     <minScore> 3000 </minScore>  
   </level>
   <!-- 2 -->
