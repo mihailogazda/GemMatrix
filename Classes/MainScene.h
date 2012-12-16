@@ -83,6 +83,8 @@ private:
 	void processItem(int row, int col);
 	void postProcess();
 	
+	short bonusVisibleCount;
+	void completeShowBonus();
 	void showBonusMessage(char* message);
 	void checkForBonus();
 
@@ -107,6 +109,8 @@ private:
 
     bool wasInit;
 	void postInit();
+
+	void processTimeArtifact();
 
 public:
    

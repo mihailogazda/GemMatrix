@@ -81,6 +81,7 @@ bool MainScene::init()
     this->totalTime = 0;
     this->pointsCount = 0;
 	this->timerTip = 0;
+	this->bonusVisibleCount = 0;
 	
 	this->timerCount = this->gameLevel.insertRowTime;
 
@@ -483,14 +484,14 @@ void MainScene::verifyTouch(CCPoint point)
 
 void MainScene::processItem(int row, int col)
 {	
-	//	skipp existing elementss	
+	//	skipp existing elements	
 	for (unsigned int i = 0; i < this->foundItems.size(); i++)
 	{
 		MATRIXPOS p2 = this->foundItems.at(i);
 		if ( p2.col == col && p2.row == row)
 			return;
 	}
-
+	
 	CCGemSprite* s = this->matrix[row][col];
 	int tag = s->getTag();
 	
@@ -507,13 +508,13 @@ void MainScene::processItem(int row, int col)
 	CCGemSprite* bottom = row - 1 >= 0 ? this->matrix[row - 1][col] : NULL;
 
 	//	
-	if (left && left->getTag() == tag)
+	if (left && (left->getTag() == tag || left->getTag() == TIME_ID) )
 		this->processItem(row, col - 1);
-	if (right && right->getTag() == tag)
+	if (right && (right->getTag() == tag || right->getTag() == TIME_ID) )
 		this->processItem(row, col + 1);
-	if (top && top->getTag() == tag)
+	if (top && (top->getTag() == tag || top->getTag() == TIME_ID) )
 		this->processItem(row + 1, col);
-	if (bottom && bottom->getTag() == tag)
+	if (bottom && (bottom->getTag() == tag || bottom->getTag() == TIME_ID) )
 		this->processItem(row - 1, col);
 }
 
@@ -521,6 +522,9 @@ void MainScene::hideItem(unsigned int row, unsigned int col)
 {
 	CCGemSprite* sp = this->matrix[row][col];
 	CC_ASSERT(sp);
+
+	if (sp->getTag() == TIME_ID)
+		processTimeArtifact();
 
 	//	fade out
 	//CCBlink* fo = CCBlink::create(0.6f, 2);		
@@ -568,55 +572,38 @@ void MainScene::postProcess()
 	for (int i = 0; i < size; i++)
 	{
 		MATRIXPOS p = this->foundItems.at(i);
-		CCLog("Post processing item: %d x %d", p.row, p.col);
+		CCLog("Post processing item: %d x %d", p.row, p.col);			
+
+		//	finally hide
 		this->hideItem(p.row, p.col);
-#if 0
-		CCGemSprite* sp = this->matrix[p.row][p.col];
-		CC_ASSERT(sp);
 
-		//	fade out
-		//CCBlink* fo = CCBlink::create(0.6f, 2);		
-		CCHide *hi = CCHide::create();
-		CCCallFuncN *cf = CCCallFuncN::create(this, callfuncN_selector(MainScene::callbackItemHidden));
-		CCAction* seq = CCSequence::create(/*fo,*/ hi, cf, NULL);
-		
-		//	Add points won per gem
-		CCPoint pos = positionForElement(p.row, p.col);
-		CCLabelTTF *lab  = CCLabelTTF::create("10", "Impact", 16);
-		pos.x += GEM_WIDTH / 2;
-		pos.y += GEM_HEIGHT / 2;
-		lab->setPosition(pos);
-		this->addChild(lab);
 
-		CCFadeOut* fo2 = CCFadeOut::create(0.8f);				
-		CCMoveBy* mb2 = CCMoveBy::create(0.4f, ccp(0, 10));
-
-		sp->runAction(seq);
-		lab->runAction(mb2);
-		lab->runAction(fo2);
 
 		/*
-		//http://www.cocos2d-iphone.org/forum/topic/19523
-		CCParticleExplosion *ex = CCParticleExplosion::create();		
-		ex->setPosition(pos);
-		CCTexture2D *tx = CCTextureCache::sharedTextureCache()->addImage(IMG_SNOWFLAKE);
-		ex->setTexture(tx);
-		this->addChild(ex);
+			//http://www.cocos2d-iphone.org/forum/topic/19523
+			CCParticleExplosion *ex = CCParticleExplosion::create();		
+			ex->setPosition(pos);
+			CCTexture2D *tx = CCTextureCache::sharedTextureCache()->addImage(IMG_SNOWFLAKE);
+			ex->setTexture(tx);
+			this->addChild(ex);
 		*/
-
-		//	set zero
-		this->matrix[p.row][p.col] = NULL;
-#endif
-
 	}
+}
+
+void MainScene::completeShowBonus()
+{
+	CCLog("Complete show bonus");
+	--this->bonusVisibleCount;
 }
 
 void MainScene::showBonusMessage(char* message)
 {
 	CCLabelTTF* bonusLabel = CCLabelTTF::create(message, "Impact", 28);
-	CCAssert(bonusLabel, "Bonus label is empty");
+	CCAssert(bonusLabel, "Bonus label is empty");	
 
-	bonusLabel->setPosition(ccp(gameContent->getContentSize().width / 2, g_height / 2));
+	int spustac =  this->bonusVisibleCount * 80;
+
+	bonusLabel->setPosition(ccp(gameContent->getContentSize().width / 2, g_height / 2 - spustac));
 	bonusLabel->setOpacity(0);
 	gameContent->addChild(bonusLabel, 2);
 
@@ -624,7 +611,10 @@ void MainScene::showBonusMessage(char* message)
 		CCFadeTo::create(0.2f, 255),
 		CCScaleTo::create(0.5, 2),			
 		CCFadeTo::create(0.5, 0),
+		CCCallFunc::create(this, callfunc_selector(MainScene::completeShowBonus)),
 		NULL));
+
+	this->bonusVisibleCount++;
 }
 
 void MainScene::checkForBonus()
@@ -754,7 +744,7 @@ void MainScene::redrawSpareRow()
 
 void MainScene::handleTimeUpdate(float delta)
 {
-	CCLog("Handle Time Update");
+	//CCLog("Handle Time Update");
     
     if (!this->wasInit)
     {
@@ -767,7 +757,7 @@ void MainScene::handleTimeUpdate(float delta)
 
 	float max = this->gameLevel.timeout;
 	float perc =  (this->totalTime / max) * 100 ;
-	CCLog("Percentage is %f (%d of %d)", perc, this->totalTime, max);
+	//CCLog("Percentage is %f (%d of %d)", perc, this->totalTime, max);
 	this->timeProgress->setPercentage(perc);
 
 	//	check for timeout
@@ -1023,4 +1013,14 @@ void MainScene::shakeTick(float delta)
 		this->unschedule(schedule_selector(MainScene::shakeTick));
 		this->setPosition(0, 0);
 	}
+}
+
+void MainScene::processTimeArtifact()
+{
+	CCLog("ProcessTimeArtifact()");
+	
+	showBonusMessage("15s EXTRA TIME!");
+	this->totalTime -= 15;
+	if (this->totalTime < 0)
+		this->totalTime = 0;
 }

@@ -33,14 +33,20 @@ enum IOSTYPE
 
 //	for uniform distribution
 static bool seedWasAssigned = false;
+static bool timeSeedWasAssigned = false;
+static bool bombSeedWasAssigned = false;
+
 static std::array<int, 3> g_a = {33, 33, 33};
 static std::vector<int> g_p(g_a.begin(), g_a.end());
 static std::tr1::discrete_distribution<int> randomDist();
 
 #if _WINDOWS
 static std::tr1::mt19937 eng;
+static std::tr1::mt19937 engBombs;
+static std::tr1::mt19937 engTime;
 static std::tr1::uniform_int_distribution<int> uniformGems(0, 3);
-static std::tr1::uniform_int_distribution<int> uniformGemsRocks(0, GEM_ROCK_PROBABILITY_MAX);
+static std::tr1::uniform_int_distribution<int> uniformGemsBombs(0, GEM_ROCK_PROBABILITY_MAX);
+static std::tr1::uniform_int_distribution<int> uniformGemsTime(0, GEM_ROCK_PROBABILITY_MAX * 2);
 #endif
 
 class CCUtils 
@@ -69,10 +75,26 @@ public:
 		return uniformGems(eng);
 	}
 
-	static int uniformProbabilityRock()
+	static int uniformProbabilityBombs()
 	{
-		return uniformGemsRocks(eng) == 0;
+		if (!bombSeedWasAssigned)
+		{
+			engBombs.seed(time(0));
+			bombSeedWasAssigned = true;
+		}
+		return uniformGemsBombs(engBombs) == 0;
 	}
+
+	static int uniformProbabilityTime()
+	{
+		if (!timeSeedWasAssigned)
+		{
+			engTime.seed(time(0));
+			timeSeedWasAssigned = true;
+		}
+		return uniformGemsTime(engTime) == 0;
+	}
+
 #endif
 
 	static void trim(char * s) 

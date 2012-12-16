@@ -12,6 +12,8 @@ using namespace cocos2d;
 #define GEM_POINS 10
 #define BONUS_FACTOR 10
 
+#define TIME_ID 5
+
 static const char* g_gemNames[] = 
 {
 	"Gem Blue.png",
@@ -19,7 +21,9 @@ static const char* g_gemNames[] =
 	"Gem Green.png",
     "Gem Gray.png",
 	"bomb.png",
-	"Rock.png"
+	"Key.png",
+	"Rock.png",
+	NULL
 };
 
 extern IOSTYPE phoneType;
@@ -35,8 +39,11 @@ public:
 		//	r = 3;
 
 		int r = CCUtils::uniformRandomGems();
-		if (CCUtils::uniformProbabilityRock())
+		if (CCUtils::uniformProbabilityBombs())
 			r = BOMB_ID;
+
+		if (CCUtils::uniformProbabilityTime())
+			r = TIME_ID;
 
 		const char* gemname = g_gemNames[r];
     
