@@ -603,15 +603,15 @@ void MainScene::showBonusMessage(char* message)
 
 	int spustac =  this->bonusVisibleCount * 80;
 
-	bonusLabel->setPosition(ccp(gameContent->getContentSize().width / 2, g_height / 2 - spustac));
+	bonusLabel->setPosition(ccp(gameContent->getContentSize().width / 2, g_height / 2 + 50 - spustac));
 	bonusLabel->setOpacity(0);
 	gameContent->addChild(bonusLabel, 2);
 
 	bonusLabel->runAction(CCSequence::create(
 		CCFadeTo::create(0.2f, 255),
 		CCScaleTo::create(0.5, 2),			
-		CCFadeTo::create(0.5, 0),
 		CCCallFunc::create(this, callfunc_selector(MainScene::completeShowBonus)),
+		CCFadeTo::create(0.5, 0),		
 		NULL));
 
 	this->bonusVisibleCount++;
