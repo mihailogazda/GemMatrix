@@ -20,6 +20,7 @@ class CCGameMessage : public CCObject
 		CCLayer* messageParent;
 		CCLayer* messageLayer;
 		
+		//	use these to link directly to actions inc cocoa, e.g. CCMenuItemFont touch or similar
 		SEL_CallFunc callback;
 		SEL_CallFunc exitCallback;		
 
@@ -79,7 +80,7 @@ class CCGameMessage : public CCObject
 			messageLayer->setScale(0);
 
 			messageParent->addChild(messageLayer);
-			parent->addChild(messageParent);
+			parent->addChild(messageParent, 100);
 			
 			CCCallFunc *cf1 = CCCallFunc::create(parent, callback);
 			CCSequence *seq = CCSequence::createWithTwoActions(CCEaseBounceOut::create(CCScaleTo::create(0.5, 1, 1)), cf1);
