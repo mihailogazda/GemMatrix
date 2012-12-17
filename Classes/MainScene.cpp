@@ -61,8 +61,6 @@ bool MainScene::init()
 	this->addChild(this->gameContent, 1);
    
 	this->wasInit = false;
-	this->isPaused = false;	
-	this->pauseLayer = NULL;
 	this->upButton = NULL;
 
 	this->gameLevel = LevelLoader::sharedLoader()->getGameLevel(currentLevel);
@@ -84,6 +82,7 @@ bool MainScene::init()
 	this->bonusVisibleCount = 0;
 	
 	this->timerCount = this->gameLevel.insertRowTime;
+	this->pauseMessage = NULL;
 
 	//	scheduel ticker
 	this->schedule(schedule_selector(MainScene::handleTimeUpdate), 1);
@@ -151,62 +150,37 @@ void MainScene::handleClickMenu(CCObject* sender)
     CCDirector::sharedDirector()->replaceScene(sc);
 }
 
+void MainScene::handlePauseShow()
+{
+	this->pauseSchedulerAndActions();
+	this->disableTouches = true;
+	
+	this->sidebarMenu->setTouchEnabled(false);
+
+	CCMenuItemFont *p1 = CCMenuItemFont::create("Continue", pauseMessage, pauseMessage->sel_hideMessageBox);
+	p1->setColor(ccc3(0, 0, 0));
+	
+	CCMenu *m = CCMenu::create(p1, NULL);	
+	pauseMessage->getMessageLayer()->addChild(m);
+}
+
+void MainScene::handlePauseHide()
+{	
+	this->disableTouches = false;
+	this->sidebarMenu->setTouchEnabled(true);
+
+	this->resumeSchedulerAndActions();
+}
+
 void MainScene::handleClickPause(CCObject* sender)
 {
 	CCLog("Pause click");	
 
-	if (!this->isPaused)
-	{
-		if (!this->pauseLayer)
-		{
-			this->pauseLayer = CCLayerColor::create(ccc4(0, 0, 0, 0));								
-			pauseLayer->setAnchorPoint(ccp(0, 0));
-			pauseLayer->setPosition(ccp(0, 0));
-			this->addChild(pauseLayer, 1000);
+	if (this->pauseMessage)
+		delete this->pauseMessage;
 
-			CCLabelTTF *pausedLabel = CCLabelTTF::create("Paused", "Impact", 26);
-			pausedLabel->setPosition(ccp(g_width / 2, g_height / 2));
-			pausedLabel->setOpacity(0);
-			this->pauseLayer->addChild(pausedLabel);
-
-			CCMenuItemFont::setFontSize(20);
-			CCMenuItemFont* cont = CCMenuItemFont::create("Continue game", this, menu_selector(MainScene::handleClickPause));
-			this->pauseMenu = CCMenu::create(cont, NULL);			
-			this->pauseMenu->setPosition(ccp(g_width / 2, g_height / 2 - 50));
-			this->pauseMenu->setOpacity(0);
-			this->pauseLayer->addChild(this->pauseMenu);
-		}
-
-		this->disableTouches = true;
-		this->pauseMenu->setTouchEnabled(true);
-		this->sidebarMenu->setTouchEnabled(false);
-
-		this->pauseSchedulerAndActions();
-		this->pauseLayer->runAction(CCEaseIn::create(CCFadeTo::create(0.5, 255 * 0.7), 1));
-
-		for (unsigned int i = 0; i < this->pauseLayer->getChildrenCount(); i++)
-		{
-			CCNode* ch = (CCNode*) this->pauseLayer->getChildren()->objectAtIndex(i);
-			ch->runAction(CCEaseIn::create(CCFadeTo::create(0.5, 255 * 0.8), 1));
-		}
-	}
-	else
-	{
-		this->resumeSchedulerAndActions();
-		this->pauseMenu->setTouchEnabled(false);
-		this->sidebarMenu->setTouchEnabled(true);
-
-		this->pauseLayer->runAction(CCEaseOut::create(CCFadeTo::create(0.5, 0), 1));
-		for (unsigned int i = 0; i < this->pauseLayer->getChildrenCount(); i++)
-		{
-			CCNode* ch = (CCNode*) this->pauseLayer->getChildren()->objectAtIndex(i);
-			ch->runAction(CCEaseOut::create(CCFadeTo::create(0.5, 0), 1));
-		}
-
-		this->disableTouches = false;
-	}
-
-	this->isPaused = !this->isPaused;
+	this->pauseMessage = CCGameMessage::create(this, callfunc_selector(MainScene::handlePauseShow), callfunc_selector(MainScene::handlePauseHide));
+	pauseMessage->showMessageBox();
 }
 
 bool MainScene::initTextures()

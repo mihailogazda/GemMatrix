@@ -40,7 +40,7 @@ private:
 
 	void handleLeft(CCObject* sender);
 	void handleRight(CCObject* sender);
-	void handleLevelSelected(CCObject* sender);
+	void handleLevelSelected(CCObject* sender);	
 
 	void setStrings();
 

@@ -7,6 +7,7 @@
 #include "GemSprite.h"
 #include "LevelLoader.h"
 #include <list>
+#include "GameMessage.h"
 
 using namespace cocos2d;
 
@@ -26,6 +27,11 @@ private:
 	unsigned int timerTip;
     int totalTime;
 	
+
+	CCGameMessage *pauseMessage;
+	void handlePauseShow();
+	void handlePauseHide();
+
 	GAMELEVEL gameLevel;
 
 	CCProgressTimer *timeProgress;
@@ -36,7 +42,6 @@ private:
     CCLabelTTF* levelLabel;
 
 	CCMenuItemSprite* upButton; 
-	CCMenu* pauseMenu;
 	CCMenu* sidebarMenu;
 
 	CCLayer* gameContent;
@@ -67,8 +72,6 @@ private:
 	void handleTimeUpdate(float delta);
     void handleClickUp(CCObject* sender);
 
-	bool isPaused;
-	CCLayerColor* pauseLayer;
 	void handleClickPause(CCObject* sender);
 
 	void handleTimeout();

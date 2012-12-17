@@ -219,7 +219,7 @@ void MainMenuScene::handleBoxShowed()
 
 		sprintf(tmp, "Back");
 		CCMenuItemFont* close = CCMenuItemFont::create(tmp, messageBox, messageBox->sel_hideMessageBox);
-		close->setColor(ccc3(200, 0, 100));
+		close->setColor(ccc3(54, 177, 191));
 		
 		CCMenu* menu = CCMenu::create(play, close, NULL);
 		menu->setPosition(ccp(x, y));
