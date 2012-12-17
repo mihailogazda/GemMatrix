@@ -98,6 +98,7 @@
     <ClInclude Include="..\Classes\LevelLoader.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
     <ClInclude Include="..\Classes\MainScene.h" />
+    <ClInclude Include="..\Classes\GameMessage.h" />
     <ClInclude Include="..\Classes\NextScene.h" />
     <ClInclude Include="..\Classes\utils.h" />
     <ClInclude Include="main.h" />

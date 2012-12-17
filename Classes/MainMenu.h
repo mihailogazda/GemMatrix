@@ -12,6 +12,7 @@
 #include <cocos2d.h>
 #include "GameResources.h"
 #include "MainScene.h"
+#include "GameMessage.h"
 
 using namespace cocos2d;
 
@@ -22,9 +23,11 @@ private:
 	void PlayButton(CCObject* sender);
 
 	bool messageShowing;
-	CCLayer* messageLayer;
+	
+	CCLayer* messageParent;	
 	void handleBoxShowed();
-	void handleLevelSelected(CCObject* sender);
+
+	CCGameMessage* messageBox;
 
 	CCLabelTTF* points;
 	CCLabelTTF* timeout;
@@ -36,6 +39,7 @@ private:
 
 	void handleLeft(CCObject* sender);
 	void handleRight(CCObject* sender);
+	void handleLevelSelected(CCObject* sender);
 
 	void setStrings();
 

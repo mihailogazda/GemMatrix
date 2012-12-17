@@ -71,6 +71,9 @@
     <ClInclude Include="..\Classes\NextScene.h">
       <Filter>Header Files\Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\GameMessage.h">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\levels.xml">

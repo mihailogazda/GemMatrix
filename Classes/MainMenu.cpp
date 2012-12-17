@@ -124,32 +124,13 @@ bool MainMenuScene::init()
 void MainMenuScene::PlayButton(CCObject* sender)
 {
     CCLog("PlayButton");
-    
-	if (this->messageShowing)
-		return;    
-
-	this->messageShowing = true;
-
-	CCLayerColor* darkBack = CCLayerColor::create(ccc4(0, 0, 0, 255 * 0.6));
-	this->addChild(darkBack);
-
-	messageLayer = CCLayer::create();
-
-	CCSprite* levelList = CCSprite::createWithSpriteFrameName("levelList.png");
-	levelList->setPosition(ccp(g_width / 2, g_height / 2));
-	messageLayer->addChild(levelList);
-	messageLayer->setScale(0);
-
-	this->addChild(messageLayer);
-
-
-	CCCallFunc *cf1 = CCCallFunc::create(this, callfunc_selector(MainMenuScene::handleBoxShowed));
-	CCSequence *seq = CCSequence::createWithTwoActions(CCEaseBounceOut::create(CCScaleTo::create(0.5, 1, 1)), cf1);
-	messageLayer->runAction(seq);
+	
+	this->messageBox = CCGameMessage::create(this, callfunc_selector(MainMenuScene::handleBoxShowed));
+	this->messageBox->showMessageBox();
 }
 
 void MainMenuScene::handleBoxShowed()
-{
+{	
 	CCLog("Handle box showed");
 
 	char tmp[100];
@@ -161,6 +142,8 @@ void MainMenuScene::handleBoxShowed()
 	char *font = "Impact";
 	short fontSize = 28;
 	selectedLevel = currentLevel;
+
+	CCLayer* messageLayer = this->messageBox->getMessageLayer();
 	
 	level = CCLabelTTF::create(tmp, "Impact", fontSize);
 	level->setPosition(ccp(x, y));
@@ -183,7 +166,7 @@ void MainMenuScene::handleBoxShowed()
 
 	CCMenu *m = CCMenu::create(left, right, NULL);
 	m->setPosition(x, y);
-	this->addChild(m, 2);
+	messageLayer->addChild(m, 2);
 
 	//	now create text and button
 	GAMELEVEL gl = LevelLoader::sharedLoader()->getGameLevel(currentLevel);
@@ -224,8 +207,13 @@ void MainMenuScene::handleBoxShowed()
 		CCMenuItemFont* play = CCMenuItemFont::create(tmp, this, menu_selector(MainMenuScene::handleLevelSelected));
 		play->setColor(ccc3(200, 0, 100));		
 
-		CCMenu* menu = CCMenu::create(play, NULL);
+		sprintf(tmp, "Back");
+		CCMenuItemFont* close = CCMenuItemFont::create(tmp, messageBox, messageBox->sel_hideMessageBox);
+		close->setColor(ccc3(200, 0, 100));
+		
+		CCMenu* menu = CCMenu::create(play, close, NULL);
 		menu->setPosition(ccp(x, y));
+		menu->alignItemsHorizontally();
 		messageLayer->addChild(menu);
 	}
 }
