@@ -62,6 +62,8 @@ bool MainMenuScene::init()
     
     int fontSize = (phoneType == IPAD3 || phoneType == IPHONE4) ? 52 : 26;
     CCMenuItemFont::setFontSize(fontSize);
+
+	this->messageBox = NULL;
     
     
 	//logo
@@ -124,9 +126,17 @@ bool MainMenuScene::init()
 void MainMenuScene::PlayButton(CCObject* sender)
 {
     CCLog("PlayButton");
+
+	if (this->messageBox)
+		delete this->messageBox;
 	
-	this->messageBox = CCGameMessage::create(this, callfunc_selector(MainMenuScene::handleBoxShowed));
+	this->messageBox = CCGameMessage::create(this, callfunc_selector(MainMenuScene::handleBoxShowed), callfunc_selector(MainMenuScene::handleBoxClosed));
 	this->messageBox->showMessageBox();
+}
+
+void MainMenuScene::handleBoxClosed()
+{
+	CCLog("Handle box closed");
 }
 
 void MainMenuScene::handleBoxShowed()

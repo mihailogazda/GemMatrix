@@ -6,6 +6,7 @@
 /*
  *	Game message popup.
  *	forward SEL_CallFunc handler to process layer recieved by getMessageLayer().
+ *	use exitCallback to know when closed.
  *	use create()
 */
 
@@ -20,7 +21,7 @@ class CCGameMessage : public CCObject
 		CCLayer* messageLayer;
 		
 		SEL_CallFunc callback;
-		
+		SEL_CallFunc exitCallback;		
 
 		CCGameMessage(CCLayer* parent, SEL_CallFunc callback)
 		{
@@ -28,6 +29,7 @@ class CCGameMessage : public CCObject
 			
 			this->parent = parent;
 			this->callback = callback;
+			this->exitCallback = NULL;
 
 			this->sel_hideMessageBox = menu_selector(CCGameMessage::hideMessageBox);
 			this->sel_showMessageBox = menu_selector(CCGameMessage::showMessageBox);
@@ -38,6 +40,13 @@ class CCGameMessage : public CCObject
 		static CCGameMessage* create(CCLayer* parent, SEL_CallFunc callback)
 		{
 			return new CCGameMessage(parent,  callback);
+		}
+
+		static CCGameMessage* create(CCLayer* parent, SEL_CallFunc callback, SEL_CallFunc exitCallback)
+		{
+			CCGameMessage* p = new CCGameMessage(parent, callback);
+			p->exitCallback = exitCallback;
+			return p;
 		}
 
 		CCLayer *getMessageLayer()
@@ -79,9 +88,21 @@ class CCGameMessage : public CCObject
 
 		void hideMessageBox(CCObject *sender = NULL)
 		{
+			CCCallFunc *cf1 = CCCallFunc::create(this, callfunc_selector(CCGameMessage::handleHideCleanup));
+			CCSequence *seq = CCSequence::createWithTwoActions(CCEaseBounceIn::create(CCScaleTo::create(0.5, 0, 0)), cf1);
+			messageLayer->runAction(seq);
+		}
+
+		void handleHideCleanup()
+		{
 			messageParent->removeAllChildrenWithCleanup(true);
 			messageParent->removeFromParent();
 			this->messageShowing = false;
+			
+			if (this->exitCallback)
+				parent->runAction(CCCallFunc::create(parent, this->exitCallback));
+
+			
 		}
 };
 

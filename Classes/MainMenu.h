@@ -26,6 +26,7 @@ private:
 	
 	CCLayer* messageParent;	
 	void handleBoxShowed();
+	void handleBoxClosed();
 
 	CCGameMessage* messageBox;
 
