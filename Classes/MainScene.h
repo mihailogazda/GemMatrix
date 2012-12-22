@@ -115,6 +115,13 @@ private:
 
 	void processTimeArtifact();
 
+	bool isMatrixFull();
+
+	CCGameMessage *doneMessage;
+	void handleDone();
+	void handleDoneExit();
+	//void handleDoneRestart();
+
 public:
    
 	virtual bool init();

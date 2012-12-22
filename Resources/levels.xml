@@ -1,16 +1,21 @@
 <levels>
   <!-- 1 -->
   <level>
-    <timeout> 60 </timeout>
-    <insertRowTime> 10 </insertRowTime>
+    <timeout> 90 </timeout>
+    <insertRowTime> 12 </insertRowTime>
     <substractRows> 4 </substractRows>
-    <minScore> 3000 </minScore>  
+    <minScore> 3000 </minScore>
+    <bombProbability> 0 </bombProbability>
+    <timeProbability> 0 </timeProbability>
   </level>
   <!-- 2 -->
   <level>
-    <timeout> 60 </timeout>
-    <insertRowTime> 10 </insertRowTime>
-    <minScore> 4000 </minScore>
+    <timeout> 90 </timeout>
+    <insertRowTime> 12 </insertRowTime>
+    <substractRows> 4 </substractRows>
+    <minScore> 3500 </minScore>
+    <bombProbability> 0 </bombProbability>
+    <timeProbability> 0 </timeProbability>
   </level>
   <!-- 3 -->
   <level>
@@ -38,8 +43,8 @@
     <insertRowTime> 88 </insertRowTime>
     <minScore> 7000 </minScore>
     <checksInvalid> true </checksInvalid>
-    <hasRocks> true </hasRocks>
-    <substractRows> 0 </substractRows>
+    <bombProbability> 120 </bombProbability>
+    <timeProbability> 0 </timeProbability>
     <secondsToTip> 5 </secondsToTip>
   </level>
   <!-- 7 -->

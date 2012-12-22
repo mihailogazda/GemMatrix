@@ -170,7 +170,10 @@ void MainMenuScene::handleBoxShowed()
 	right = CCMenuItemFont::create("->", this, menu_selector(MainMenuScene::handleRight));
 
 	if (currentLevel == 1)
+	{
 		left->setEnabled(false);
+		right->setEnabled(false);
+	}
 	else if (currentLevel == lastLevel)
 		right->setEnabled(false);
 

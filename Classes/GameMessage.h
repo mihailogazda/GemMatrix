@@ -58,6 +58,8 @@ class CCGameMessage : public CCObject
 		SEL_MenuHandler sel_hideMessageBox;
 		SEL_MenuHandler sel_showMessageBox;
 
+		CCPoint position;
+
 		void showMessageBox(CCObject *sender = NULL)
 		{
 			if (this->messageShowing)
@@ -75,7 +77,10 @@ class CCGameMessage : public CCObject
 			int g_height = CCDirector::sharedDirector()->getWinSize().height;
 
 			CCSprite* levelList = CCSprite::createWithSpriteFrameName("levelList.png");
-			levelList->setPosition(ccp(g_width / 2, g_height / 2));
+
+			position = ccp(g_width / 2, g_height / 2);
+
+			levelList->setPosition(position);
 			messageLayer->addChild(levelList);
 			messageLayer->setScale(0);
 

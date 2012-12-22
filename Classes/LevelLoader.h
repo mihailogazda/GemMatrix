@@ -14,7 +14,8 @@ typedef struct
 	unsigned int substractRows;
 	unsigned int secondsToTip;
 	static const unsigned int tipPause = 10;
-	bool hasRocks;
+	int bombProbability;
+	int timeProbability;
 	bool checksInvalid;
 	bool valid;
 } GAMELEVEL, *LPGAMELEVEL;
@@ -119,12 +120,17 @@ private:
 			//
 			//	not counting in successfull - optional
 			//
-			else if (xmlStrcmp(currNode->name, (const xmlChar*) "hasRocks") == 0)
+			else if (xmlStrcmp(currNode->name, (const xmlChar*) "bombProbability") == 0)
 			{
 				cont = xmlNodeGetContent(currNode);				
+				CCUtils::trim((char*) cont);							
+				l.bombProbability = atoi((const char*) cont);
+			}
+			else if (xmlStrcmp(currNode->name, (const xmlChar*) "timeProbability") == 0)
+			{
+				cont = xmlNodeGetContent(currNode);
 				CCUtils::trim((char*) cont);
-				if (xmlStrcmp(cont, (const xmlChar*) "true") == 0)				
-					l.hasRocks = true;
+				l.timeProbability = atoi((const char*) cont);
 			}
 			else if (xmlStrcmp(currNode->name, (const xmlChar*) "checksInvalid") == 0)
 			{

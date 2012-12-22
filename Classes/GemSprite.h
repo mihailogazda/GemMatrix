@@ -3,6 +3,7 @@
 #include "SimpleAudioEngine.h"
 #include "GameResources.h"
 #include "utils.h"
+#include "LevelLoader.h"
 
 using namespace cocos2d;
 
@@ -34,11 +35,13 @@ public:
 
 	static CCGemSprite* create(bool includeRock = false)
 	{		
+		extern GAMELEVEL globalCurrentLevel;
+
 		int r = 0;
-		if (CCUtils::uniformProbabilityBombs())
+		if (CCUtils::uniformProbabilityBombs(globalCurrentLevel.bombProbability))
 			r = BOMB_ID;
 
-		if (r == 0 && CCUtils::uniformProbabilityTime() )
+		if (r == 0 && CCUtils::uniformProbabilityTime(globalCurrentLevel.timeProbability) )
 			r = TIME_ID;
 
 		if (!(r == TIME_ID || r == BOMB_ID))

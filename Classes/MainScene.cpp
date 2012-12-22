@@ -83,6 +83,7 @@ bool MainScene::init()
 	
 	this->timerCount = this->gameLevel.insertRowTime;
 	this->pauseMessage = NULL;
+	this->doneMessage = NULL;
 
 	//	scheduel ticker
 	this->schedule(schedule_selector(MainScene::handleTimeUpdate), 1);
@@ -103,7 +104,6 @@ void MainScene::postInit()
 
 	//	callback count reset - this will enable touching
 	this->disableTouches = false;
-
 }
 
 void MainScene::handleClickReset(CCObject* sender)
@@ -124,6 +124,9 @@ void MainScene::handleClickUp(CCObject* sender)
 {
 	CCLog("Handle UP button");
     
+	if (this->disableTouches || this->isMatrixFull())
+		return;
+
 	//	add points	
 	CCLabelTTF *pts = CCLabelTTF::create("100 points!", GAME_FONT, 24);
 	pts->setPosition(this->upButton->getPosition());
@@ -145,7 +148,7 @@ void MainScene::handleClickUp(CCObject* sender)
 void MainScene::handleClickMenu(CCObject* sender)
 {
     CCLog("handleClickMenu");
-    
+
     CCScene* sc = CCTransitionFadeBL::create(1, MainMenuScene::scene());
     CCDirector::sharedDirector()->replaceScene(sc);
 }
@@ -153,8 +156,7 @@ void MainScene::handleClickMenu(CCObject* sender)
 void MainScene::handlePauseShow()
 {
 	this->pauseSchedulerAndActions();
-	this->disableTouches = true;
-	
+	this->disableTouches = true;	
 	this->sidebarMenu->setTouchEnabled(false);
 
 	CCMenuItemFont *p1 = CCMenuItemFont::create("Continue", pauseMessage, pauseMessage->sel_hideMessageBox);
@@ -226,7 +228,7 @@ void MainScene::initMatrix()
 			int stop = this->rows - this->gameLevel.substractRows;
 			if (i < stop)
 			{
-				CCGemSprite* gs = CCGemSprite::create(gameLevel.hasRocks);
+				CCGemSprite* gs = CCGemSprite::create();
 				gs->setAnchorPoint(ccp(0, 0));
 				this->matrix[i][j] = gs;
 				this->gameContent->addChild(gs);
@@ -248,7 +250,7 @@ void MainScene::initSpareRow()
 		//if (this->spareRow[i] != NULL)		
 		//	this->spareRow[i]->removeFromParentAndCleanup(true);					
 
-		CCGemSprite* gs = CCGemSprite::create(gameLevel.hasRocks);
+		CCGemSprite* gs = CCGemSprite::create();
 		this->spareRow[i] = gs;		
 		gs->setAnchorPoint(ccp(0, 0));
 		gs->setOpacity(SPARE_ROW_FADE_START);
@@ -786,19 +788,76 @@ void MainScene::handleTimeUpdate(float delta)
 	}
 }
 
+void MainScene::handleDone()
+{
+	CCLog("Game over");
+
+	this->pauseSchedulerAndActions();
+	this->disableTouches = true;	
+	this->sidebarMenu->setTouchEnabled(false);
+
+	CCPoint p = this->doneMessage->position;
+
+	int x =  20, y =  20;
+	CCLayer* lay = CCLayer::create();
+	ccColor3B colorBlack = ccc3(0, 0, 0);
+	
+	CCLabelTTF *gameOver = CCLabelTTF::create("Game Over", GAME_FONT, 24);
+	gameOver->setColor(colorBlack);
+	lay->addChild(gameOver);
+	gameOver->getTexture()->setAliasTexParameters();
+	
+	
+	CCMenuItemFont *restart = CCMenuItemFont::create("Restart", this, menu_selector(MainScene::handleClickReset));
+	restart->setColor(colorBlack);
+	CCMenuItemFont *cont = CCMenuItemFont::create("Main menu", this, menu_selector(MainScene::handleClickMenu));
+	cont->setColor(colorBlack);
+	
+	CCMenu *menu = CCMenu::create(restart, cont, NULL);
+	menu->setPosition(ccp(0, -80));
+	menu->alignItemsVertically();
+
+	lay->addChild(menu);
+
+	lay->setPosition(p);
+	this->doneMessage->getMessageLayer()->addChild(lay);
+}
+
+void MainScene::handleDoneExit()
+{
+	this->pauseSchedulerAndActions();
+	this->disableTouches = false;	
+	this->sidebarMenu->setTouchEnabled(true);
+}
+
+bool MainScene::isMatrixFull()
+{
+	for (int i = 0; i < this->columns; i++)
+    {
+        if (this->matrix[this->rows - 1][i] != NULL)
+        {
+			return true;
+		}
+	}
+	return false;
+}
+
 void MainScene::insertRowFromBottom()
 {
     //	first check if game is ended
     //	basically if last row is filled then we end
-    for (int i = 0; i < this->columns; i++)
-    {
-        if (this->matrix[this->rows - 1][i] != NULL)
-        {
-            CCLog("EXIT SCENE");
-            CCScene* died = DiedScene::scene();
-            CCDirector::sharedDirector()->replaceScene( CCTransitionFadeBL::create(1, died) );
-            return;
-        }
+	if (this->isMatrixFull())
+	{
+		CCLog("EXIT SCENE");
+
+		if (this->pointsCount >= this->gameLevel.minScore)
+			this->handleTimeout();
+		else
+		{
+			this->doneMessage = CCGameMessage::create(this, callfunc_selector(MainScene::handleDone), callfunc_selector(MainScene::handleDoneExit));			
+			this->doneMessage->showMessageBox();						
+		}
+		return;
     }
 
     //	now insert from bottom
