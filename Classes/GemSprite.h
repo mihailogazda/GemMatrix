@@ -34,19 +34,18 @@ public:
 
 	static CCGemSprite* create(bool includeRock = false)
 	{		
-		//int r = CCUtils::randomInInterval(0, 2); //CCUtils::uniformRandomGems();
-		//if (includeRock && CCUtils::randomInInterval(0, 60) == 0)
-		//	r = 3;
-
-		int r = CCUtils::uniformRandomGems();
+		int r = 0;
 		if (CCUtils::uniformProbabilityBombs())
 			r = BOMB_ID;
 
-		if (CCUtils::uniformProbabilityTime())
+		if (r == 0 && CCUtils::uniformProbabilityTime() )
 			r = TIME_ID;
 
+		if (!(r == TIME_ID || r == BOMB_ID))
+			r = CCUtils::randomInInterval(0, 3);
+
 		const char* gemname = g_gemNames[r];
-    
+
 		CCLog("Spawning sprite (%d) %s", r,  gemname);
         CCGemSprite* t = (CCGemSprite*) CCSprite::createWithSpriteFrameName(gemname);
 		t->setTag(r);		    

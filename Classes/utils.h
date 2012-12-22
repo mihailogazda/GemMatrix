@@ -2,19 +2,16 @@
 #define __CC_UTILS_H__
 
 #include "cocos2d.h"
-
-#if _WINDOWS
-#include <random>
-#include <array>
 #include <time.h>
-#endif
+#include <vector>
+#include <array>
+#include <random>
 
 #include "GameResources.h"
 
 
 //	few usefull macros
 #define INSERT_LABEL(name, txt, font, fontSize, x, y, color, layer) CCLabelTTF* name = CCLabelTTF::create(txt, font, fontSize); name->setPosition(ccp(x, y)); name->setColor(color); layer->addChild(name);
-
 
 using namespace cocos2d;
 
@@ -36,22 +33,21 @@ static bool seedWasAssigned = false;
 static bool timeSeedWasAssigned = false;
 static bool bombSeedWasAssigned = false;
 
-static std::array<int, 3> g_a = {33, 33, 33};
-static std::vector<int> g_p(g_a.begin(), g_a.end());
-static std::tr1::discrete_distribution<int> randomDist();
-
-#if _WINDOWS
-static std::tr1::mt19937 eng;
-static std::tr1::mt19937 engBombs;
-static std::tr1::mt19937 engTime;
-static std::tr1::uniform_int_distribution<int> uniformGems(0, 3);
-static std::tr1::uniform_int_distribution<int> uniformGemsBombs(0, GEM_ROCK_PROBABILITY_MAX);
-static std::tr1::uniform_int_distribution<int> uniformGemsTime(0, GEM_ROCK_PROBABILITY_MAX * 2);
-#endif
+static std::vector<int> bombRandomList;
+static std::vector<int> randomList;
+static std::vector<int> timeRandomList;
 
 class CCUtils 
 {
 public:
+
+	static void randomizeVector(std::vector<int> &v, int oneIn)
+	{
+		for (int i = 0; i < oneIn; i++)
+			v.push_back(i);
+
+		std::random_shuffle(bombRandomList.begin(), bombRandomList.end());
+	}
 
 	//	gets random interval number with upper border
 	static int randomInInterval(int min, int max)
@@ -63,39 +59,51 @@ public:
 		}
         return min + (rand() % (int)(max - min + 1));
 	}
-    
-#if _WINDOWS
-	static int uniformRandomGems()
-	{
-		if (!seedWasAssigned)
-		{
-			eng.seed(static_cast<unsigned int>(time(0)));
-			seedWasAssigned = true;
-		}
-		return uniformGems(eng);
-	}
 
-	static int uniformProbabilityBombs()
+	static bool uniformProbabilityBombs(int oneIn = 120)
 	{
 		if (!bombSeedWasAssigned)
 		{
-			engBombs.seed(time(0));
+			randomizeVector(bombRandomList, oneIn);
 			bombSeedWasAssigned = true;
 		}
-		return uniformGemsBombs(engBombs) == 0;
+
+		if (bombRandomList.size() == 0)
+		{
+			bombRandomList.clear();
+			bombSeedWasAssigned = false;
+		}
+		else
+		{
+			int ret = bombRandomList.back();
+			bombRandomList.pop_back();
+			return ret == 5;
+		}
+		return false;
 	}
 
-	static int uniformProbabilityTime()
-	{
+	static bool uniformProbabilityTime(int oneIn = 120)
+	{		
 		if (!timeSeedWasAssigned)
 		{
-			engTime.seed(time(0));
+			randomizeVector(timeRandomList, oneIn);
 			timeSeedWasAssigned = true;
 		}
-		return uniformGemsTime(engTime) == 0;
-	}
 
-#endif
+		if (timeRandomList.size() == 0)
+		{
+			timeRandomList.clear();
+			timeSeedWasAssigned = false;
+		}
+		else
+		{
+			int ret = timeRandomList.back();
+			timeRandomList.pop_back();
+			return ret == 5;
+		}
+
+		return false;		
+	}
 
 	static void trim(char * s) 
 	{

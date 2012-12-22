@@ -867,14 +867,14 @@ void MainScene::startTipDiscovery()
 				{
 					CCLog("Found tip");
 
-					for (int m = 0; m < this->foundItems.size(); m++)
+					for (unsigned int m = 0; m < this->foundItems.size(); m++)
 					{
 						MATRIXPOS po = this->foundItems[m];
 						CCGemSprite* s = this->matrix[po.row][po.col];
 						int scale = s->getScaleX();
 
-						CCEaseInOut *e1 = CCEaseInOut::create(CCScaleTo::create(0.3, GEM_SCALE + 0.05, GEM_SCALE + 0.05), 1);						
-						CCEaseInOut *e2 = CCEaseInOut::create(CCScaleTo::create(0.3, GEM_SCALE, GEM_SCALE), 1);
+						CCEaseInOut *e1 = CCEaseInOut::create(CCScaleTo::create(0.3f, GEM_SCALE + 0.05, GEM_SCALE + 0.05), 1);						
+						CCEaseInOut *e2 = CCEaseInOut::create(CCScaleTo::create(0.3f, GEM_SCALE, GEM_SCALE), 1);
 						CCRepeat *rep = CCRepeat::create(CCSequence::createWithTwoActions(e1, e2), 3);
 						
 						s->runAction(rep);
