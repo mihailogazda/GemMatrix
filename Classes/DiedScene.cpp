@@ -44,7 +44,7 @@ bool DiedScene::init()
     this->addChild(back);    
 
     int fontSize = (phoneType == IPAD3 || phoneType == IPHONE4) ? 72 : 36;
-	CCLabelTTF *loser = CCLabelTTF::create("You loose!", "Impact", fontSize);
+	CCLabelTTF *loser = CCLabelTTF::create("You loose!", GAME_FONT, fontSize);
 	loser->setPosition(ccp(xs, ys));	
 	this->addChild(loser);
 	

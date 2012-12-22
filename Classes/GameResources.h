@@ -36,6 +36,8 @@
 
 #define GEM_ROCK_PROBABILITY_MAX 40
 
+#define GAME_FONT "Impact"
+
 //
 //	BASE DIRECTORY
 //

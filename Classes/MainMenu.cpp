@@ -72,7 +72,7 @@ bool MainMenuScene::init()
 	this->addChild(l);
     
 	//  menu
-	CCMenuItemFont::setFontName("Impact");
+	CCMenuItemFont::setFontName(GAME_FONT);
     CCMenuItemFont *play = CCMenuItemFont::create("Play now", this, menu_selector(MainMenuScene::PlayButton));
     play->setPosition(ccp(g_width / 2, g_height /2 - 100));
     
@@ -149,16 +149,19 @@ void MainMenuScene::handleBoxShowed()
 	int x = g_width / 2;
 	int y = g_height - 110;
 	ccColor3B black = ccc3(0, 0, 0);
-	char *font = "Impact";
+	char *font = GAME_FONT;
 	short fontSize = 28;
 	selectedLevel = currentLevel;
 
 	CCLayer* messageLayer = this->messageBox->getMessageLayer();
 	
-	level = CCLabelTTF::create(tmp, "Impact", fontSize);
+	level = CCLabelTTF::create(tmp, GAME_FONT, fontSize);
 	level->setPosition(ccp(x, y));
 	level->setColor(black);
 	messageLayer->addChild(level, 1);
+	
+	level->getTexture()->setAntiAliasTexParameters();
+	level->getTexture()->setAliasTexParameters();
 
 	//CCMenuItemFont::setColor(black);
 
@@ -186,28 +189,34 @@ void MainMenuScene::handleBoxShowed()
 		short spaceing = 50;
 		
 		y -= spaceing + 20;		
-		INSERT_LABEL(l1, "Points to win:", font, fontSize, x, y, black, messageLayer)
+		INSERT_LABEL(l1, "Points to win:", font, fontSize, x, y, black, messageLayer);		
+		l1->getTexture()->setAliasTexParameters();
 
 		y -= spaceing / 2;
 		sprintf(tmp, "%d", gl.minScore);
 		INSERT_LABEL(l4, tmp, font, fontSize, x, y, black, messageLayer);
 		this->points = l4;
+		l4->getTexture()->setAliasTexParameters();
 
 		y -= spaceing;		
 		INSERT_LABEL(l2, "Time to win it:", font, fontSize, x, y, black, messageLayer);
+		l2->getTexture()->setAliasTexParameters();
 
 		y -= spaceing / 2;
 		sprintf(tmp, "%d seconds", gl.timeout);
 		INSERT_LABEL(l5, tmp, font, fontSize, x, y, black, messageLayer);
 		this->timeout = l5;
+		l5->getTexture()->setAliasTexParameters();
 
 		y -= spaceing;		
 		INSERT_LABEL(l3, "New row comes every:", font, fontSize, x, y, black, messageLayer);
+		l3->getTexture()->setAliasTexParameters();
 
 		y -= spaceing / 2;	
 		sprintf(tmp, "%d seconds", gl.insertRowTime);
 		INSERT_LABEL(l6, tmp, font, fontSize, x, y, black, messageLayer);
 		this->insertRowTime = l6;
+		l6->getTexture()->setAliasTexParameters();
 
 		y -= spaceing + 20;
 		fontSize = 36;
@@ -216,10 +225,11 @@ void MainMenuScene::handleBoxShowed()
 		CCMenuItemFont::setFontSize(fontSize);
 		CCMenuItemFont* play = CCMenuItemFont::create(tmp, this, menu_selector(MainMenuScene::handleLevelSelected));
 		play->setColor(ccc3(200, 0, 100));		
+		
 
 		sprintf(tmp, "Back");
 		CCMenuItemFont* close = CCMenuItemFont::create(tmp, messageBox, messageBox->sel_hideMessageBox);
-		close->setColor(ccc3(54, 177, 191));
+		close->setColor(ccc3(54, 177, 191));		
 		
 		CCMenu* menu = CCMenu::create(play, close, NULL);
 		menu->setPosition(ccp(x, y));

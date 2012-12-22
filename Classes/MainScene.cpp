@@ -125,7 +125,7 @@ void MainScene::handleClickUp(CCObject* sender)
 	CCLog("Handle UP button");
     
 	//	add points	
-	CCLabelTTF *pts = CCLabelTTF::create("100 points!", "Impact", 24);
+	CCLabelTTF *pts = CCLabelTTF::create("100 points!", GAME_FONT, 24);
 	pts->setPosition(this->upButton->getPosition());
 	this->sidebar->addChild(pts);
 	
@@ -260,7 +260,7 @@ void MainScene::initSpareRow()
 
 bool MainScene::initSidebar()
 {
-	char* fontName = "Impact";
+	char* fontName = GAME_FONT;
 	unsigned int fontSize = 26;
     
     if (phoneType == IPAD3 || phoneType == IPHONE4)
@@ -512,7 +512,7 @@ void MainScene::hideItem(unsigned int row, unsigned int col)
 		
 	//	Add points won per gem
 	CCPoint pos = positionForElement(row, col);
-	CCLabelTTF *lab  = CCLabelTTF::create("10", "Impact", 16);
+	CCLabelTTF *lab  = CCLabelTTF::create("10", GAME_FONT, 16);
 	pos.x += GEM_WIDTH / 2;
 	pos.y += GEM_HEIGHT / 2;
 	lab->setPosition(pos);
@@ -588,7 +588,7 @@ void MainScene::completeShowBonus()
 
 void MainScene::showBonusMessage(char* message)
 {
-	CCLabelTTF* bonusLabel = CCLabelTTF::create(message, "Impact", 28);
+	CCLabelTTF* bonusLabel = CCLabelTTF::create(message, GAME_FONT, 28);
 	CCAssert(bonusLabel, "Bonus label is empty");	
 
 	int spustac =  this->bonusVisibleCount * 80;
