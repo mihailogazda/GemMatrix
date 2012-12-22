@@ -125,7 +125,7 @@ void MainScene::handleClickUp(CCObject* sender)
 	CCLog("Handle UP button");
     
 	//	add points	
-	CCLabelTTF *pts = CCLabelTTF::create("100 points!", "Impact", 18);
+	CCLabelTTF *pts = CCLabelTTF::create("100 points!", "Impact", 24);
 	pts->setPosition(this->upButton->getPosition());
 	this->sidebar->addChild(pts);
 	
@@ -419,6 +419,7 @@ void MainScene::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 	verifyTouch(point);	
 }
 
+bool timeArtifactInProcessing = false;
 void MainScene::verifyTouch(CCPoint point)
 {
 	CCLog("Touch recieved: x:%f y:%f", point.x, point.y);
@@ -440,10 +441,13 @@ void MainScene::verifyTouch(CCPoint point)
 			{
 				CCLog("Found item @ %dx%d", i, j);
 
+				if (this->matrix[i][j]->getTag() == TIME_ID)
+					timeArtifactInProcessing = true;
+
 				if (this->matrix[i][j]->getTag() == BOMB_ID)
 				{
 					this->processBomb(i, j);
-				}
+				}				
 				else
 				{
 					this->foundItems.clear();
@@ -530,8 +534,22 @@ void MainScene::postProcess()
 	if (size < 3)
 	{
 		CCLOG("NOT ENOUGH");
+
+		//	level checks for invalid touches
+		if (gameLevel.checksInvalid && !timeArtifactInProcessing)
+		{
+			this->pointsCount = max(this->pointsCount - 100, 0); // always positive
+
+			char tmp[50];
+			sprintf(tmp, "%d points", this->pointsCount);
+			this->pointsLabel->setString(tmp);
+		}
+
+		timeArtifactInProcessing = false;
 		return;
 	}
+
+	timeArtifactInProcessing = false;
 
 	this->callbackCount = size;
 	this->disableTouches = true;
@@ -550,8 +568,6 @@ void MainScene::postProcess()
 
 		//	finally hide
 		this->hideItem(p.row, p.col);
-
-
 
 		/*
 			//http://www.cocos2d-iphone.org/forum/topic/19523
@@ -585,7 +601,7 @@ void MainScene::showBonusMessage(char* message)
 		CCFadeTo::create(0.2f, 255),
 		CCScaleTo::create(0.5, 2),			
 		CCCallFunc::create(this, callfunc_selector(MainScene::completeShowBonus)),
-		CCFadeTo::create(0.5, 0),		
+		CCFadeTo::create(1.5, 0),		
 		NULL));
 
 	this->bonusVisibleCount++;
@@ -880,23 +896,43 @@ void MainScene::processBomb(unsigned int row, unsigned int col)
 
 	if (this->matrix[row + 1][col])		//	top
 	{
-		this->hideItem(row + 1, col);
-		counter++;
+		if (this->matrix[row + 1][col]->getTag() == BOMB_ID)
+			this->processBomb(row + 1, col);
+		else
+		{
+			this->hideItem(row + 1, col);		
+			counter++;
+		}
 	}
 	if (this->matrix[row][col + 1])		//	right
 	{
-		this->hideItem(row, col + 1);
-		counter++;
+		if (this->matrix[row][col + 1]->getTag() == BOMB_ID)
+			this->processBomb(row, col + 1);
+		else
+		{
+			this->hideItem(row, col + 1);
+			counter++;
+		}
 	}
 	if (row > 0 && this->matrix[row - 1][col])		//	bottom
 	{
-		this->hideItem(row - 1, col);	
-		counter++;
+		if (this->matrix[row -1 ][col]->getTag() == BOMB_ID)
+			this->processBomb(row - 1, col);
+		else
+		{
+			this->hideItem(row - 1, col);	
+			counter++;
+		}
 	}
 	if (col > 0 && this->matrix[row][col - 1])		//	left
 	{
-		this->hideItem(row, col - 1);
-		counter++;
+		if (this->matrix[row][col - 1]->getTag() == BOMB_ID)
+			this->processBomb(row, col - 1);
+		else
+		{
+			this->hideItem(row, col - 1);
+			counter++;
+		}
 	}
 
 	/*
@@ -908,28 +944,47 @@ void MainScene::processBomb(unsigned int row, unsigned int col)
 	//	1
 	if (col > 0 && this->matrix[row + 1][col - 1])
 	{
-		this->hideItem(row + 1, col - 1);
-		counter++;
+		if (this->matrix[row + 1][col - 1]->getTag() == BOMB_ID)
+			this->processBomb(row + 1, col - 1);
+		else
+		{
+			this->hideItem(row + 1, col - 1);
+			counter++;
+		}
 	}
 	//	2
 	if (this->matrix[row + 1][col + 1])
 	{
-		this->hideItem(row + 1, col + 1);
-		counter++;
+		if (this->matrix[row + 1][col + 1]->getTag() == BOMB_ID)
+			this->processBomb(row + 1, col + 1);
+		else
+		{
+			this->hideItem(row + 1, col + 1);
+			counter++;
+		}
 	}
 	//	3
 	if (row > 0 && col > 0 && this->matrix[row - 1][col - 1])
 	{
-		this->hideItem(row - 1, col - 1);
-		counter++;
+		if (this->matrix[row - 1][col - 1]->getTag() == BOMB_ID)
+			this->processBomb(row - 1, col - 1);
+		else
+		{
+			this->hideItem(row - 1, col - 1);
+			counter++;
+		}
 	}
 	//	4
 	if (row > 0 && this->matrix[row - 1][col + 1])
 	{
-		this->hideItem(row - 1, col + 1);
-		counter++;
-	}
-	
+		if (this->matrix[row - 1][col + 1]->getTag() == BOMB_ID)
+			this->processBomb(row - 1, col + 1);
+		else
+		{
+			this->hideItem(row - 1, col + 1);
+			counter++;
+		}
+	}	
 
 	this->timerTip = 0;
 
@@ -941,7 +996,7 @@ void MainScene::processBomb(unsigned int row, unsigned int col)
 	sprintf(tmp, "%d points", this->pointsCount);
 	this->pointsLabel->setString(tmp);
 
-	sprintf(tmp, "%d points!", won);
+	sprintf(tmp, "%d bonus points!", won);
 	this->showBonusMessage(tmp);
 
 	this->reorganizeMatrix();
