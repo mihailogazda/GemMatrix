@@ -4,7 +4,7 @@
     <timeout> 90 </timeout>
     <insertRowTime> 12 </insertRowTime>
     <substractRows> 4 </substractRows>
-    <minScore> 3000 </minScore>
+    <minScore> 1500 </minScore>
     <bombProbability> 0 </bombProbability>
     <timeProbability> 0 </timeProbability>
   </level>
@@ -13,8 +13,8 @@
     <timeout> 90 </timeout>
     <insertRowTime> 12 </insertRowTime>
     <substractRows> 4 </substractRows>
-    <minScore> 3500 </minScore>
-    <bombProbability> 0 </bombProbability>
+    <minScore> 3000 </minScore>
+    <bombProbability> 120 </bombProbability>
     <timeProbability> 0 </timeProbability>
   </level>
   <!-- 3 -->

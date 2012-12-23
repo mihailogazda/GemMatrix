@@ -378,6 +378,7 @@ bool MainScene::initSidebar()
         upButton->setScale(0.7f);
     
 	upButton->setPosition(ccp(gw / 2, buttonStart));
+	upButton->setVisible(false);
     this->sidebarMenu->addChild(upButton);
     
 	//	Timer for new row
@@ -755,7 +756,10 @@ void MainScene::handleTimeUpdate(float delta)
 	//	check for timeout
 	if (this->totalTime == this->gameLevel.timeout)
 	{
-		this->handleTimeout();
+		//this->handleTimeout();
+		//this->handleDone();
+		this->doneMessage = CCGameMessage::create(this, callfunc_selector(MainScene::handleDone), callfunc_selector(MainScene::handleDoneExit));			
+		this->doneMessage->showMessageBox();
 		return;
 	}
 
@@ -805,15 +809,21 @@ void MainScene::handleDone()
 	CCLabelTTF *gameOver = CCLabelTTF::create("Game Over", GAME_FONT, 24);
 	gameOver->setColor(colorBlack);
 	lay->addChild(gameOver);
-	gameOver->getTexture()->setAliasTexParameters();
-	
-	
+	gameOver->getTexture()->setAliasTexParameters();	
+
+	CCMenuItemFont* cont = CCMenuItemFont::create("Continue", this, menu_selector(MainScene::handleClickContinue));
+	cont->setColor(colorBlack);	
 	CCMenuItemFont *restart = CCMenuItemFont::create("Restart", this, menu_selector(MainScene::handleClickReset));
 	restart->setColor(colorBlack);
-	CCMenuItemFont *cont = CCMenuItemFont::create("Main menu", this, menu_selector(MainScene::handleClickMenu));
+	CCMenuItemFont *main = CCMenuItemFont::create("Main menu", this, menu_selector(MainScene::handleClickMenu));
 	cont->setColor(colorBlack);
-	
-	CCMenu *menu = CCMenu::create(restart, cont, NULL);
+
+	CCMenu *menu = NULL;
+	if (this->pointsCount >= this->gameLevel.minScore)	
+		menu = CCMenu::create(cont, restart, main, NULL);
+	else
+		menu = CCMenu::create(restart, main, NULL);
+
 	menu->setPosition(ccp(0, -80));
 	menu->alignItemsVertically();
 
@@ -821,6 +831,11 @@ void MainScene::handleDone()
 
 	lay->setPosition(p);
 	this->doneMessage->getMessageLayer()->addChild(lay);
+}
+
+void MainScene::handleClickContinue(CCObject* sender)
+{
+
 }
 
 void MainScene::handleDoneExit()

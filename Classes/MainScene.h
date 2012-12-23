@@ -120,6 +120,7 @@ private:
 	CCGameMessage *doneMessage;
 	void handleDone();
 	void handleDoneExit();
+	void handleClickContinue(CCObject* sender);
 	//void handleDoneRestart();
 
 public:

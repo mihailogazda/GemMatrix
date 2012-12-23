@@ -29,12 +29,17 @@ static const char* g_gemNames[] =
 
 extern IOSTYPE phoneType;
 
+static int lastTag = -1;
+static int sameLastTagCount = 0;
+
 class CCGemSprite : public CCSprite
 {
 public:
 
+
+
 	static CCGemSprite* create(bool includeRock = false)
-	{		
+	{
 		extern GAMELEVEL globalCurrentLevel;
 
 		int r = 0;
@@ -46,6 +51,22 @@ public:
 
 		if (!(r == TIME_ID || r == BOMB_ID))
 			r = CCUtils::randomInInterval(0, 3);
+
+		//	never generate more than 3 of the same item so close
+		if (lastTag == r)
+		{
+			sameLastTagCount++;
+			if (sameLastTagCount == 4)
+			{
+				CCLog("Sprite %d generated 3 times in a row, skipping...", r);
+				return CCGemSprite::create(includeRock);
+			}
+		}
+		else
+		{
+			lastTag = r;
+			sameLastTagCount = 0;
+		}
 
 		const char* gemname = g_gemNames[r];
 
