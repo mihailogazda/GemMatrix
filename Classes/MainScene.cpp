@@ -1,8 +1,5 @@
 #include "MainScene.h"
-#include "DiedScene.h"
 #include "MainMenu.h"
-#include "NextScene.h"
-#include "NextScene.h"
 
 extern int g_height;
 extern int g_width;
@@ -615,7 +612,7 @@ void MainScene::checkForBonus()
 	unsigned int size = this->foundItems.size();
 	
 	//	now bonus
-	unsigned int bonusOver = 5;
+	unsigned int bonusOver = this->gameLevel.bonusOver;
 	int bonus = size - bonusOver;
 	if (bonus > 0)
 	{
@@ -816,7 +813,7 @@ void MainScene::handleDone()
 	CCMenuItemFont *restart = CCMenuItemFont::create("Restart", this, menu_selector(MainScene::handleClickReset));
 	restart->setColor(colorBlack);
 	CCMenuItemFont *main = CCMenuItemFont::create("Main menu", this, menu_selector(MainScene::handleClickMenu));
-	cont->setColor(colorBlack);
+	main->setColor(colorBlack);
 
 	CCMenu *menu = NULL;
 	if (this->pointsCount >= this->gameLevel.minScore)	
@@ -835,7 +832,14 @@ void MainScene::handleDone()
 
 void MainScene::handleClickContinue(CCObject* sender)
 {
+	//totalWonPoints = this->pointsCount;
+	totalPoints += this->pointsCount;
+	currentLevel++;
 
+	CCUserDefault::sharedUserDefault()->setIntegerForKey(SETTING_TOTAL_POINTS, totalPoints);
+	CCUserDefault::sharedUserDefault()->setIntegerForKey(SETTING_LEVEL_CURRENT, currentLevel);
+
+	this->handleClickReset(NULL);
 }
 
 void MainScene::handleDoneExit()
@@ -865,13 +869,9 @@ void MainScene::insertRowFromBottom()
 	{
 		CCLog("EXIT SCENE");
 
-		if (this->pointsCount >= this->gameLevel.minScore)
-			this->handleTimeout();
-		else
-		{
-			this->doneMessage = CCGameMessage::create(this, callfunc_selector(MainScene::handleDone), callfunc_selector(MainScene::handleDoneExit));			
-			this->doneMessage->showMessageBox();						
-		}
+		this->doneMessage = CCGameMessage::create(this, callfunc_selector(MainScene::handleDone), callfunc_selector(MainScene::handleDoneExit));			
+		this->doneMessage->showMessageBox();						
+
 		return;
     }
 
@@ -907,17 +907,6 @@ void MainScene::insertRowFromBottom()
     
     this->initSpareRow();
 	this->timerCount = gameLevel.insertRowTime;
-}
-
-void MainScene::handleTimeout()
-{
-	CCLog("HandleTimeout");
-	//currentLevel++;
-	
-	totalWonPoints = this->pointsCount;
-
-	//	set temp values for NextScene to read
-	CCDirector::sharedDirector()->replaceScene(CCTransitionFadeBL::create(1, NextScene::scene()));
 }
 
 void MainScene::updateProgress()

@@ -13,6 +13,7 @@ typedef struct
 	unsigned int minScore;
 	unsigned int substractRows;
 	unsigned int secondsToTip;
+	unsigned int bonusOver;
 	static const unsigned int tipPause = 10;
 	int bombProbability;
 	int timeProbability;
@@ -139,7 +140,13 @@ private:
 				if (xmlStrcmp(cont, (const xmlChar*) "true") == 0)
 					l.checksInvalid = true;
 			}
-			
+			else if (xmlStrcmp(currNode->name, (const xmlChar*) "bonusOver") == 0)
+			{
+				cont = xmlNodeGetContent(currNode);
+				l.bonusOver = atoi((const char*) cont);
+				if (l.bonusOver != 0)
+					foundCounter++;
+			}			
 			
 			currNode = currNode->next;
 		}
@@ -152,6 +159,9 @@ private:
 
 		if (l.substractRows == 0)
 			l.substractRows = 3;
+
+		if (l.bonusOver == 0)
+			l.bonusOver = 4;
 
 		return l;
 	}

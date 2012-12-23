@@ -4,7 +4,7 @@
     <timeout> 90 </timeout>
     <insertRowTime> 12 </insertRowTime>
     <substractRows> 4 </substractRows>
-    <minScore> 1500 </minScore>
+    <minScore> 1000 </minScore>
     <bombProbability> 0 </bombProbability>
     <timeProbability> 0 </timeProbability>
   </level>
@@ -13,29 +13,36 @@
     <timeout> 90 </timeout>
     <insertRowTime> 12 </insertRowTime>
     <substractRows> 4 </substractRows>
-    <minScore> 3000 </minScore>
+    <minScore> 1200 </minScore>
     <bombProbability> 120 </bombProbability>
     <timeProbability> 0 </timeProbability>
   </level>
   <!-- 3 -->
   <level>
-    <timeout> 60 </timeout>
-    <insertRowTime> 10 </insertRowTime>
-    <minScore> 5000 </minScore>
+    <timeout> 90 </timeout>
+    <insertRowTime> 12 </insertRowTime>
+    <substractRows> 4 </substractRows>
+    <minScore> 1400 </minScore>
+    <bombProbability> 120 </bombProbability>
+    <timeProbability> 0 </timeProbability>
   </level>
   <!-- 4 -->
   <level>
-    <timeout> 50 </timeout>
-    <insertRowTime> 10 </insertRowTime>
-    <minScore> 6000 </minScore>
-    <hasRocks> true </hasRocks>
+    <timeout> 90 </timeout>
+    <insertRowTime> 11 </insertRowTime>
+    <substractRows> 4 </substractRows>
+    <minScore> 1600 </minScore>
+    <bombProbability> 120 </bombProbability>
+    <timeProbability> 120 </timeProbability>
   </level>
   <!-- 5 -->
   <level>
-    <timeout> 50 </timeout>
-    <insertRowTime> 9 </insertRowTime>
-    <minScore> 7000 </minScore>
-    <hasRocks> true </hasRocks>
+    <timeout> 90 </timeout>
+    <insertRowTime> 10 </insertRowTime>
+    <substractRows> 4 </substractRows>
+    <minScore> 1800 </minScore>
+    <bombProbability> 120 </bombProbability>
+    <timeProbability> 120 </timeProbability>
   </level>
   <!-- 6 -->
   <level>

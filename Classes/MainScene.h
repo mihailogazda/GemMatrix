@@ -74,7 +74,6 @@ private:
 
 	void handleClickPause(CCObject* sender);
 
-	void handleTimeout();
 	void updateProgress();
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);

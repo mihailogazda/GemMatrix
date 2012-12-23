@@ -56,7 +56,7 @@ public:
 		if (lastTag == r)
 		{
 			sameLastTagCount++;
-			if (sameLastTagCount == 4)
+			if (sameLastTagCount >= 3)
 			{
 				CCLog("Sprite %d generated 3 times in a row, skipping...", r);
 				return CCGemSprite::create(includeRock);
@@ -69,8 +69,8 @@ public:
 		}
 
 		const char* gemname = g_gemNames[r];
+		//CCLog("Spawning sprite (%d) %s", r,  gemname);
 
-		CCLog("Spawning sprite (%d) %s", r,  gemname);
         CCGemSprite* t = (CCGemSprite*) CCSprite::createWithSpriteFrameName(gemname);
 		t->setTag(r);		    
 
