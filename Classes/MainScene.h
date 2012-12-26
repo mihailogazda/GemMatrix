@@ -22,11 +22,12 @@ class MainScene : public CCLayerColor
 {
 private:
     
-	int pointsCount;
-	int timerCount;
+	unsigned int pointsCount;
+	unsigned int timerCount;
 	unsigned int timerTip;
     int totalTime;
-	
+
+	unsigned int levelPhase; // 0 - min, 1 - med and 2 - max score
 
 	CCGameMessage *pauseMessage;
 	void handlePauseShow();

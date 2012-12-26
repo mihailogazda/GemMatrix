@@ -375,7 +375,7 @@ bool MainScene::initSidebar()
         upButton->setScale(0.7f);
     
 	upButton->setPosition(ccp(gw / 2, buttonStart));
-	upButton->setVisible(false);
+	//upButton->setVisible(false);
     this->sidebarMenu->addChild(upButton);
     
 	//	Timer for new row
@@ -816,7 +816,7 @@ void MainScene::handleDone()
 	main->setColor(colorBlack);
 
 	CCMenu *menu = NULL;
-	if (this->pointsCount >= this->gameLevel.minScore)	
+	if (this->pointsCount >= this->gameLevel.minScore)
 		menu = CCMenu::create(cont, restart, main, NULL);
 	else
 		menu = CCMenu::create(restart, main, NULL);

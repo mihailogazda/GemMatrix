@@ -1,17 +1,19 @@
 <levels>
   <!-- 1 -->
   <level>
-    <timeout> 90 </timeout>
-    <insertRowTime> 12 </insertRowTime>
+    <timeout> 60 </timeout>
+    <insertRowTime> 10 </insertRowTime>
     <substractRows> 4 </substractRows>
     <minScore> 1000 </minScore>
+    <medScore> 1500 </medScore>
+    <maxScore> 2500 </maxScore>
     <bombProbability> 0 </bombProbability>
     <timeProbability> 0 </timeProbability>
   </level>
   <!-- 2 -->
   <level>
-    <timeout> 90 </timeout>
-    <insertRowTime> 12 </insertRowTime>
+    <timeout> 60 </timeout>
+    <insertRowTime> 10 </insertRowTime>
     <substractRows> 4 </substractRows>
     <minScore> 1200 </minScore>
     <bombProbability> 120 </bombProbability>
@@ -19,8 +21,8 @@
   </level>
   <!-- 3 -->
   <level>
-    <timeout> 90 </timeout>
-    <insertRowTime> 12 </insertRowTime>
+    <timeout> 60 </timeout>
+    <insertRowTime> 10 </insertRowTime>
     <substractRows> 4 </substractRows>
     <minScore> 1400 </minScore>
     <bombProbability> 120 </bombProbability>
@@ -28,7 +30,7 @@
   </level>
   <!-- 4 -->
   <level>
-    <timeout> 90 </timeout>
+    <timeout> 60 </timeout>
     <insertRowTime> 11 </insertRowTime>
     <substractRows> 4 </substractRows>
     <minScore> 1600 </minScore>
@@ -37,7 +39,7 @@
   </level>
   <!-- 5 -->
   <level>
-    <timeout> 90 </timeout>
+    <timeout> 60 </timeout>
     <insertRowTime> 10 </insertRowTime>
     <substractRows> 4 </substractRows>
     <minScore> 1800 </minScore>

@@ -82,15 +82,13 @@ bool MainMenuScene::init()
     CCMenuItemFont* credits = CCMenuItemFont::create("Credits");
     credits->setPosition(ccp(g_width / 2, g_height / 2 - 220));
     
-    CCMenu *menu = CCMenu::create(play, options, credits, NULL);
-    menu->setPosition(ccp(0, 0));
-    menu->setAnchorPoint(ccp(0, 0));
+    mainMenu = CCMenu::create(play, options, credits, NULL);
+    mainMenu->setPosition(ccp(0, 0));
+    mainMenu->setAnchorPoint(ccp(0, 0));
     
-    this->addChild(menu);
+    this->addChild(mainMenu);    
     
-    
-    //  Move play button arround a little
-	
+    //  Move play button arround a little	
     play->runAction(CCRepeatForever::create(CCSequence::createWithTwoActions(CCEaseBackInOut::create(CCSkewBy::create(1, 5, 5)), CCEaseBackInOut::create(CCSkewBy::create(1, -5, -5)))));
     play->runAction(CCRepeatForever::create(CCSequence::createWithTwoActions(CCEaseBackInOut::create(CCScaleTo::create(1, 1.2, 1.2)), CCEaseBackInOut::create(CCScaleTo::create(1, 1.0, 1.0)))));
     credits->runAction(CCRepeatForever::create(CCSequence::createWithTwoActions(CCEaseBackInOut::create(CCSkewBy::create(1, 5, 5)), CCEaseBackInOut::create(CCSkewBy::create(1, -5, -5)))));
@@ -130,6 +128,7 @@ void MainMenuScene::PlayButton(CCObject* sender)
 	if (this->messageBox)
 		delete this->messageBox;
 	
+	this->mainMenu->setEnabled(false);
 	this->messageBox = CCGameMessage::create(this, callfunc_selector(MainMenuScene::handleBoxShowed), callfunc_selector(MainMenuScene::handleBoxClosed));
 	this->messageBox->showMessageBox();
 }
@@ -137,11 +136,14 @@ void MainMenuScene::PlayButton(CCObject* sender)
 void MainMenuScene::handleBoxClosed()
 {
 	CCLog("Handle box closed");
+	mainMenu->setEnabled(true);
 }
 
 void MainMenuScene::handleBoxShowed()
 {	
 	CCLog("Handle box showed");
+
+	mainMenu->setEnabled(false);
 
 	char tmp[100];
 	sprintf(tmp, "Level: %d", currentLevel);

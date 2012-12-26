@@ -11,10 +11,12 @@ typedef struct
 	unsigned int timeout;
 	unsigned int insertRowTime;
 	unsigned int minScore;
+	unsigned int medScore;
+	unsigned int maxScore;
 	unsigned int substractRows;
 	unsigned int secondsToTip;
 	unsigned int bonusOver;
-	static const unsigned int tipPause = 10;
+	static const unsigned int tipPause = 10;	
 	int bombProbability;
 	int timeProbability;
 	bool checksInvalid;
@@ -102,6 +104,20 @@ private:
 				cont = xmlNodeGetContent(currNode);
 				l.minScore = atoi((const char*) cont);
 				if (l.minScore != 0)
+					foundCounter++;
+			}
+			else if (xmlStrcmp(currNode->name, (const xmlChar*) "medScore") == 0)
+			{
+				cont = xmlNodeGetContent(currNode);
+				l.medScore = atoi((const char*) cont);
+				if (l.medScore != 0)
+					foundCounter++;
+			}
+			else if (xmlStrcmp(currNode->name, (const xmlChar*) "maxScore") == 0)
+			{
+				cont = xmlNodeGetContent(currNode);
+				l.maxScore = atoi((const char*) cont);
+				if (l.maxScore != 0)
 					foundCounter++;
 			}
 			else if (xmlStrcmp(currNode->name, (const xmlChar*) "substractRows") == 0)

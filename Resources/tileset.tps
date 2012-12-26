@@ -10,7 +10,7 @@
         <key>autoSDSettings</key>
         <array/>
         <key>allowRotation</key>
-        <true/>
+        <false/>
         <key>quiet</key>
         <false/>
         <key>premultiplyAlpha</key>
@@ -40,7 +40,7 @@
             </struct>
         </struct>
         <key>shapePadding</key>
-        <uint>2</uint>
+        <uint>0</uint>
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
@@ -50,7 +50,7 @@
         <key>textureFormat</key>
         <enum type="SettingsBase::TextureFormat">png</enum>
         <key>borderPadding</key>
-        <uint>2</uint>
+        <uint>0</uint>
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
@@ -119,7 +119,7 @@
         <key>outputFormat</key>
         <enum type="SettingsBase::OutputFormat">RGBA8888</enum>
         <key>autoAliasEnabled</key>
-        <true/>
+        <false/>
         <key>trimSpriteNames</key>
         <false/>
         <key>globalSpriteSettings</key>
@@ -141,41 +141,15 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>PlanetCute PNG/bomb.png</filename>
             <filename>PlanetCute PNG/Gem Blue.png</filename>
             <filename>PlanetCute PNG/Gem Gray.png</filename>
             <filename>PlanetCute PNG/Gem Green.png</filename>
             <filename>PlanetCute PNG/Gem Orange.png</filename>
-            <filename>PlanetCute PNG/bomb.png</filename>
-            <filename>PlanetCute PNG/Gem Blue.png</filename>
-            <filename>PlanetCute PNG/Gem Gray.png</filename>
-            <filename>PlanetCute PNG/Gem Green.png</filename>
-            <filename>PlanetCute PNG/Gem Orange.png</filename>
-            <filename>PlanetCute PNG/bomb.png</filename>
-            <filename>PlanetCute PNG/Gem Blue.png</filename>
-            <filename>PlanetCute PNG/Gem Gray.png</filename>
-            <filename>PlanetCute PNG/Gem Green.png</filename>
-            <filename>PlanetCute PNG/Gem Orange.png</filename>
-            <filename>PlanetCute PNG/bomb.png</filename>
-            <filename>PlanetCute PNG/Gem Blue.png</filename>
-            <filename>PlanetCute PNG/Gem Gray.png</filename>
-            <filename>PlanetCute PNG/Gem Green.png</filename>
-            <filename>PlanetCute PNG/Gem Orange.png</filename>
-            <filename>PlanetCute PNG/bomb.png</filename>
-            <filename>PlanetCute PNG/Gem Blue.png</filename>
-            <filename>PlanetCute PNG/Gem Gray.png</filename>
-            <filename>PlanetCute PNG/Gem Green.png</filename>
-            <filename>PlanetCute PNG/Gem Orange.png</filename>
+            <filename>PlanetCute PNG/Heart.png</filename>
+            <filename>PlanetCute PNG/Key.png</filename>
             <filename>PlanetCute PNG/Rock.png</filename>
-            <filename>PlanetCute PNG/Heart.png</filename>
-            <filename>PlanetCute PNG/Key.png</filename>
             <filename>PlanetCute PNG/Star.png</filename>
-            <filename>PlanetCute PNG/Heart.png</filename>
-            <filename>PlanetCute PNG/Key.png</filename>
-            <filename>PlanetCute PNG/Star.png</filename>
-            <filename>PlanetCute PNG/Heart.png</filename>
-            <filename>PlanetCute PNG/Key.png</filename>
-            <filename>PlanetCute PNG/Star.png</filename>
+            <filename>PlanetCute PNG/bomb.png</filename>
             <filename>levelList.png</filename>
         </array>
         <key>ignoreFileList</key>

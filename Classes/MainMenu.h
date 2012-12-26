@@ -35,6 +35,8 @@ private:
 	CCLabelTTF* insertRowTime;
 	CCLabelTTF* level;
 
+	CCMenu *mainMenu;
+
 	CCMenuItem* left;
 	CCMenuItem* right;
 
