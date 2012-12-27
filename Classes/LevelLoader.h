@@ -20,6 +20,7 @@ typedef struct
 	int bombProbability;
 	int timeProbability;
 	bool checksInvalid;
+	bool upButtonHidden;
 	bool valid;
 } GAMELEVEL, *LPGAMELEVEL;
 
@@ -162,13 +163,20 @@ private:
 				l.bonusOver = atoi((const char*) cont);
 				if (l.bonusOver != 0)
 					foundCounter++;
-			}			
+			}		
+			else if (xmlStrcmp(currNode->name, (const xmlChar*) "upButtonHidden") == 0)
+			{
+				cont = xmlNodeGetContent(currNode);
+				CCUtils::trim((char*) cont);
+				if (xmlStrcmp(cont, (const xmlChar*) "true") == 0)
+					l.upButtonHidden = true;
+			}
 			
 			currNode = currNode->next;
 		}
 
 		if (foundCounter >= 3)
-			l.valid = true;
+			l.valid = true;		
 
 		if (l.secondsToTip == 0)
 			l.secondsToTip = 5;

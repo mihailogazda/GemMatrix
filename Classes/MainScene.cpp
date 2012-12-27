@@ -283,7 +283,10 @@ bool MainScene::initSidebar()
 		buttonStart = 70;
 #endif
     
-    sidebar = CCLayerColor::create(ccc4(255, 255, 255, 100));
+	ccColor4B colorWhite = ccc4(255, 255, 255, 100);
+	ccColor4B colorWhatever = ccc4(247, 133, 26, 255);
+
+	sidebar = CCLayerColor::create(colorWhatever);
     sidebar->setPosition(ccp(xs, 0));
     sidebar->setAnchorPoint(ccp(0, 0));
 
@@ -366,17 +369,19 @@ bool MainScene::initSidebar()
 	sidebar->addChild(timeProgress, 1);    
     
     //  now button
-    CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(IMG_BUTTON);
-	upButton = CCMenuItemSprite::create(CCSprite::createWithTexture(tex), CCSprite::createWithTexture(tex), this, menu_selector(MainScene::handleClickUp));
+	if (!gameLevel.upButtonHidden)
+	{
+		CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage(IMG_BUTTON);
+		upButton = CCMenuItemSprite::create(CCSprite::createWithTexture(tex), CCSprite::createWithTexture(tex), this, menu_selector(MainScene::handleClickUp));
     
-    if (phoneType == IPAD3)
-        upButton->setScale(1.4f);
-    else
-        upButton->setScale(0.7f);
+		if (phoneType == IPAD3)
+			upButton->setScale(1.4f);
+		else
+			upButton->setScale(0.7f);
     
-	upButton->setPosition(ccp(gw / 2, buttonStart));
-	//upButton->setVisible(false);
-    this->sidebarMenu->addChild(upButton);
+		upButton->setPosition(ccp(gw / 2, buttonStart));
+		this->sidebarMenu->addChild(upButton);
+	}
     
 	//	Timer for new row
 	this->timeLabel = CCLabelTTF::create("0s", fontName, fontSize - 6);
