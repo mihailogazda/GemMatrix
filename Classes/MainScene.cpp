@@ -49,7 +49,7 @@ bool MainScene::init()
 
 	//	init matrix
 	memset(this->matrix, 0, sizeof(this->matrix));
-	memset(this->spareRow, 0, sizeof(this->spareRow));
+	memset(this->spareRow, 0, sizeof(this->spareRow));	
 
 	//	init game content layer
 	this->gameContent = CCLayer::create();
@@ -66,7 +66,7 @@ bool MainScene::init()
 	//CCAssert(this->gameLevel.valid, "GameLevel not valid. Probably end of the game.");	
 	if (!this->gameLevel.valid)
 	{
-#ifdef _WINDOWS
+#ifdef CC_PLATFORM_WIN32
 		MessageBox(NULL, "Probably end of the game (no more levels in xml file)", "Hello", MB_OK | MB_ICONWARNING);		
 #endif
 		exit(0);
@@ -82,7 +82,7 @@ bool MainScene::init()
 	this->pauseMessage = NULL;
 	this->doneMessage = NULL;
 
-	//	scheduel ticker
+	//	schedule ticker
 	this->schedule(schedule_selector(MainScene::handleTimeUpdate), 1);
     
 	return true;
@@ -286,7 +286,7 @@ bool MainScene::initSidebar()
 	ccColor4B colorWhite = ccc4(255, 255, 255, 100);
 	ccColor4B colorWhatever = ccc4(247, 133, 26, 255);
 
-	sidebar = CCLayerColor::create(colorWhatever);
+	sidebar = CCLayerColor::create(colorWhite);
     sidebar->setPosition(ccp(xs, 0));
     sidebar->setAnchorPoint(ccp(0, 0));
 
@@ -722,6 +722,7 @@ void MainScene::redrawMatrix()
 			if (this->matrix[i][j] != NULL)
 			{
 				CCPoint pos = positionForElement(i, j);
+				this->matrix[i][j]->stopAllActions();
 				this->matrix[i][j]->runAction( CCEaseBounceOut::create( CCMoveTo::create(0.5f, pos) ) );
 			}
 		}
@@ -907,8 +908,8 @@ void MainScene::insertRowFromBottom()
     }
 
     memcpy(this->matrix, tmp, sizeof(this->matrix));
-    
-    this->redrawMatrix();		
+    	
+    this->redrawMatrix();
     
     this->initSpareRow();
 	this->timerCount = gameLevel.insertRowTime;
@@ -1068,8 +1069,9 @@ void MainScene::processBomb(unsigned int row, unsigned int col)
 	this->showBonusMessage(tmp);
 
 	this->reorganizeMatrix();
-	this->redrawMatrix();
+	//this->redrawMatrix();
 	
+	//	shake it baby
 	this->makeShakeEffect();
 }
 
