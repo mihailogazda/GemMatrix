@@ -7,7 +7,7 @@
     <minScore> 1000 </minScore>
     <medScore> 1500 </medScore>
     <maxScore> 2500 </maxScore>
-    <bombProbability> 0 </bombProbability>
+    <bombProbability> 120 </bombProbability>
     <timeProbability> 0 </timeProbability>
   </level>
   <!-- 2 -->
@@ -17,7 +17,7 @@
     <substractRows> 4 </substractRows>
     <minScore> 1200 </minScore>
     <bombProbability> 120 </bombProbability>
-    <timeProbability> 0 </timeProbability>
+    <timeProbability> 120 </timeProbability>
   </level>
   <!-- 3 -->
   <level>
