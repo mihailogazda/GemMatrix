@@ -67,27 +67,27 @@
 //
 //	IMAGE RESOURCES
 //
-#define IMG_CLOSE_NORMAL RES_DIRECTORY "CloseNormal.png"
-#define IMG_CLOSE_SELECTED RES_DIRECTORY "CloseSelected.png"
+#define IMG_CLOSE_NORMAL "CloseNormal.png"
+#define IMG_CLOSE_SELECTED "CloseSelected.png"
 
 
-#define IMG_MAIN_TILESET RES_DIRECTORY "tileset.png"
-#define IMG_MAIN_TILESET_PLIST RES_DIRECTORY "tileset.plist"
+#define IMG_MAIN_TILESET "tileset.png"
+#define IMG_MAIN_TILESET_PLIST "tileset.plist"
 
-#define IMG_SNOWFLAKE RES_DIRECTORY "snowflake.png"
+#define IMG_SNOWFLAKE "snowflake.png"
 
-#define IMG_BLUE_BACK RES_DIRECTORY BACKS_DIR "blueBG.png"
-#define IMG_GREEN_BACK RES_DIRECTORY BACKS_DIR "greenBG.png"
-#define IMG_GREENYELLOW RES_DIRECTORY BACKS_DIR "greenyellowBG.png"
+#define IMG_BLUE_BACK BACKS_DIR "blueBG.png"
+#define IMG_GREEN_BACK BACKS_DIR "greenBG.png"
+#define IMG_GREENYELLOW BACKS_DIR "greenyellowBG.png"
 
-#define IMG_SPOOKY RES_DIRECTORY "spooky_logo.png"
-#define IMG_BUTTON RES_DIRECTORY "button.png"
+#define IMG_SPOOKY "spooky_logo.png"
+#define IMG_BUTTON "button.png"
 
-#define IMG_CLOCK	RES_DIRECTORY "clock.png"
-#define IMG_CLOCK_FORE	RES_DIRECTORY "clock_fore.png"
+#define IMG_CLOCK	"clock.png"
+#define IMG_CLOCK_FORE	"clock_fore.png"
 
-#define IMG_PROGRESS RES_DIRECTORY "progress.png"
-#define IMG_PROGRESS_FORE RES_DIRECTORY "progress_fore.png"
+#define IMG_PROGRESS "progress.png"
+#define IMG_PROGRESS_FORE "progress_fore.png"
 
 
 #endif

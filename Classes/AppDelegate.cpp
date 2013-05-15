@@ -78,6 +78,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	CCLog("Level count: %d", l->getLevelsCount());
 
 	//GAMELEVEL lev = l->getGameLevel(currentLevel);
+	SetCurrentDirectory(RES_DIRECTORY);
 
 	//	load textures
 	CCSpriteFrameCache *sfc = CCSpriteFrameCache::sharedSpriteFrameCache();	
