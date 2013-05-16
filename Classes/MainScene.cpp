@@ -452,7 +452,7 @@ void MainScene::verifyTouch(CCPoint point)
 				if (this->matrix[i][j]->getTag() == BOMB_ID)
 				{
 					this->processBomb(i, j);
-				}				
+				}
 				else
 				{
 					this->foundItems.clear();
@@ -471,7 +471,7 @@ void MainScene::processItem(int row, int col)
 	for (unsigned int i = 0; i < this->foundItems.size(); i++)
 	{
 		MATRIXPOS p2 = this->foundItems.at(i);
-		if ( p2.col == col && p2.row == row)
+		if ( p2.col == col && p2.row == row )
 			return;
 	}
 	

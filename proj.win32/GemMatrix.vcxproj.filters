@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Classes">
       <UniqueIdentifier>{091ee408-0e34-4109-8d7b-3e9d6eb6632a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\external">
+      <UniqueIdentifier>{e25d4fbd-3797-4d2d-9fe5-d35f6025ed72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\External">
+      <UniqueIdentifier>{07f80ce9-cbeb-4e49-9c49-eaee5ba3077e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -32,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\MainScene.cpp">
       <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cocos2dx\support\tinyxml2\tinyxml2.cpp">
+      <Filter>Source Files\External</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +70,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\GameMessage.h">
       <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameLevel.h">
+      <Filter>Header Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cocos2dx\support\tinyxml2\tinyxml2.h">
+      <Filter>Header Files\external</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

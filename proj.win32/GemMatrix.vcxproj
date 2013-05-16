@@ -54,7 +54,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\cocos2dx\platform\third_party\win32\iconv;..\..\cocos2dx\platform\third_party\win32\libxml2;..\..\CocosDenshion\include;..\..\CocosDenshion\;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\base_nodes;..\Classes;..\..\cocos2dx\;..\..\cocos2dx\platform;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\kazmath;..\..\cocos2dx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cocos2dx\platform\third_party\win32\iconv;..\..\cocos2dx\support\tinyxml2;..\..\CocosDenshion\include;..\..\CocosDenshion\;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\base_nodes;..\Classes;..\..\cocos2dx\;..\..\cocos2dx\platform;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\kazmath;..\..\cocos2dx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251; 4244;4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -63,7 +63,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\Mihailo\Desktop\cocos2d\Debug.win32;..\..\Debug.win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libBox2D.lib;libchipmunk.lib;libcocos2d.lib;libCocosDenshion.lib;libExtensions.lib;libXML2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libBox2D.lib;libchipmunk.lib;libcocos2d.lib;libCocosDenshion.lib;libExtensions.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -75,7 +75,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\cocos2dx\platform\third_party\win32\iconv;..\..\cocos2dx\platform\third_party\win32\libxml2;..\..\CocosDenshion\include;..\..\CocosDenshion\;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\base_nodes;..\Classes;..\..\cocos2dx\;..\..\cocos2dx\platform;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\kazmath;..\..\cocos2dx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cocos2dx\platform\third_party\win32\iconv;..\..\cocos2dx\support\tinyxml2;..\..\CocosDenshion\include;..\..\CocosDenshion\;..\..\cocos2dx\kazmath\include;..\..\cocos2dx\base_nodes;..\Classes;..\..\cocos2dx\;..\..\cocos2dx\platform;..\..\cocos2dx\platform\win32;..\..\cocos2dx\platform\third_party\win32\OGLES;..\..\cocos2dx\platform\third_party\win32;..\..\cocos2dx\kazmath;..\..\cocos2dx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251; 4244;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -84,17 +84,20 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>C:\Users\Mihailo\Desktop\cocos2d\Release.win32;..\..\Release.win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libBox2D.lib;libchipmunk.lib;libcocos2d.lib;libCocosDenshion.lib;libExtensions.lib;libXML2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libBox2D.lib;libchipmunk.lib;libcocos2d.lib;libCocosDenshion.lib;libExtensions.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\cocos2dx\support\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\cocos2dx\support\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\GameLevel.h" />
     <ClInclude Include="..\Classes\GameResources.h" />
     <ClInclude Include="..\Classes\GemSprite.h" />
     <ClInclude Include="..\Classes\LevelLoader.h" />

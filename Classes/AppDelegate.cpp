@@ -39,7 +39,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
-
     // turn on display FPS
     pDirector->setDisplayStats(false);
 
@@ -75,6 +74,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCLog("Window size: %dx%d", g_width, g_height);
 		
 	LevelLoader *l = LevelLoader::sharedLoader();
+	if (!l)
+	{
+		CCLog("Level resources XML file not parsed OK. Exiting...");
+		return false;
+	}
+
 	CCLog("Level count: %d", l->getLevelsCount());
 
 	//GAMELEVEL lev = l->getGameLevel(currentLevel);

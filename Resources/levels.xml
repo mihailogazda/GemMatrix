@@ -18,6 +18,7 @@
     <minScore> 1200 </minScore>
     <bombProbability> 120 </bombProbability>
     <timeProbability> 120 </timeProbability>
+	<checksInvalid>false</checksInvalid>
   </level>
   <!-- 3 -->
   <level>
