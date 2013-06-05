@@ -77,6 +77,7 @@ class CCGameMessage : public CCObject
 			int g_height = CCDirector::sharedDirector()->getWinSize().height;
 
 			CCSprite* levelList = CCSprite::createWithSpriteFrameName("levelList.png");
+			//levelList->setScale(0.5f);
 
 			position = ccp(g_width / 2, g_height / 2);
 

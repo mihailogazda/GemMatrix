@@ -1,0 +1,49 @@
+Basic info:
+	- Everything is open for discussion, let me know if you hate any of this or have better ideas :)
+	- I think we should do game menus and board with message boxes first. This way we have playable game even with no story. Then later we add story.
+
+Device support:
+	- iPhone, iPhone 4 (retina), iPhone 5 come first
+	- + complementary Windows build since we develop it on desktops (and maybe MacOS as well)
+	- this way we maximize our reach (most people still dont have tablets) on iOS
+	- later if any traction we should expand to Android and tablets
+
+Monetization:
+	- Ads show up when game paused or message boxes (see PSD)
+	- (Ads will enable us to track game usage analytics as well)
+	- I don't think this game has potential for paid version, but we will see
+
+Art direction & assets:
+	- iPhone resolution is 320x480, on retina that is 480x960 - so we use that (included PSD) and scale it to 50% to get 320x480
+	- This is all you man, but we like ducky sewers / pirate direction you showed us
+	- If pirate we should add piratey traits to the game, and gems should be pirate like, maybe ropes as board lines, etc..
+	- Colors and style - regular casual so anyone can play
+	- CLEAR LAYOUT - we need items on screen to be clearly visible and to avoid "too much on screen" issues
+
+Fonts:
+	- We need to define which font to use (has to be free) - so we don't need to draw all the text by hand (+ easier to change)
+	- Fonts should be uniform throught the game i think? (pick one font and stick with it? or use more?)
+
+Story:
+	- Very simple and short
+	- We show story by switching couple of images (Scenes - bellow) and showing lines of text in a box above it (see PSD)
+	- Synopsys: 
+		- Our main character is a ship captain and goes with his new wife to honey moon
+		- At one point evil pirates attack and take our bellowed wife captive and will only give her back after we collect enough Gems.
+		- We now go to the epic adventure of getting our wife back
+	- Scenes (story screens):
+		- INTRO:
+			- 1. Our main character is with his wife enjoying the honeymoon travel. Classic titanic scene. Everyone happy, calm seas.
+			- 2. Oh noes - Pirates Attack - classic ship against ship pirate battle with Pirates boarding. Cannons fire.
+			- 3. Our ship is in ruins, we lie hurt (that is where we get our eye patch?) while our wife is being taken by parates (they pull her by her hand forcingly)
+			- 4. Most Evil Pirate holds our wife by her throat, you will only get her back after you collect enough treasure
+				- b) We can add scene - we are still lying down and with one hand trying to take her but she is too far - for dramatic effect, but dont have to.
+			- 5. We threat with our hand that this is NOT OVER
+			(game begins)
+		- END GAME: 
+			- 1. We sail into pirate cove
+			- 2. We stand with our pirate feet on full chest of treasure
+			- 3. 
+
+Testing:
+	- My wife and couple of friends with iPhones

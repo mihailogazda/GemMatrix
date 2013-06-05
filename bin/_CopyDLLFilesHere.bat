@@ -1,1 +1,0 @@
-copy ..\..\Release.win32\*.dll *.*

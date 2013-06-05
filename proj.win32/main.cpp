@@ -27,8 +27,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     //	create the application instance
     //	
 	
-    CCEGLView* eglView = CCEGLView::sharedOpenGLView();		
-    eglView->setFrameSize(780, 560);
+    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    eglView->setFrameSize(320, 480);
+	eglView->setDesignResolutionSize(320, 480, ResolutionPolicy::kResolutionShowAll);	
+
 	
 	HWND handle = eglView->getHWnd();
 	SetWindowText(handle, "Gem Matrix");
